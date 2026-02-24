@@ -34,7 +34,7 @@ public class SlidingDoor : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Ladron"))
         {
             isOpen = true;
         }
@@ -42,7 +42,7 @@ public class SlidingDoor : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Ladron"))
         {
             isOpen = false;
         }

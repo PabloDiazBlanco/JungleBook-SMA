@@ -46,7 +46,7 @@ public class SlidingGate : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ladron") || other.CompareTag("Agent"))
+        if (other.CompareTag("Ladron"))
         {
             isOpen = true;
         }
@@ -54,7 +54,7 @@ public class SlidingGate : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Ladron") || other.CompareTag("Agent"))
+        if (other.CompareTag("Ladron"))
         {
             isOpen = false;
         }

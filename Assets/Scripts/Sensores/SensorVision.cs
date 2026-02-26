@@ -40,8 +40,8 @@ public class SensorVision : MonoBehaviour
             {
                 float distancia = Vector3.Distance(transform.position, objetivo.position);
 
-                // 2. Comprobación de oclusión (obstáculos)
-                if (!Physics.Raycast(transform.position, direccionAlObjetivo, distancia, capaObstaculos))
+                Vector3 origenRayo = transform.position + Vector3.up * 0.2f;
+                if (!Physics.Raycast(origenRayo, direccionAlObjetivo, distancia, capaObstaculos))
                 {
                     encontrado = true;
                     posicionDetectada = objetivo.position;

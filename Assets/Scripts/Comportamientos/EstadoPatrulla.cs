@@ -1,52 +1,59 @@
 using UnityEngine;
-using UnityEngine.AI; // Necesario para el NavMesh
 
 public class EstadoPatrulla : EstadoAgente
 {
-    private int indicePuntoActual = 0;
+    private int indicePunto = 0;
 
     public override void Enter(AgenteBase agente)
     {
-        Debug.Log("Entrando en modo Patrulla");
-        IrAlSiguientePunto(agente);
+        Debug.Log("<color=cyan>LOBO:</color> Iniciando Patrulla.");
+        EstablecerConfiguracionFisica(agente);
+        IrADestino(agente);
     }
 
     public override void Execute(AgenteBase agente)
     {
-        // 1. REGLA REACTIVA: Si en la memoria veo al ladrón, cambio de estado
+        VerificarAvistamiento(agente);
+        VerificarLlegadaADestino(agente);
+    }
+
+    private void EstablecerConfiguracionFisica(AgenteBase agente)
+    {
+        agente.nav.speed = 2.0f;
+        agente.nav.acceleration = 15f;
+        agente.nav.autoBraking = true;
+    }
+
+    private void VerificarAvistamiento(AgenteBase agente)
+    {
         if (agente.memoria.veoAlLadron)
         {
+            Debug.Log("<color=red>LOBO:</color> ¡Objetivo detectado! Iniciando persecución.");
             agente.CambiarEstado(new EstadoPersecucion());
-            return;
-        }
-
-        // PRIORIDAD 2: Oído (Investigación)
-        if (agente.memoria.escuchoAlLadron)
-        {
-            // El lobo no sabe dónde estás exactamente para morderte, 
-            // pero sabe que hay ruido y va a mirar.
-            agente.CambiarEstado(new EstadoBusqueda());
-            return;
-        }
-
-        // 2. LÓGICA DE PATRULLA: Si llegué al destino, voy al siguiente
-        NavMeshAgent nav = agente.GetComponent<NavMeshAgent>();
-        if (!nav.pathPending && nav.remainingDistance < 0.5f)
-        {
-            IrAlSiguientePunto(agente);
         }
     }
 
-    public override void Exit(AgenteBase agente)
+    private void VerificarLlegadaADestino(AgenteBase agente)
     {
-        Debug.Log("Saliendo de modo Patrulla");
+        if (!agente.nav.pathPending && agente.nav.remainingDistance < 0.5f)
+        {
+            ActualizarSiguientePunto(agente);
+        }
     }
 
-    private void IrAlSiguientePunto(AgenteBase agente)
+    private void ActualizarSiguientePunto(AgenteBase agente)
     {
-        // Supongamos que el agente tiene una lista de puntos en un script de configuración
-        // Por ahora, si no tienes puntos, se quedará quieto o irá a una posición fija
-        Vector3 proximoDestino = agente.ObtenerProximoPuntoPatrulla();
-        agente.GetComponent<NavMeshAgent>().SetDestination(proximoDestino);
+        indicePunto = (indicePunto + 1) % agente.puntosPatrulla.Count;
+        IrADestino(agente);
     }
+
+    private void IrADestino(AgenteBase agente)
+    {
+        if (agente.puntosPatrulla.Count > 0)
+        {
+            agente.nav.SetDestination(agente.puntosPatrulla[indicePunto].position);
+        }
+    }
+
+    public override void Exit(AgenteBase agente) {}
 }

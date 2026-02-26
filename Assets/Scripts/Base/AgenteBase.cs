@@ -5,37 +5,34 @@ using System.Collections.Generic;
 public class AgenteBase : MonoBehaviour
 {
     public MemoriaAgente memoria;
-    public List<Transform> puntosPatrulla; // Arrastra aquí objetos vacíos desde el Inspector
-    private int indicePunto = 0;
-    
-    private EstadoAgente estadoActual;
+    public List<Transform> puntosPatrulla;
+    public NavMeshAgent nav;
+    public EstadoAgente estadoActual;
 
     void Start()
     {
+        // Asignación directa y arranque
         memoria = GetComponent<MemoriaAgente>();
-        // IMPORTANTE: El primer estado
+        nav = GetComponent<NavMeshAgent>();
         CambiarEstado(new EstadoPatrulla());
     }
 
     void Update()
     {
-        if (estadoActual != null)
-            estadoActual.Execute(this);
+        EjecutarEstado();
+    }
+
+    private void EjecutarEstado()
+    {
+        estadoActual.Execute(this);
     }
 
     public void CambiarEstado(EstadoAgente nuevoEstado)
     {
+        if (estadoActual != null && estadoActual.GetType() == nuevoEstado.GetType()) return;
+
         if (estadoActual != null) estadoActual.Exit(this);
         estadoActual = nuevoEstado;
         estadoActual.Enter(this);
-    }
-
-    public Vector3 ObtenerProximoPuntoPatrulla()
-    {
-        if (puntosPatrulla == null || puntosPatrulla.Count == 0) return transform.position;
-        
-        Vector3 destino = puntosPatrulla[indicePunto].position;
-        indicePunto = (indicePunto + 1) % puntosPatrulla.Count;
-        return destino;
     }
 }

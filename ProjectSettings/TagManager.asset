@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ladron
   - Agent
+  - Thief
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - UI
   - Fences
   - Ladron
-  - 
-  - 
-  - 
-  - 
+  - Agentes
+  - Gate
+  - Gate_Sensor
+  - Thief
   - 
   - 
   - 

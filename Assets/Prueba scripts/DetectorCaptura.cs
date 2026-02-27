@@ -1,25 +1,29 @@
 using UnityEngine;
+using UnityEngine.Events; // Necesario para los eventos
 using UnityEngine.SceneManagement;
 
 public class DetectorCaptura : MonoBehaviour
 {
-    public string etiquetaLadron = "Thief";
+    // Este evento aparecerá en el Inspector como un recuadro donde puedes arrastrar cosas
+    public UnityEvent onCapture; 
+    private bool capturado = false;
 
-    // Este es el metodo que funcionara con "Is Trigger" marcado
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        // Debug para ver en consola si alguien entra en el espacio del guardia
-        Debug.Log("Algo ha entrado en el sensor del guardia: " + other.gameObject.name);
-
-        if (other.gameObject.CompareTag(etiquetaLadron))
+        if (other.CompareTag("Thief") && !capturado)
         {
-            ReiniciarNivel();
+            capturado = true;
+
+            // 1. Lanzamos el evento. "Avisamos" a quien esté escuchando.
+            if (onCapture != null) onCapture.Invoke();
+
+            // 2. Reiniciamos la escena con un pequeño retraso
+            Invoke("ReiniciarEscena", 1.5f);
         }
     }
 
-    private void ReiniciarNivel()
+    void ReiniciarEscena()
     {
-        Debug.Log("CAPTURA CONFIRMADA. Reiniciando escena...");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

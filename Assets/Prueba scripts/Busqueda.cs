@@ -60,6 +60,8 @@ public class Busqueda : GuardBehavior
     {
         if (agent == null) return;
 
+        agent.speed = 6.0f;
+
         // Lógica de deambular aleatorio cerca de la última posición conocida
         if (!agent.pathPending && agent.remainingDistance < 0.5f && Time.time >= tiempoProximoPunto)
         {

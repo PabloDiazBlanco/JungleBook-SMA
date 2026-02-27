@@ -30,6 +30,7 @@ public class Persecucion : GuardBehavior
     {
         // El agente se mueve directamente a la posicion del ladron
         // Como el ladron se mueve con WASD, el NavMesh actualiza la ruta constantemente
+        agent.speed = 8.0f;
         agent.SetDestination(thief.position);
     }
 }

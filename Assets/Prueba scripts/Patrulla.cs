@@ -25,6 +25,7 @@ public class Patrulla : GuardBehavior
     {
         if (puntosControl.Count == 0) return;
 
+        agent.speed = 2.0f;
         // Aseguramos que el agente esté "despierto" para recibir la nueva orden de patrulla
         if (agent.isStopped) agent.isStopped = false;
 

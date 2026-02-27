@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class skeleton_brain : MonoBehaviour
+public class MainCharacter_Brain : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float mouseSensitivity = 0.1f;

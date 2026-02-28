@@ -12,6 +12,11 @@ public class Busqueda : GuardBehavior
     public float radioInspeccion = 5f; 
     private float tiempoProximoPunto = 0f;
 
+    [Header("Ajustes de Inteligencia")]
+    // Si es 0, el comportamiento es el de siempre (ideal para el Lobo)
+    // Si es > 0, el agente "imagina" que avanzaste esa distancia al perderte de vista
+    public float impulsoInercia = 0f; 
+
     void Start()
     {
         if (sensor == null) sensor = GetComponent<GuardVision>();
@@ -19,30 +24,42 @@ public class Busqueda : GuardBehavior
 
     void Update()
     {
-        // El Update ahora solo llama al método, cumpliendo el requisito del profe
         ActualizarEstadoRastro();
     }
 
-    // Método que centraliza la lógica de memoria y tiempo
     private void ActualizarEstadoRastro()
     {
         if (sensor != null && sensor.PuedeVerAlLadron())
         {
-            // Fase de Memoria: Mientras hay visión, guardamos datos
             ultimaPosicionConocida = thief.position;
             tieneRastro = true;
             cronometro = tiempoBusqueda;
         }
         else if (tieneRastro && cronometro > 0)
         {
-            // Fase de Olvido: Si perdemos la visión, el tiempo empieza a correr
+            // Detectamos el MOMENTO JUSTO en el que perdemos la visión
+            // Si el cronómetro está al máximo, es que acabamos de perder el contacto
+            if (cronometro == tiempoBusqueda && impulsoInercia > 0)
+            {
+                AplicarInerciaAlRastro();
+            }
+
             cronometro -= Time.deltaTime;
         }
     }
 
+    private void AplicarInerciaAlRastro()
+    {
+        // Calculamos la dirección en la que se movía el ladrón respecto al guardia
+        Vector3 direccionHuida = (thief.position - transform.position).normalized;
+        // Proyectamos la posición un poco más adelante para que el guardia "entre"
+        ultimaPosicionConocida += direccionHuida * impulsoInercia;
+        
+        Debug.Log(gameObject.name + ": He perdido de vista al ladrón, supongo que sigue hacia adelante.");
+    }
+
     public override bool CanActivate()
     {
-        // Decisión basada en los datos procesados por ActualizarEstadoRastro
         if (sensor != null && !sensor.PuedeVerAlLadron() && tieneRastro && cronometro > 0)
         {
             return true;
@@ -62,7 +79,6 @@ public class Busqueda : GuardBehavior
 
         agent.speed = 6.0f;
 
-        // Lógica de deambular aleatorio cerca de la última posición conocida
         if (!agent.pathPending && agent.remainingDistance < 0.5f && Time.time >= tiempoProximoPunto)
         {
             CalcularSiguientePuntoInspeccion();
@@ -71,8 +87,6 @@ public class Busqueda : GuardBehavior
         Debug.DrawLine(transform.position, agent.destination, Color.red);
     }
 
-    // He aprovechado para extraer también la lógica del punto aleatorio, 
-    // así el Action() queda igual de limpio que el Update().
     private void CalcularSiguientePuntoInspeccion()
     {
         Vector2 circuloAleatorio = Random.insideUnitCircle * radioInspeccion;

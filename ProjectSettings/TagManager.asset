@@ -8,6 +8,10 @@ TagManager:
   - Agent
   - Thief
   - Antorcha
+  - FuegoHoguera
+  - Aldeano
+  - Doors_houses
+  - Hoguera
   layers:
   - Default
   - TransparentFX
@@ -22,9 +26,9 @@ TagManager:
   - Gate_Sensor
   - Thief
   - Houses
-  - 
-  - 
-  - 
+  - Cultivo
+  - Doors_houses
+  - Hoguera
   - 
   - 
   - 

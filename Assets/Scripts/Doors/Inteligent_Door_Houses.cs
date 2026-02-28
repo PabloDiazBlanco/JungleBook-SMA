@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
-public class SlidingDoor : MonoBehaviour
+public class Inteligent_Door_Houses : MonoBehaviour
 {
     public Transform door;   
     public float slideDistance = 2f;
@@ -10,10 +11,16 @@ public class SlidingDoor : MonoBehaviour
     private Vector3 closedPos;
     private Vector3 openPos;
     private bool isOpen = false;
-
     private NavMeshObstacle obstacle;
+    
+    private List<Collider> agentesEnRango = new List<Collider>();
 
     void Start()
+    {
+        InicializarPuerta();
+    }
+
+    private void InicializarPuerta()
     {
         if (door != null)
         {
@@ -21,40 +28,70 @@ public class SlidingDoor : MonoBehaviour
             openPos = closedPos + transform.forward * slideDistance;
             obstacle = door.GetComponent<NavMeshObstacle>();
             
-            if (obstacle != null)
-            {
-                obstacle.carving = true;
-            }
+            // Debug inicial para verificar componentes
+            if (obstacle == null) Debug.LogWarning("PUERTA: No se encontró NavMeshObstacle en " + door.name);
         }
     }
 
     void Update()
     {
-        if (door == null) return;
+        ActualizarEstadoApertura();
+        MoverPuerta();
+        GestionarObstaculoNavMesh();
+    }
 
+    private void ActualizarEstadoApertura()
+    {
+        isOpen = agentesEnRango.Count > 0;
+    }
+
+    private void MoverPuerta()
+    {
+        if (door == null) return;
         Vector3 target = isOpen ? openPos : closedPos;
         door.localPosition = Vector3.MoveTowards(door.localPosition, target, speed * Time.deltaTime);
+    }
 
+    private void GestionarObstaculoNavMesh()
+    {
         if (obstacle != null)
         {
-            // El obstáculo se desactiva cuando la puerta está abierta para dejar pasar al lobo
             obstacle.enabled = !isOpen;
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Thief"))
+        // DEBUG 1: ¿Algo está tocando el trigger?
+        Debug.Log("COLISIÓN: Objeto '" + other.name + "' entró en el trigger de la puerta.");
+
+        if (other.CompareTag("Thief") || other.CompareTag("Aldeano"))
         {
-            isOpen = true;
+            // DEBUG 2: ¿El Tag es correcto?
+            Debug.Log("PUERTA: Acceso concedido a " + other.tag);
+
+            if (!agentesEnRango.Contains(other))
+            {
+                agentesEnRango.Add(other);
+                Debug.Log("PUERTA: Agente añadido a la lista. Total: " + agentesEnRango.Count);
+            }
+        }
+        else 
+        {
+            // DEBUG 3: El objeto no tiene el tag esperado
+            Debug.Log("PUERTA: Objeto ignorado. Tag actual: " + other.tag);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Thief"))
+        if (other.CompareTag("Thief") || other.CompareTag("Aldeano"))
         {
-            isOpen = false;
+            if (agentesEnRango.Contains(other))
+            {
+                agentesEnRango.Remove(other);
+                Debug.Log("PUERTA: Agente salió. Quedan: " + agentesEnRango.Count);
+            }
         }
     }
 }

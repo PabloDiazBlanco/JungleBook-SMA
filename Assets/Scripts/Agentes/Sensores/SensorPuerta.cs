@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class SensorPercepcionObjetos : MonoBehaviour
+public class SensorPuertas : MonoBehaviour
 {
     public float radioDeteccion = 12f;
     public LayerMask capaInteres;
-
-    // Esta es la variable que leen tus otros scripts para abrir la puerta
     public Transform ultimaPuertaDetectada;
 
     void Update()
@@ -15,25 +13,18 @@ public class SensorPercepcionObjetos : MonoBehaviour
 
     private void EscanearPuertas()
     {
-        // Escaneamos solo los objetos en el radio de detección
         Collider[] objetos = Physics.OverlapSphere(transform.position, radioDeteccion, capaInteres);
-        
-        // Reset de la puerta detectada en cada frame
         ultimaPuertaDetectada = null;
 
         foreach (Collider obj in objetos)
         {
-            // Si el objeto tiene el Tag de las puertas de las casas
             if (obj.CompareTag("Doors_houses"))
             {
                 ultimaPuertaDetectada = obj.transform;
-                // Una vez encontramos una puerta, no necesitamos seguir buscando en este frame
-                break; 
             }
         }
     }
 
-    // Dibujamos el radio amarillo en la escena para ver el alcance del sensor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

@@ -1,15 +1,16 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage{graphicx} 
+\usepackage{float}
 \begin{document}
 
 \title{\vspace{-70pt}\begingroup  
     \centering
-    \includegraphics[width=0.6\textwidth]{Imaxes/Simbolo_logo_cor transp.png}\\
+    \includegraphics[width=0.6\textwidth]{imaxes/udc.png}\\
     \large Grado en Intelixencia Artificial\\
     \large Sistemas Multiaxente\\[0.5em]
     \large \textbf{Práctica 1: Mundo virtual y comportamiento individual}\par 
 \endgroup}
-\author{Guillermo Blanco Núñez \\ Pablo Díaz Blanco \\ Miguel Pérez Francos \\ Grupo de martes)}
+\author{Guillermo Blanco Núñez \\ Pablo Díaz Blanco \\ Miguel Pérez Francos \\ Grupo de martes}
 
 \date{}
 \maketitle
@@ -17,9 +18,32 @@
 
 
 \section*{\large Mundo Virtual}
-Resaltad los aspectos más relevantes de vuestro mundo virtual, como decisiones sobre el diseño de habitaciones, pasillos, puertas u otros elementos clave.
+Nuestro entorno virtual se divide en dos grandes zonas: el exterior y el interior de la villa. Fuera de la empalizada de madera se encuentra un lobo que vigila la única entrada; este agente solo puede entrar si la puerta está abierta, ya que no sabe abrirla. Al atravesar la puerta, el jugador avanza por un camino principal de madera donde le esperan dos agentes que controlan la zona de cultivos y las tiendas de campaña situadas a ambos lados. Más adelante aparece un barrio con dos filas de casas a los lados del camino, también vigilado por otra pareja de agentes; en algunas de estas casas, el ladrón y los agentes (excepto el lobo) pueden abrir las puertas y entrar. Siguiendo el recorrido se llega a la zona más importante del mapa, al fondo: una pequeña plaza con puestos, mesas y elementos de mercado, con una hoguera en el centro y un barril cercano donde hay una antorcha apagada. En esta plaza hay un último agente que intenta impedir que recojamos la antorcha y nos llevemos el fuego de la hoguera.
 
-Si deseáis participar en la competición al mejor entorno, debéis incluir una imagen de vuestro escenario.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{imaxes/entradaLOBO.png}
+    \caption{Vista desde la entrada a la villa, con el agente lobo en la puerta.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{imaxes/lateral.png}
+    \caption{Vista lateral de la villa.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{imaxes/plaza.png}
+    \caption{Vista de la plaza principal de la villa donde están la hoguera y al lado la antorcha.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{imaxes/hoguera.png}
+    \caption{Zona de la plaza donde se encuentra el barril con la antorcha y la hoguera.}
+\end{figure}
+
 \section*{\large Arquitectura individual}
 
 Presentad una breve justificación de la arquitectura utilizada en cada uno de vuestros agentes (reactiva, deliberativa, híbrida, BDI, etc.), explicando las razones de vuestra elección.

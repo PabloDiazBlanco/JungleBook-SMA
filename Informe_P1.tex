@@ -56,5 +56,16 @@ Esta arquitectura permite que cada agente actúe de manera autónoma, eficiente 
 
 Usamos dos tipos de sensores: visuales y auditivos. Los sensores visuales detectan al jugador teniendo en cuenta obstáculos visuales. Este es crucial para los agentes ya que si ven al ladrón deben ir a por él, haciendo la lógica de detección muy realista. Los sensores auditivos detectan sonidos que el jugador genera involuntariamente con su movimientos, saltos o colisiones con objetos. Estos sensores son completamente independientes de los obstáculos visuales, sus limitaciones son por proximidad. Permite que los agentes puedan detectar al ladrón a través de un obstáculo visual si este genera algún ruido, haciendo así la lógica de detección completamente realista. 
 \section*{\large Actuadores}
-Describid y justificad la elección de cada uno de los actuadores que habéis decidido incluir, explicando su función y relevancia dentro del sistema.
+En cuanto a los actuadores, los agentes del sistema utilizan distintos mecanismos que les permiten ejecutar físicamente las decisiones tomadas por su arquitectura reactiva. 
+El principal actuador de movimiento es el componente NavMeshAgent, que gestiona la navegación por el entorno calculando rutas y permitiendo desplazamientos realistas dentro del mapa. En el caso del ladrón, se emplea además una cámara en tercera persona que permite ver al ladrón completo y ligeramente a su espalda, donde el movimiento se controla con las teclas WASD y la orientación mediante el ratón, lo que permite una interacción directa y fluida con el entorno. Para recoger un objeto, como la antorcha o una vez esta se tenga el fuego, se utiliza la tecla E. Las puertas de la valla o de las casas que se abren (no se abren las puertas de todas las casas) son deslizantes y se abren si el ladrón o los agentes entran a un box collider qu es más grande por fuera de la casa que por dentro. 
+Los agentes funcionan internamente como una máquina de estados, especificando qué comportamiento deben ejecutar (patrulla, persecución, búsqueda, etc.), lo que actúa como mecanismo de activación de acciones. Los agentes usan tags para detectar si hay puertas cerca cuando está en estado de investigación del entorno y para detectar si hay fuego en la hoguera y tiene que ir a la puerta inmediatamente. Este último tag solo lo tiene el agente que está en la plaza.
+Si un guardia alcanza al ladrón, se ejecuta la acción de “golpe”, que finaliza la partida y reinicia al ladrón en su punto inicial. 
+También se modifican magnitudes físicas como parte de los actuadores: la velocidad aumenta para un agente cuando este detecta al ladrón para así reforzar la sensación de persecución, y la gravedad se mantiene activa para evitar comportamientos irreales como la levitación. Finalmente, el ladrón dispone de capacidades adicionales como saltar y desplazarse por rampas y escaleras, mientras que los guardias no pueden hacerlo, lo que introduce diferencias funcionales en la interacción con el entorno y refuerza el diseño asimétrico del sistema.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{imaxes/alturas.png}
+    \caption{Demostración de como el ladrón puede escalar a una altura mientras los agente no pueden.}
+\end{figure}
 \end{document}

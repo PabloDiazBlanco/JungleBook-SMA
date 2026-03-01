@@ -18,23 +18,23 @@
 
 
 \section*{\large Mundo Virtual}
-Nuestro entorno virtual se divide en dos grandes zonas: el exterior y el interior de la villa. Fuera de la valla de madera se encuentra un lobo que vigila la única entrada; este agente solo puede entrar si la puerta está abierta, ya que no sabe abrirla. Al atravesar la puerta, el jugador avanza por un camino principal de madera donde le esperan dos agentes que controlan la zona de cultivos y las tiendas de campaña situadas a ambos lados. Más adelante aparece un barrio con dos filas de casas a los lados del camino, también vigilado por otra pareja de agentes; en algunas de estas casas, el ladrón y los agentes (excepto el lobo) pueden abrir las puertas y entrar. Siguiendo el recorrido se llega a la zona más importante del mapa, al fondo: una pequeña plaza con puestos, mesas y elementos de mercado, con una hoguera en el centro y un barril cercano donde hay una antorcha apagada. En esta plaza hay un último agente que intenta impedir que recojamos la antorcha y nos llevemos el fuego de la hoguera.
+Nuestro entorno virtual se divide en dos grandes zonas: el exterior y el interior de la villa. Fuera de la valla de madera se encuentra un lobo que vigila la única entrada y solo cuenta con sensores visuales; este agente solo puede entrar si la puerta está abierta, ya que no sabe abrirla. Al atravesar la puerta, el jugador avanza por un camino principal de madera donde le esperan dos agentes que controlan la zona de las tiendas de campaña situadas a ambos lados, estos agentes también solo tienen sensores visuales. Inmediatamente después y a cada lado de la pasarela hay dos zonas de cultivo y en cada una se encuentra un agente con sensores visuales y auditivos. Más adelante aparece un barrio con dos filas de casas (separadas por otra pasarela en sentido perpendicular a la principal) a los lados del camino, este barrio está vigilado por un agente que patrulla por la intersección de las dos pasarelas formando una pequeña cruz (+). En algunas de estas casas, el ladrón y los agentes (excepto el lobo) pueden abrir las puertas y entrar. Siguiendo el recorrido se llega a la zona más importante del mapa, al fondo: una pequeña plaza con puestos, mesas y elementos de mercado, con una hoguera en el centro y un barril cercano donde hay una antorcha apagada. En esta plaza hay un último agente que intenta impedir que recojamos la antorcha y nos llevemos el fuego de la hoguera. Este último agente cuenta con sensores visuaes y auditivos.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\textwidth]{imaxes/entradaLOBO.png}
+    \includegraphics[width=0.68\textwidth]{imaxes/entradaLOBO.png}
     \caption{Vista desde la entrada a la villa, con el agente lobo en la puerta.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{imaxes/lateral.png}
+    \includegraphics[width=0.68\textwidth]{imaxes/lateral.png}
     \caption{Vista lateral de la villa.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{imaxes/plaza.png}
+    \includegraphics[width=0.68\textwidth]{imaxes/plaza.png}
     \caption{Vista de la plaza principal de la villa donde están la hoguera y al lado la antorcha.}
 \end{figure}
 
@@ -48,7 +48,7 @@ Nuestro entorno virtual se divide en dos grandes zonas: el exterior y el interio
 
 En nuestro proyecto usamos una arquitectura reactiva basada en estados, ya que el entorno es dinámico, parcialmente observable y requiere respuestas en tiempo real. Esto representa una arquitectura reactiva, donde los agentes seleccionan sus acciones en función de las percepciones actuales sin necesidad de realizar planificación compleja ni mantener un modelo simbólico detallado del mundo.
 
-Cada guardia cuenta con sensores de visión que le permiten detectar al ladrón dentro de un radio determinado; a partir de estas percepciones, el agente activa distintos comportamientos organizados por prioridad. El estado base es la patrulla, donde el guardia recorre puntos predefinidos; si detecta visualmente al ladrón, pasa a persecución y, si lo alcanza, el juego termina. Si durante la persecución lo pierde de vista, activa un estado de búsqueda alrededor del último punto donde lo vio. Además, si en esa zona existen elementos relevantes (en nuestro caso, puertas), puede activar un comportamiento de investigación para acercarse y entrar por si el ladrón se estaba escondiendo dentro de una casa. El guardia que patrulla en la plaza es el más completo de todos, al estar más cerca del objetivo, ya que además del sensor visual tiene un sensor auditivo que permite detectar al ladrón a través de ruidos que genera involuntariamente y que se propagan por el entorno. Este guardia tiene además un comportamiento específico de bloqueo de salida: memoriza la posición de la hoguera y, si deja de verla encendida, se desplaza hasta la puerta para impedir la escapatoria. Si una vez en la puerta, o de camino a ella se encuentra o escucha al ladrón entonces pasará al modo persecución pero si lo vuelve a perder irá directamente a la puerta. En cuanto al sistema de oído, si el ladrón genera ruido dentro de un radio determinado, el guardia calcula una posición aproximada (con un componente aleatorio) cercana al origen del sonido y se dirige hacia ella, reanudando la persecución si vuelve a detectarlo visualmente. 
+Cada guardia cuenta con sensores de visión que le permiten detectar al ladrón dentro de un radio determinado; a partir de estas percepciones, el agente activa distintos comportamientos organizados por prioridad. El estado base es la patrulla, donde el guardia recorre puntos predefinidos; si detecta visualmente al ladrón, pasa a persecución y, si lo alcanza, el juego termina. Si durante la persecución lo pierde de vista, activa un estado de búsqueda alrededor del último punto donde lo vio. Además, si en esa zona existen elementos relevantes (en nuestro caso, puertas), puede activar un comportamiento de investigación para acercarse y entrar por si el ladrón se estaba escondiendo dentro de una casa. El guardia que patrulla en la plaza y los que están en la zona de los cultivos son los más completos de todos, ya que además del sensor visual tienen un sensor auditivo que les permite detectar al ladrón a través de ruidos que genera involuntariamente y que se propagan por el entorno. El último guardia, el que está en la plaza donde están la hoguera y la antorcha, tiene además un comportamiento específico de bloqueo de salida: memoriza la posición de la hoguera y, si deja de verla encendida, se desplaza hasta la puerta para impedir la escapatoria. Si una vez en la puerta, o de camino a ella se encuentra o escucha al ladrón entonces pasará al modo persecución pero si lo vuelve a perder irá directamente a la puerta. En cuanto al sistema de oído, si el ladrón genera ruido dentro de un radio determinado, el guardia calcula una posición aproximada (con un componente aleatorio) cercana al origen del sonido y se dirige hacia ella, reanudando la persecución si vuelve a detectarlo visualmente. 
 
 Esta arquitectura permite que cada agente actúe de manera autónoma, eficiente y coherente  aún respetando la restricción de no poder tener comunicación directa entre ellos.
 

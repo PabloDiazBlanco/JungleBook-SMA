@@ -327,6 +327,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Campesino2
       objectReference: {fileID: 0}
+    - target: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      propertyPath: m_TagString
+      value: Aldeano
+      objectReference: {fileID: 0}
     - target: {fileID: 8616305835474767040, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.04
@@ -352,10 +356,16 @@ PrefabInstance:
       addedObject: {fileID: 10459467}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 10459473}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 10459466}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 10459465}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459472}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 10459464}
@@ -435,13 +445,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ed6b3e2a328fe4c9651653c1213f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Patrulla
-  priority: 3
+  priority: 4
   puntosControl:
-  - {fileID: 341017250}
-  - {fileID: 2104354744}
-  - {fileID: 1077726978}
-  - {fileID: 1164962185}
   - {fileID: 901488023}
+  - {fileID: 1164962185}
+  - {fileID: 1077726978}
+  - {fileID: 2104354744}
+  - {fileID: 341017250}
   indiceActual: 0
   distanciaUmbral: 1.5
 --- !u!114 &10459463
@@ -456,8 +466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 2
+  priority: 3
   sensor: {fileID: 10459467}
+  sensorOido: {fileID: 0}
   ultimaPosicionConocida: {x: 0, y: 0, z: 0}
   tieneRastro: 0
   tiempoBusqueda: 10
@@ -475,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 1
+  priority: 2
   sensorObjetos: {fileID: 10459466}
   memoriaBusqueda: {fileID: 10459463}
 --- !u!114 &10459465
@@ -612,6 +623,36 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &10459472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04eafc10ce1aa444cbe36bb5f90022a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InvestigarSonido
+  priority: 1
+  sensorOido: {fileID: 10459473}
+  velocidadInvestigacion: 6
+  distanciaLlegada: 1.5
+--- !u!114 &10459473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bd7cbc955c46842af3ef9b181ee1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuardHearing
+  agudezaAuditiva: 1.5
+  radioImprecision: 5
 --- !u!1001 &12447510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3995,6 +4036,9 @@ MonoBehaviour:
   mouseSensitivity: 0.1
   gravity: -20
   jumpHeight: 1
+  radioRuidoActual: 0
+  radioCorriendo: 10
+  radioSaltando: 15
   antorchaEnMano: {fileID: 1909091390}
   fuegoEnAntorcha: {fileID: 1170349130}
 --- !u!54 &114233768
@@ -11941,6 +11985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 1
   sensor: {fileID: 324811759}
+  sensorOido: {fileID: 0}
   ultimaPosicionConocida: {x: 0, y: 0, z: 0}
   tieneRastro: 0
   tiempoBusqueda: 5
@@ -19191,6 +19236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
   sensor: {fileID: 529498519}
+  sensorOido: {fileID: 0}
   ultimaPosicionConocida: {x: 0, y: 0, z: 0}
   tieneRastro: 0
   tiempoBusqueda: 10
@@ -32181,7 +32227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 321.5
+      value: 182.8
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.y
@@ -32189,7 +32235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -31.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalRotation.w
@@ -35011,6 +35057,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Campesino1
       objectReference: {fileID: 0}
+    - target: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      propertyPath: m_TagString
+      value: Aldeano
+      objectReference: {fileID: 0}
     - target: {fileID: 8616305835474767040, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.04
@@ -35036,10 +35086,16 @@ PrefabInstance:
       addedObject: {fileID: 2143201458}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2143201466}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2143201457}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2143201456}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201465}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2143201455}
@@ -40698,6 +40754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
   sensor: {fileID: 1019043328}
+  sensorOido: {fileID: 0}
   ultimaPosicionConocida: {x: 0, y: 0, z: 0}
   tieneRastro: 0
   tiempoBusqueda: 10
@@ -42354,6 +42411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
   sensor: {fileID: 1063662412}
+  sensorOido: {fileID: 0}
   ultimaPosicionConocida: {x: 0, y: 0, z: 0}
   tieneRastro: 0
   tiempoBusqueda: 10
@@ -55850,16 +55908,28 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1381432413}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1381432418}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432419}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1381432408}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432421}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432409}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1381432416}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1381432413}
+      addedObject: {fileID: 1381432420}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432412}
@@ -55871,16 +55941,10 @@ PrefabInstance:
       addedObject: {fileID: 1381432410}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1381432409}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1381432408}
+      addedObject: {fileID: 1381432405}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432407}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1381432405}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432406}
@@ -56063,7 +56127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ed6b3e2a328fe4c9651653c1213f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Patrulla
-  priority: 4
+  priority: 5
   puntosControl:
   - {fileID: 992104137}
   - {fileID: 1690089276}
@@ -56089,8 +56153,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 3
+  priority: 4
   sensor: {fileID: 1381432408}
+  sensorOido: {fileID: 1381432421}
   ultimaPosicionConocida: {x: 0, y: 0, z: 0}
   tieneRastro: 0
   tiempoBusqueda: 10
@@ -56108,7 +56173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 2
+  priority: 3
   sensorObjetos: {fileID: 1381432419}
   memoriaBusqueda: {fileID: 1381432411}
 --- !u!114 &1381432413
@@ -56175,6 +56240,36 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   ultimaPuertaDetectada: {fileID: 0}
+--- !u!114 &1381432420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04eafc10ce1aa444cbe36bb5f90022a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InvestigarSonido
+  priority: 2
+  sensorOido: {fileID: 1381432421}
+  velocidadInvestigacion: 6
+  distanciaLlegada: 1.5
+--- !u!114 &1381432421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bd7cbc955c46842af3ef9b181ee1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuardHearing
+  agudezaAuditiva: 1.5
+  radioImprecision: 5
 --- !u!1001 &1382889800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88696,7 +88791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ed6b3e2a328fe4c9651653c1213f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Patrulla
-  priority: 3
+  priority: 4
   puntosControl:
   - {fileID: 579934897}
   - {fileID: 669438657}
@@ -88717,8 +88812,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 2
+  priority: 3
   sensor: {fileID: 2143201458}
+  sensorOido: {fileID: 2143201466}
   ultimaPosicionConocida: {x: 0, y: 0, z: 0}
   tieneRastro: 0
   tiempoBusqueda: 10
@@ -88736,7 +88832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 1
+  priority: 2
   sensorObjetos: {fileID: 2143201457}
   memoriaBusqueda: {fileID: 2143201454}
 --- !u!114 &2143201456
@@ -88914,6 +89010,36 @@ CapsuleCollider:
   m_Height: 1.3680062
   m_Direction: 1
   m_Center: {x: -3.607301e-10, y: 1, z: 0.03193641}
+--- !u!114 &2143201465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04eafc10ce1aa444cbe36bb5f90022a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InvestigarSonido
+  priority: 1
+  sensorOido: {fileID: 2143201466}
+  velocidadInvestigacion: 6
+  distanciaLlegada: 1.5
+--- !u!114 &2143201466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bd7cbc955c46842af3ef9b181ee1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuardHearing
+  agudezaAuditiva: 1.5
+  radioImprecision: 5
 --- !u!1 &2144177625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}

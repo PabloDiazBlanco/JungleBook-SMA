@@ -9,6 +9,11 @@ public class MainCharacter_Brain : MonoBehaviour
     public float gravity = -20f;
     public float jumpHeight = 1f;
 
+    [Header("Ajustes de Sonido")]
+    public float radioRuidoActual = 0f;
+    public float radioCorriendo = 10f; 
+    public float radioSaltando = 15f;
+
     [Header("Referencias de Inventario")]
     public GameObject antorchaEnMano;
     public GameObject fuegoEnAntorcha;
@@ -87,6 +92,19 @@ public class MainCharacter_Brain : MonoBehaviour
     void Deliberar() { 
         float multiplier = isActionLocked ? 0f : 1f; 
         moveInput *= multiplier; 
+
+        if (!isGrounded) 
+        {
+            radioRuidoActual = radioSaltando;
+        }
+        else if (moveInput.magnitude > 0.01f) 
+        {
+            radioRuidoActual = radioCorriendo;
+        }
+        else 
+        {
+            radioRuidoActual = 0f;
+        }
     }
 
     void Ejecutar()

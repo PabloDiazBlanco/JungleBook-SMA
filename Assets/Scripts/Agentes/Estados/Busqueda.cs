@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class Busqueda : GuardBehavior
 {
     public GuardVision sensor;
+    public GuardHearing sensorOido;
     public Vector3 ultimaPosicionConocida;
     public bool tieneRastro = false;
     public float tiempoBusqueda = 10f; 
@@ -16,6 +17,7 @@ public class Busqueda : GuardBehavior
     void Start()
     {
         if (sensor == null) sensor = GetComponent<GuardVision>();
+        if (sensorOido == null) sensorOido = GetComponent<GuardHearing>();
     }
 
     void Update()
@@ -31,6 +33,14 @@ public class Busqueda : GuardBehavior
             tieneRastro = true;
             cronometro = tiempoBusqueda;
         }
+        // Si el guardia oye algo, también actualizamos la posición de búsqueda
+        else if (sensorOido != null && sensorOido.EscuchoAlgo())
+        {
+            ultimaPosicionConocida = sensorOido.GetPosicionRuido();
+            tieneRastro = true;
+            cronometro = tiempoBusqueda;
+        }
+
         else if (tieneRastro && cronometro > 0)
         {
             cronometro -= Time.deltaTime;

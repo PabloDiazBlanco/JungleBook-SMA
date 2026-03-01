@@ -8,21 +8,28 @@ public class LoboAnimationControllers : MonoBehaviour
 
     [Header("Ajustes de Velocidad")]
     public float umbralCaminar = 0.1f;
-    public float umbralCorrer = 4.5f; // Por encima de 4.5 (Búsqueda y Persecución) corre
+    public float umbralCorrer = 4.5f; 
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+        if (agent == null || anim == null)
+        {
+            this.enabled = false;
+        }
     }
 
     void Update()
     {
-        if (agent == null || anim == null) return;
+        ActualizarAnimacionesMovimiento();
+    }
 
+    private void ActualizarAnimacionesMovimiento()
+    {
         float velocidadActual = agent.velocity.magnitude;
 
-        // Lógica de animaciones basada en la velocidad real
         bool moviendoseLento = velocidadActual > umbralCaminar && velocidadActual < umbralCorrer;
         bool moviendoseRapido = velocidadActual >= umbralCorrer;
 
@@ -32,14 +39,13 @@ public class LoboAnimationControllers : MonoBehaviour
 
     public void EjecutarAtaque()
     {
-        if (anim != null && !anim.GetBool("isAttacking")) // Solo si no está ya atacando
+        if (anim != null && !anim.GetBool("isAttacking")) 
         {
             anim.SetBool("isAttacking", true);
-            
-
             Invoke("DetenerAtaque", 0.75f);
         }
     }
+
     private void DetenerAtaque()
     {
         if (anim != null) anim.SetBool("isAttacking", false);

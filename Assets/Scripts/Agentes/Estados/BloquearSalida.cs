@@ -3,10 +3,9 @@ using UnityEngine;
 public class BloquearSalida : GuardBehavior
 {
     public SensorHogueraIndividual sensor;
-    public Transform puntoPuertaPueblo; // Referencia al destino de bloqueo
+    public Transform puntoPuertaPueblo; 
     public override bool CanActivate()
     {
-        // Solo se activa para este individuo si ÉL detectó el robo
         return sensor != null && sensor.alarmaRoboDetectada;
     }
 
@@ -14,8 +13,7 @@ public class BloquearSalida : GuardBehavior
     {
         if (agent == null) return;
 
-        // ¡Corre a la puerta!
-        agent.speed = 10f; // Velocidad de pánico
+        agent.speed = 10f;
         agent.SetDestination(puntoPuertaPueblo.position);
         
         Debug.Log("¡ALERTA! ¡Han robado la hoguera!");

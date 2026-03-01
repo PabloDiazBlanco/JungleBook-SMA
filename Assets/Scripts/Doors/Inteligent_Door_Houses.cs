@@ -28,7 +28,6 @@ public class Inteligent_Door_Houses : MonoBehaviour
             openPos = closedPos + transform.forward * slideDistance;
             obstacle = door.GetComponent<NavMeshObstacle>();
             
-            // Debug inicial para verificar componentes
             if (obstacle == null) Debug.LogWarning("PUERTA: No se encontró NavMeshObstacle en " + door.name);
         }
     }
@@ -62,12 +61,10 @@ public class Inteligent_Door_Houses : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // DEBUG 1: ¿Algo está tocando el trigger?
         Debug.Log("COLISIÓN: Objeto '" + other.name + "' entró en el trigger de la puerta.");
 
         if (other.CompareTag("Thief") || other.CompareTag("Aldeano"))
         {
-            // DEBUG 2: ¿El Tag es correcto?
             Debug.Log("PUERTA: Acceso concedido a " + other.tag);
 
             if (!agentesEnRango.Contains(other))
@@ -78,7 +75,6 @@ public class Inteligent_Door_Houses : MonoBehaviour
         }
         else 
         {
-            // DEBUG 3: El objeto no tiene el tag esperado
             Debug.Log("PUERTA: Objeto ignorado. Tag actual: " + other.tag);
         }
     }

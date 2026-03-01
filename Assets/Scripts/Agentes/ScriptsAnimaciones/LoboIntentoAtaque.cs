@@ -6,7 +6,6 @@ public class LoboIntentoAtaque : MonoBehaviour
 
     void Start()
     {
-        // Buscamos el controlador en el padre (el Lobo)
         animControl = GetComponentInParent<LoboAnimationControllers>();
     }
 
@@ -14,7 +13,6 @@ public class LoboIntentoAtaque : MonoBehaviour
     {
         if (other.CompareTag("Thief"))
         {
-            // El lobo intenta morder porque está cerca
             if (animControl != null) 
             {
                 animControl.EjecutarAtaque();

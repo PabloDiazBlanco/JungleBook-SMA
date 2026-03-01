@@ -7,7 +7,7 @@ public class MainCharacter_Brain : MonoBehaviour
     public float moveSpeed = 5f;
     public float mouseSensitivity = 0.1f;
     public float gravity = -20f;
-    public float jumpHeight = 2f;
+    public float jumpHeight = 1f;
 
     [Header("Referencias de Inventario")]
     public GameObject antorchaEnMano;
@@ -63,13 +63,13 @@ public class MainCharacter_Brain : MonoBehaviour
         {
             hayAntorchaCerca = true;
             antorchaSuelo = other.gameObject;
-            Debug.Log("SENSOR: Detectada Antorcha.");
+            Debug.Log("SENSOR: Antorcha detectada.");
         }
         if (other.CompareTag("FuegoHoguera")) 
         {
             hayFuegoCerca = true;
             hogueraDetectada = other.gameObject;
-            Debug.Log("SENSOR: Detectada Hoguera.");
+            Debug.Log("SENSOR: Hoguera detectada.");
         }
     }
 
@@ -113,12 +113,10 @@ public class MainCharacter_Brain : MonoBehaviour
         ActualizarAnimaciones();
     }
 
-    // --- EL ACTUADOR CON DEBUGS ---
     public void EjecutarRecogida()
     {
         Debug.Log("ACTUADOR: EjecutarRecogida disparado por el evento.");
 
-        // Diagnóstico de Antorcha
         if (hayAntorchaCerca) {
             if (antorchaSuelo != null) {
                 antorchaSuelo.SetActive(false);
@@ -129,7 +127,6 @@ public class MainCharacter_Brain : MonoBehaviour
             }
         }
 
-        // Diagnóstico de Hoguera
         if (hayFuegoCerca) {
             bool tieneAntorcha = antorchaEnMano != null && antorchaEnMano.activeSelf;
             Debug.Log("ACTUADOR: Cerca del fuego. ¿Tiene antorcha en mano?: " + tieneAntorcha);

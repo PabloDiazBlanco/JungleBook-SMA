@@ -12,10 +12,6 @@ public class Busqueda : GuardBehavior
     public float radioInspeccion = 5f; 
     private float tiempoProximoPunto = 0f;
 
-    [Header("Ajustes de Inteligencia")]
-    // Si es 0, el comportamiento es el de siempre (ideal para el Lobo)
-    // Si es > 0, el agente "imagina" que avanzaste esa distancia al perderte de vista
-    public float impulsoInercia = 0f; 
 
     void Start()
     {
@@ -37,26 +33,10 @@ public class Busqueda : GuardBehavior
         }
         else if (tieneRastro && cronometro > 0)
         {
-            // Detectamos el MOMENTO JUSTO en el que perdemos la visión
-            // Si el cronómetro está al máximo, es que acabamos de perder el contacto
-            if (cronometro == tiempoBusqueda && impulsoInercia > 0)
-            {
-                AplicarInerciaAlRastro();
-            }
-
             cronometro -= Time.deltaTime;
         }
     }
 
-    private void AplicarInerciaAlRastro()
-    {
-        // Calculamos la dirección en la que se movía el ladrón respecto al guardia
-        Vector3 direccionHuida = (thief.position - transform.position).normalized;
-        // Proyectamos la posición un poco más adelante para que el guardia "entre"
-        ultimaPosicionConocida += direccionHuida * impulsoInercia;
-        
-        Debug.Log(gameObject.name + ": He perdido de vista al ladrón, supongo que sigue hacia adelante.");
-    }
 
     public override bool CanActivate()
     {

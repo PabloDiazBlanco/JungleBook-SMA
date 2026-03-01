@@ -13,23 +13,31 @@ public class SensorHogueraIndividual : MonoBehaviour
 
     void Start()
     {
-        // Solo buscamos el punto una vez al nacer para guardar la ubicación en memoria local
         GameObject punto = GameObject.Find("PuntoHogueraCentral");
+        
         if (punto != null)
         {
             posicionHogueraMemoria = punto.transform.position;
             haInicializado = true;
             Debug.Log($"<color=cyan>MEMORIA: {gameObject.name} conoce la ubicación de la hoguera.</color>");
         }
+        else
+        {
+            this.enabled = false;
+        }
     }
 
     void Update()
+    {
+        VigilarHoguera();
+    }
+
+    private void VigilarHoguera()
     {
         if (!haInicializado || alarmaRoboDetectada) return;
 
         float distanciaAlSitio = Vector3.Distance(transform.position, posicionHogueraMemoria);
 
-        // SOLO si el aldeano está cerca del sitio, verifica la presencia física del fuego
         if (distanciaAlSitio < radioSeguridadAlarma)
         {
             bool fuegoEncontrado = false;
@@ -46,7 +54,6 @@ public class SensorHogueraIndividual : MonoBehaviour
 
             veHoguera = fuegoEncontrado;
 
-            // Si está en el rango pero tras el escaneo no hay fuego: Alarma.
             if (!veHoguera)
             {
                 alarmaRoboDetectada = true;

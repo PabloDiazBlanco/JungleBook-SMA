@@ -13,7 +13,7 @@ public class InvestigarSonido : GuardBehavior
 
     public override bool CanActivate()
     {
-        return sensorOido != null && sensorOido.EscuchoAlgo();
+        return oyoAlgo;
     }
 
     public override void Action()
@@ -21,15 +21,14 @@ public class InvestigarSonido : GuardBehavior
         if (agent == null) return;
 
         agent.speed = velocidadInvestigacion;
-        Vector3 destinoRuido = sensorOido.GetPosicionRuido();
-        agent.SetDestination(destinoRuido);
+        agent.SetDestination(posicionRuido.Value);
 
         if (!agent.pathPending && agent.remainingDistance <= distanciaLlegada)
         {
-            sensorOido.ResetearAudicion();
+            if (sensorOido != null) sensorOido.ResetearAudicion();
             Debug.Log($"<color=yellow>LOG: {gameObject.name} ha llegado al origen del ruido y no hay nada.</color>");
         }
 
-        Debug.DrawLine(transform.position, destinoRuido, Color.yellow);
+        Debug.DrawLine(transform.position, posicionRuido.Value, Color.yellow);
     }
 }

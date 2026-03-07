@@ -4,17 +4,11 @@ public class GuardHearing : MonoBehaviour
 {
     [Header("Configuración de Audición")]
     public float agudezaAuditiva = 1.0f;
-    public float radioImprecision = 5.0f; 
-    private MainCharacter_Brain mainCharacter;
+    public float radioImprecision = 5.0f;
+    public LayerMask capaLadron;
+
     private Vector3 posicionRuidoDetectada;
     private bool haEscuchadoAlgo = false;
-
-    void Awake()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Thief");
-        if (player != null) mainCharacter = player.GetComponent<MainCharacter_Brain>();
-        if (mainCharacter == null) this.enabled = false;
-    }
 
     void Update()
     {
@@ -23,25 +17,38 @@ public class GuardHearing : MonoBehaviour
 
     private void ProcesarAudicion()
     {
-        float radioRuidoLadrón = mainCharacter.radioRuidoActual;
-        float distanciaAlLadrón = Vector3.Distance(transform.position, mainCharacter.transform.position);
+        Collider[] objetivosEnRango = Physics.OverlapSphere(
+            transform.position,
+            50f, // Radio 
+            capaLadron
+        );
 
-        bool ruidoEnRango = distanciaAlLadrón <= (radioRuidoLadrón * agudezaAuditiva);
+        foreach (Collider objetivo in objetivosEnRango)
+        {
+            if (!objetivo.CompareTag("Thief")) continue;
 
-        ActualizarMemoriaAcustica(ruidoEnRango && radioRuidoLadrón > 0);
+            MainCharacter_Brain cerebro = objetivo.GetComponent<MainCharacter_Brain>();
+            if (cerebro == null) continue;
+
+            float distanciaAlLadron = Vector3.Distance(transform.position, objetivo.transform.position);
+            bool ruidoEnRango = distanciaAlLadron <= (cerebro.radioRuidoActual * agudezaAuditiva)
+                                && cerebro.radioRuidoActual > 0;
+
+            if (ruidoEnRango)
+            {
+                ActualizarMemoriaAcustica(objetivo.transform.position);
+            }
+        }
     }
 
-    private void ActualizarMemoriaAcustica(bool detectado)
+    private void ActualizarMemoriaAcustica(Vector3 posicionReal)
     {
-        if (detectado)
-        {            
-            Vector2 circuloAleatorio = Random.insideUnitCircle * radioImprecision;
-            Vector3 desplazamiento = new Vector3(circuloAleatorio.x, 0, circuloAleatorio.y);
-            posicionRuidoDetectada = mainCharacter.transform.position + desplazamiento;
-            
-            haEscuchadoAlgo = true;
-            Debug.Log($"<color=orange>OÍDO: {gameObject.name} ha escuchado algo por la zona de {posicionRuidoDetectada}</color>");
-        }
+        Vector2 circuloAleatorio = Random.insideUnitCircle * radioImprecision;
+        Vector3 desplazamiento = new Vector3(circuloAleatorio.x, 0, circuloAleatorio.y);
+        posicionRuidoDetectada = posicionReal + desplazamiento;
+
+        haEscuchadoAlgo = true;
+        Debug.Log($"<color=orange>OÍDO: {gameObject.name} ha escuchado algo por la zona de {posicionRuidoDetectada}</color>");
     }
 
     public bool EscuchoAlgo() => haEscuchadoAlgo;
@@ -54,13 +61,7 @@ public class GuardHearing : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (mainCharacter != null)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(mainCharacter.transform.position, mainCharacter.radioRuidoActual * agudezaAuditiva);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(mainCharacter.transform.position, radioImprecision);
-        }
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, 50f * agudezaAuditiva);
     }
 }

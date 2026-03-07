@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class BloquearSalida : GuardBehavior
 {
-    public SensorHogueraIndividual sensor;
     public Transform puntoPuertaPueblo; 
     public override bool CanActivate()
     {
-        return sensor != null && sensor.alarmaRoboDetectada;
+        return alarmaHogueraActiva;
     }
 
     public override void Action()

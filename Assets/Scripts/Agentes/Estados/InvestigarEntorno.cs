@@ -7,15 +7,15 @@ public class InvestigarEntorno : GuardBehavior
 
     public override bool CanActivate()
     {
-        return memoriaBusqueda.cronometro > 0 && sensorObjetos.ultimaPuertaDetectada != null;
+        return cronometroBusqueda > 0 && posicionPuerta != null;
     }
 
     public override void Action()
     {
-        if (agent == null || sensorObjetos.ultimaPuertaDetectada == null) return;
+        if (agent == null || posicionPuerta == null) return;
 
         agent.speed = 4.0f; 
-        agent.SetDestination(sensorObjetos.ultimaPuertaDetectada.position);
+        agent.SetDestination(posicionPuerta.Value);
         
         Debug.Log("COMPORTAMIENTO: Investigando puerta detectada.");
     }

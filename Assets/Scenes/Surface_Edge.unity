@@ -467,12 +467,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
-  sensor: {fileID: 10459467}
-  sensorOido: {fileID: 0}
-  ultimaPosicionConocida: {x: 0, y: 0, z: 0}
-  tieneRastro: 0
-  tiempoBusqueda: 10
-  cronometro: 0
   radioInspeccion: 5
 --- !u!114 &10459464
 MonoBehaviour:
@@ -502,7 +496,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
-  sensor: {fileID: 10459467}
 --- !u!114 &10459466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,7 +529,7 @@ MonoBehaviour:
   anguloVision: 120
   capaObstaculos:
     serializedVersion: 2
-    m_Bits: 78839
+    m_Bits: 78711
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
@@ -553,6 +546,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
   behaviors: []
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  tiempoBusqueda: 10
 --- !u!136 &10459469
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -655,6 +653,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GuardHearing
   agudezaAuditiva: 1.5
   radioImprecision: 5
+  capaLadron:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1001 &12447510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11986,12 +11987,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 1
-  sensor: {fileID: 324811759}
-  sensorOido: {fileID: 0}
-  ultimaPosicionConocida: {x: 0, y: 0, z: 0}
-  tieneRastro: 0
-  tiempoBusqueda: 5
-  cronometro: 0
   radioInspeccion: 5
 --- !u!114 &324811757
 MonoBehaviour:
@@ -12006,7 +12001,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
-  sensor: {fileID: 324811759}
 --- !u!114 &324811758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12020,6 +12014,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
   behaviors: []
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  tiempoBusqueda: 10
 --- !u!114 &324811759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12036,7 +12035,7 @@ MonoBehaviour:
   anguloVision: 90
   capaObstaculos:
     serializedVersion: 2
-    m_Bits: 5111
+    m_Bits: 4983
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
@@ -19190,7 +19189,7 @@ MonoBehaviour:
   anguloVision: 120
   capaObstaculos:
     serializedVersion: 2
-    m_Bits: 78839
+    m_Bits: 78711
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
@@ -19207,7 +19206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
-  sensor: {fileID: 529498519}
 --- !u!114 &529498521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19241,12 +19239,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
-  sensor: {fileID: 529498519}
-  sensorOido: {fileID: 0}
-  ultimaPosicionConocida: {x: 0, y: 0, z: 0}
-  tieneRastro: 0
-  tiempoBusqueda: 10
-  cronometro: 0
   radioInspeccion: 8
 --- !u!114 &529498523
 MonoBehaviour:
@@ -19276,6 +19268,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
   behaviors: []
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  tiempoBusqueda: 10
 --- !u!114 &529498527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32233,7 +32230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 320
+      value: 315
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.y
@@ -40720,7 +40717,7 @@ MonoBehaviour:
   anguloVision: 120
   capaObstaculos:
     serializedVersion: 2
-    m_Bits: 78839
+    m_Bits: 78711
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
@@ -40737,7 +40734,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
-  sensor: {fileID: 1019043328}
 --- !u!114 &1019043330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40773,12 +40769,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
-  sensor: {fileID: 1019043328}
-  sensorOido: {fileID: 0}
-  ultimaPosicionConocida: {x: 0, y: 0, z: 0}
-  tieneRastro: 0
-  tiempoBusqueda: 10
-  cronometro: 0
   radioInspeccion: 8
 --- !u!114 &1019043332
 MonoBehaviour:
@@ -40825,6 +40815,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
   behaviors: []
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  tiempoBusqueda: 10
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -42381,7 +42376,7 @@ MonoBehaviour:
   anguloVision: 120
   capaObstaculos:
     serializedVersion: 2
-    m_Bits: 78839
+    m_Bits: 78711
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
@@ -42398,7 +42393,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
-  sensor: {fileID: 1063662412}
 --- !u!114 &1063662414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42432,12 +42426,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
-  sensor: {fileID: 1063662412}
-  sensorOido: {fileID: 0}
-  ultimaPosicionConocida: {x: 0, y: 0, z: 0}
-  tieneRastro: 0
-  tiempoBusqueda: 10
-  cronometro: 0
   radioInspeccion: 8
 --- !u!114 &1063662416
 MonoBehaviour:
@@ -42452,6 +42440,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
   behaviors: []
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  tiempoBusqueda: 10
 --- !u!4 &1063662418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
@@ -56121,7 +56114,7 @@ MonoBehaviour:
   anguloVision: 120
   capaObstaculos:
     serializedVersion: 2
-    m_Bits: 78839
+    m_Bits: 78711
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
@@ -56138,7 +56131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
-  sensor: {fileID: 1381432408}
 --- !u!114 &1381432410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56178,12 +56170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 4
-  sensor: {fileID: 1381432408}
-  sensorOido: {fileID: 1381432421}
-  ultimaPosicionConocida: {x: 0, y: 0, z: 0}
-  tieneRastro: 0
-  tiempoBusqueda: 10
-  cronometro: 0
   radioInspeccion: 8
 --- !u!114 &1381432412
 MonoBehaviour:
@@ -56213,6 +56199,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
   behaviors: []
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  tiempoBusqueda: 10
 --- !u!114 &1381432416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56226,7 +56217,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BloquearSalida
   priority: 1
-  sensor: {fileID: 1381432418}
   puntoPuertaPueblo: {fileID: 451576569}
 --- !u!114 &1381432418
 MonoBehaviour:
@@ -56294,6 +56284,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GuardHearing
   agudezaAuditiva: 1.5
   radioImprecision: 5
+  capaLadron:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1001 &1382889800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88837,12 +88830,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
-  sensor: {fileID: 2143201458}
-  sensorOido: {fileID: 2143201466}
-  ultimaPosicionConocida: {x: 0, y: 0, z: 0}
-  tieneRastro: 0
-  tiempoBusqueda: 10
-  cronometro: 0
   radioInspeccion: 5
 --- !u!114 &2143201455
 MonoBehaviour:
@@ -88872,7 +88859,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
-  sensor: {fileID: 2143201458}
 --- !u!114 &2143201457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88906,7 +88892,7 @@ MonoBehaviour:
   anguloVision: 120
   capaObstaculos:
     serializedVersion: 2
-    m_Bits: 78839
+    m_Bits: 78711
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
@@ -88923,6 +88909,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
   behaviors: []
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  tiempoBusqueda: 10
 --- !u!54 &2143201460
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -89066,6 +89057,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GuardHearing
   agudezaAuditiva: 1.5
   radioImprecision: 5
+  capaLadron:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &2144177625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}

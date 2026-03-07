@@ -6,6 +6,7 @@ public class GuardVision : MonoBehaviour
     public float anguloVision = 45f;
     public LayerMask capaObstaculos;
     public LayerMask capaLadron; 
+    private Vector3 ultimaPosicionDetectada;
 
     public bool PuedeVerAlLadron()
     {
@@ -24,11 +25,17 @@ public class GuardVision : MonoBehaviour
             {
                 if (!Physics.Raycast(transform.position, direccion, distanciaActual, capaObstaculos))
                 {
+                    ultimaPosicionDetectada = objetivo.transform.position;
                     return true;
                 }
             }
         }
 
         return false;
+    }
+
+    public Vector3 UltimaPosicionDetectada()
+    {
+        return ultimaPosicionDetectada;
     }
 }

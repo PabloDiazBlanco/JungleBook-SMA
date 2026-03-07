@@ -3,64 +3,13 @@ using UnityEngine.AI;
 
 public class Busqueda : GuardBehavior
 {
-    public GuardVision sensor;
-    public GuardHearing sensorOido;
-    public Vector3 ultimaPosicionConocida;
-    public bool tieneRastro = false;
-    public float tiempoBusqueda = 10f; 
-    public float cronometro = 0f;
 
     public float radioInspeccion = 5f; 
     private float tiempoProximoPunto = 0f;
 
-
-    void Start()
-    {
-        if (sensor == null) sensor = GetComponent<GuardVision>();
-        if (sensorOido == null) sensorOido = GetComponent<GuardHearing>();
-    }
-
-    void Update()
-    {
-        ActualizarEstadoRastro();
-    }
-
-    private void ActualizarEstadoRastro()
-    {
-        if (sensor != null && sensor.PuedeVerAlLadron())
-        {
-            ultimaPosicionConocida = thief.position;
-            tieneRastro = true;
-            cronometro = tiempoBusqueda;
-        }
-        // Si el guardia oye algo, también actualizamos la posición de búsqueda
-        else if (sensorOido != null && sensorOido.EscuchoAlgo())
-        {
-            ultimaPosicionConocida = sensorOido.GetPosicionRuido();
-            tieneRastro = true;
-            cronometro = tiempoBusqueda;
-        }
-
-        else if (tieneRastro && cronometro > 0)
-        {
-            cronometro -= Time.deltaTime;
-        }
-    }
-
-
     public override bool CanActivate()
     {
-        if (sensor != null && !sensor.PuedeVerAlLadron() && tieneRastro && cronometro > 0)
-        {
-            return true;
-        }
-
-        if (tieneRastro && cronometro <= 0)
-        {
-            tieneRastro = false;
-        }
-
-        return false;
+        return !veAlLadron && posicionLadron != null && cronometroBusqueda > 0;
     }
 
     public override void Action()
@@ -79,8 +28,10 @@ public class Busqueda : GuardBehavior
 
     private void CalcularSiguientePuntoInspeccion()
     {
+        if (posicionLadron == null) return;
+
         Vector2 circuloAleatorio = Random.insideUnitCircle * radioInspeccion;
-        Vector3 destinoAleatorio = ultimaPosicionConocida + new Vector3(circuloAleatorio.x, 0, circuloAleatorio.y);
+        Vector3 destinoAleatorio = posicionLadron.Value + new Vector3(circuloAleatorio.x, 0, circuloAleatorio.y);
 
         NavMeshHit hit;
         if (NavMesh.SamplePosition(destinoAleatorio, out hit, radioInspeccion, NavMesh.AllAreas))

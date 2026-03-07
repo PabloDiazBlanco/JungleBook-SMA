@@ -539,7 +539,7 @@ MonoBehaviour:
     m_Bits: 78839
   capaLadron:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
 --- !u!114 &10459468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12039,7 +12039,7 @@ MonoBehaviour:
     m_Bits: 5111
   capaLadron:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
 --- !u!195 &324811760
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19193,7 +19193,7 @@ MonoBehaviour:
     m_Bits: 78839
   capaLadron:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
 --- !u!114 &529498520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40723,7 +40723,7 @@ MonoBehaviour:
     m_Bits: 78839
   capaLadron:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
 --- !u!114 &1019043329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42384,7 +42384,7 @@ MonoBehaviour:
     m_Bits: 78839
   capaLadron:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
 --- !u!114 &1063662413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56124,7 +56124,7 @@ MonoBehaviour:
     m_Bits: 78839
   capaLadron:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
 --- !u!114 &1381432409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88909,7 +88909,7 @@ MonoBehaviour:
     m_Bits: 78839
   capaLadron:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
 --- !u!114 &2143201459
 MonoBehaviour:
   m_ObjectHideFlags: 0

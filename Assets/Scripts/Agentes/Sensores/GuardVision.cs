@@ -5,32 +5,30 @@ public class GuardVision : MonoBehaviour
     public float distanciaVision = 15f;
     public float anguloVision = 45f;
     public LayerMask capaObstaculos;
-    
-    public Transform objetivoLadron;
-
-    void Awake()
-    {
-        GameObject ladron = GameObject.FindGameObjectWithTag("Thief");
-        if (ladron != null) objetivoLadron = ladron.transform;
-    }
+    public LayerMask capaLadron; 
 
     public bool PuedeVerAlLadron()
     {
-        if (objetivoLadron == null) return false;
+        Collider[] objetivosEnRango = Physics.OverlapSphere(
+            transform.position, 
+            distanciaVision, 
+            capaLadron
+        );
 
-        Vector3 direccion = (objetivoLadron.position - transform.position).normalized;
-        float distanciaActual = Vector3.Distance(transform.position, objetivoLadron.position);
-
-        if (distanciaActual <= distanciaVision)
+        foreach (Collider objetivo in objetivosEnRango)
         {
+            Vector3 direccion = (objetivo.transform.position - transform.position).normalized;
+            float distanciaActual = Vector3.Distance(transform.position, objetivo.transform.position);
+
             if (Vector3.Angle(transform.forward, direccion) < anguloVision)
             {
                 if (!Physics.Raycast(transform.position, direccion, distanciaActual, capaObstaculos))
                 {
-                    return true; 
+                    return true;
                 }
             }
         }
-        return false; 
+
+        return false;
     }
 }

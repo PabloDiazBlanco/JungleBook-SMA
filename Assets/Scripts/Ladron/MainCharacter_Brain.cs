@@ -151,11 +151,14 @@ public class MainCharacter_Brain : MonoBehaviour
 
             if (tieneAntorcha) {
                 if (fuegoEnAntorcha != null) fuegoEnAntorcha.SetActive(true);
-                if (hogueraDetectada != null) {
-                    hogueraDetectada.SetActive(false);
+
+                GameObject hogueraAApagar = hogueraDetectada;
+                hayFuegoCerca = false;
+                hogueraDetectada = null;
+
+                if (hogueraAApagar != null) {
+                    hogueraAApagar.SetActive(false);
                     Debug.Log("ACTUADOR: Hoguera apagada y antorcha encendida.");
-                } else {
-                    Debug.LogError("ACTUADOR ERROR: hayFuegoCerca es true pero hogueraDetectada es NULL.");
                 }
             } else {
                 Debug.LogWarning("ACTUADOR: El agente no puede encender el fuego porque no tiene la antorcha en la mano.");

@@ -57,7 +57,7 @@ public class SensorHogueraIndividual : MonoBehaviour
             if (!veHoguera)
             {
                 alarmaRoboDetectada = true;
-                Debug.LogError($"<color=red>¡ALERTA! {gameObject.name} ha visto que no hay fuego en la plaza.</color>");
+                Debug.Log($"<color=red>¡ALERTA! {gameObject.name} ha visto que no hay fuego en la plaza.</color>");
             }
         }
     }

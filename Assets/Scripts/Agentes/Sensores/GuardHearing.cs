@@ -47,8 +47,11 @@ public class GuardHearing : MonoBehaviour
         Vector3 desplazamiento = new Vector3(circuloAleatorio.x, 0, circuloAleatorio.y);
         posicionRuidoDetectada = posicionReal + desplazamiento;
 
+        if (!haEscuchadoAlgo)
+        {
+            Debug.Log($"<color=orange>OÍDO: {gameObject.name} ha escuchado algo por la zona de {posicionRuidoDetectada}</color>");
+        }
         haEscuchadoAlgo = true;
-        Debug.Log($"<color=orange>OÍDO: {gameObject.name} ha escuchado algo por la zona de {posicionRuidoDetectada}</color>");
     }
 
     public bool EscuchoAlgo() => haEscuchadoAlgo;

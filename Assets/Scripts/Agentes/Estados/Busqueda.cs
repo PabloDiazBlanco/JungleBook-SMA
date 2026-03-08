@@ -9,6 +9,7 @@ public class Busqueda : GuardBehavior
 
     public override bool CanActivate()
     {
+        if (enAlerta && posicionLadron != null && !veAlLadron) return true;
         return !veAlLadron && posicionLadron != null && cronometroBusqueda > 0;
     }
 

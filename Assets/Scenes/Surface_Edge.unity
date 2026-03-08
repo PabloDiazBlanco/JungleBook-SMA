@@ -481,8 +481,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
   priority: 2
-  sensorObjetos: {fileID: 10459466}
-  memoriaBusqueda: {fileID: 10459463}
 --- !u!114 &10459465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19253,8 +19251,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
   priority: 2
-  sensorObjetos: {fileID: 529498527}
-  memoriaBusqueda: {fileID: 529498522}
 --- !u!114 &529498524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40783,8 +40779,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
   priority: 2
-  sensorObjetos: {fileID: 1019043333}
-  memoriaBusqueda: {fileID: 1019043331}
 --- !u!114 &1019043333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42499,8 +42493,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
   priority: 2
-  sensorObjetos: {fileID: 1063662424}
-  memoriaBusqueda: {fileID: 1063662415}
 --- !u!54 &1063662423
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -55963,6 +55955,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432406}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432423}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432404}
@@ -56143,7 +56138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ed6b3e2a328fe4c9651653c1213f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Patrulla
-  priority: 5
+  priority: 6
   puntosControl:
   - {fileID: 992104137}
   - {fileID: 1690089276}
@@ -56169,7 +56164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 4
+  priority: 5
   radioInspeccion: 8
 --- !u!114 &1381432412
 MonoBehaviour:
@@ -56183,9 +56178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 3
-  sensorObjetos: {fileID: 1381432419}
-  memoriaBusqueda: {fileID: 1381432411}
+  priority: 4
 --- !u!114 &1381432413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56266,7 +56259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04eafc10ce1aa444cbe36bb5f90022a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarSonido
-  priority: 2
+  priority: 3
   sensorOido: {fileID: 1381432421}
   velocidadInvestigacion: 6
   distanciaLlegada: 1.5
@@ -56287,6 +56280,22 @@ MonoBehaviour:
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &1381432423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
+  priority: 2
+  posicionHoguera: {fileID: 1533431827}
+  distanciaLlegada: 2
+  velocidad: 7
 --- !u!1001 &1382889800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88844,8 +88853,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
   priority: 2
-  sensorObjetos: {fileID: 2143201457}
-  memoriaBusqueda: {fileID: 2143201454}
 --- !u!114 &2143201456
 MonoBehaviour:
   m_ObjectHideFlags: 0

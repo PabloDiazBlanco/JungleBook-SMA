@@ -9,7 +9,7 @@ public class Patrulla : GuardBehavior
     
     public override bool CanActivate()
     {
-        return puntosControl.Count > 0;
+        return puntosControl.Count > 0 && !enAlerta;
     }
 
     public override void Action()

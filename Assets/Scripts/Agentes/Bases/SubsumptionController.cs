@@ -17,6 +17,7 @@ public class SubsumptionController : MonoBehaviour
     private Vector3? ultimaPosicionLadron = null;
     private float cronometroBusqueda = 0f;
     public float tiempoBusqueda = 10f;
+    private bool enAlerta = false;
 
     void Start()
     {
@@ -48,21 +49,27 @@ public class SubsumptionController : MonoBehaviour
             ? sensorObjetos.ultimaPuertaDetectada.position
             : (Vector3?)null;
 
+        // Una vez visto el ladrón, alerta permanente
         if (veAlLadron)
         {
+            enAlerta = true;
             ultimaPosicionLadron = sensorVision.UltimaPosicionDetectada();
             cronometroBusqueda = tiempoBusqueda;
         }
         else if (oyoAlgo)
         {
+            enAlerta = true;
             ultimaPosicionLadron = posicionRuido;
             cronometroBusqueda = tiempoBusqueda;
         }
         else if (cronometroBusqueda > 0)
         {
             cronometroBusqueda -= Time.deltaTime;
-            if (cronometroBusqueda <= 0)
-                ultimaPosicionLadron = null;
+        }
+        // En alerta, cronómetro nunca baja de 0 — siempre hay una última posición conocida
+        else if (enAlerta && ultimaPosicionLadron != null)
+        {
+            cronometroBusqueda = 0f;
         }
 
         foreach (GuardBehavior capa in behaviors)
@@ -74,7 +81,8 @@ public class SubsumptionController : MonoBehaviour
                 posicionRuido,
                 alarmaHoguera,
                 posicionPuerta,
-                cronometroBusqueda
+                cronometroBusqueda,
+                enAlerta
             );
         }
 

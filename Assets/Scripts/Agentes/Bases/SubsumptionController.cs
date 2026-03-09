@@ -19,6 +19,8 @@ public class SubsumptionController : MonoBehaviour
     public float tiempoBusqueda = 10f;
     private bool enAlerta = false;
 
+    private bool ladronVisibleFrameAnterior = false;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -49,7 +51,9 @@ public class SubsumptionController : MonoBehaviour
             ? sensorObjetos.ultimaPuertaDetectada.position
             : (Vector3?)null;
 
-        // Una vez visto el ladrón, alerta permanente
+        // Detectar el momento exacto en que se pierde de vista al ladrón
+        bool acabaDePerderAlLadron = ladronVisibleFrameAnterior && !veAlLadron;
+
         if (veAlLadron)
         {
             enAlerta = true;
@@ -66,11 +70,18 @@ public class SubsumptionController : MonoBehaviour
         {
             cronometroBusqueda -= Time.deltaTime;
         }
-        // En alerta, cronómetro nunca baja de 0 — siempre hay una última posición conocida
         else if (enAlerta && ultimaPosicionLadron != null)
         {
             cronometroBusqueda = 0f;
         }
+
+        // Si acaba de perder al ladrón, resetear comportamientos con estado interno
+        if (acabaDePerderAlLadron)
+        {
+            ResetearComportamientos();
+        }
+
+        ladronVisibleFrameAnterior = veAlLadron;
 
         foreach (GuardBehavior capa in behaviors)
         {
@@ -87,6 +98,19 @@ public class SubsumptionController : MonoBehaviour
         }
 
         EjecutarDecision();
+    }
+
+    private void ResetearComportamientos()
+    {
+        // Resetear el límite de búsqueda para que empiece de nuevo
+        Busqueda busqueda = GetComponent<Busqueda>();
+        if (busqueda != null) busqueda.ResetearLimiteBusqueda();
+
+        // Resetear ComprobarHoguera para que pueda volver a comprobar
+        ComprobarHoguera comprobar = GetComponent<ComprobarHoguera>();
+        if (comprobar != null) comprobar.ResetearComprobacion();
+
+        Debug.Log($"{gameObject.name}: Comportamientos reseteados al perder al ladrón.");
     }
 
     public void EjecutarDecision()

@@ -468,6 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
   radioInspeccion: 5
+  tiempoLimiteBusqueda: 0
 --- !u!114 &10459464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11986,6 +11987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 1
   radioInspeccion: 5
+  tiempoLimiteBusqueda: 0
 --- !u!114 &324811757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19238,6 +19240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
   radioInspeccion: 8
+  tiempoLimiteBusqueda: 0
 --- !u!114 &529498523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35862,6 +35865,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2906742830765571359, guid: 78da2ace1ab76ce478600ebe37fa10fe, type: 3}
   m_PrefabInstance: {fileID: 923518399}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &924417180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 924417181}
+  m_Layer: 0
+  m_Name: DireccionVigilancia
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &924417181
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924417180}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 35.47583, y: 0.93218994, z: 8.469692}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2052565339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &924726498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40766,6 +40800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
   radioInspeccion: 8
+  tiempoLimiteBusqueda: 0
 --- !u!114 &1019043332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42421,6 +42456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
   radioInspeccion: 8
+  tiempoLimiteBusqueda: 0
 --- !u!114 &1063662416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56166,6 +56202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 5
   radioInspeccion: 8
+  tiempoLimiteBusqueda: 5
 --- !u!114 &1381432412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56196,7 +56233,7 @@ MonoBehaviour:
   sensorOido: {fileID: 0}
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
-  tiempoBusqueda: 10
+  tiempoBusqueda: 5
 --- !u!114 &1381432416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56211,6 +56248,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BloquearSalida
   priority: 1
   puntoPuertaPueblo: {fileID: 451576569}
+  direccionVigilancia: {fileID: 924417181}
+  distanciaLlegada: 1.5
+  velocidadGiro: 5
 --- !u!114 &1381432418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56223,6 +56263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  sensorVision: {fileID: 0}
   radioDeteccion: 12
   capaInteres:
     serializedVersion: 2
@@ -84777,6 +84818,7 @@ Transform:
   - {fileID: 616030803}
   - {fileID: 283446678}
   - {fileID: 1328793065}
+  - {fileID: 924417181}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2055750320
@@ -88840,6 +88882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
   priority: 3
   radioInspeccion: 5
+  tiempoLimiteBusqueda: 0
 --- !u!114 &2143201455
 MonoBehaviour:
   m_ObjectHideFlags: 0

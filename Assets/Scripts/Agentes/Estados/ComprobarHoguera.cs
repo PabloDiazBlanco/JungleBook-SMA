@@ -10,7 +10,6 @@ public class ComprobarHoguera : GuardBehavior
 
     public override bool CanActivate()
     {
-        // Solo si ha visto al ladrón, lo ha perdido de vista, y la hoguera aún no ha sido robada
         return enAlerta && !veAlLadron && !alarmaHogueraActiva && !haComprobado;
     }
 
@@ -26,5 +25,10 @@ public class ComprobarHoguera : GuardBehavior
             haComprobado = true;
             Debug.Log($"{gameObject.name}: He comprobado la hoguera.");
         }
+    }
+
+    public void ResetearComprobacion()
+    {
+        haComprobado = false;
     }
 }

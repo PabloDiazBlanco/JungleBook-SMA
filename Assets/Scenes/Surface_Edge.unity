@@ -469,6 +469,7 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 5
   tiempoLimiteBusqueda: 0
+  busquedaAgotada: 0
 --- !u!114 &10459464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11988,6 +11989,7 @@ MonoBehaviour:
   priority: 1
   radioInspeccion: 5
   tiempoLimiteBusqueda: 0
+  busquedaAgotada: 0
 --- !u!114 &324811757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19241,6 +19243,7 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
+  busquedaAgotada: 0
 --- !u!114 &529498523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40801,6 +40804,7 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
+  busquedaAgotada: 0
 --- !u!114 &1019043332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42457,6 +42461,7 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
+  busquedaAgotada: 0
 --- !u!114 &1063662416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56200,9 +56205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 8
   tiempoLimiteBusqueda: 5
+  busquedaAgotada: 0
 --- !u!114 &1381432412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56215,7 +56221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!114 &1381432413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56264,11 +56270,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
   sensorVision: {fileID: 0}
-  radioDeteccion: 12
+  radioDeteccion: 15
   capaInteres:
     serializedVersion: 2
     m_Bits: 32768
-  radioSeguridadAlarma: 6
+  radioSeguridadAlarma: 10
+  tiempoConfirmacionAlarma: 2
   alarmaRoboDetectada: 0
   veHoguera: 0
 --- !u!114 &1381432419
@@ -56300,7 +56307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04eafc10ce1aa444cbe36bb5f90022a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarSonido
-  priority: 3
+  priority: 2
   sensorOido: {fileID: 1381432421}
   velocidadInvestigacion: 6
   distanciaLlegada: 1.5
@@ -56333,7 +56340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 2
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
@@ -88883,6 +88890,7 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 5
   tiempoLimiteBusqueda: 0
+  busquedaAgotada: 0
 --- !u!114 &2143201455
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,19 +6,22 @@ public class Busqueda : GuardBehavior
     public float radioInspeccion = 5f;
 
     [Header("Límite de Búsqueda (0 = sin límite)")]
-    [Tooltip("Si es mayor que 0, este agente solo buscará este tiempo antes de pasar al siguiente comportamiento.")]
+    [Tooltip("Si es mayor que 0, el SubsumptionController contará este tiempo antes de pasar a ComprobarHoguera.")]
     public float tiempoLimiteBusqueda = 0f;
 
     private float tiempoProximoPunto = 0f;
-    private float cronometroLimiteBusqueda = 0f;
-    private bool busquedaAgotada = false;
+    private SubsumptionController controller;
 
-    // Guardamos si el ladrón era visible el frame anterior para detectar el momento en que se pierde
-    private bool ladronVisibleFrameAnterior = false;
+    protected override void Awake()
+    {
+        base.Awake();
+        controller = GetComponent<SubsumptionController>();
+    }
 
     public override bool CanActivate()
     {
-        if (tiempoLimiteBusqueda > 0f && busquedaAgotada) return false;
+        // Si hay límite y se agotó, no activar
+        if (tiempoLimiteBusqueda > 0f && controller != null && controller.busquedaAgotada) return false;
 
         if (enAlerta && posicionLadron != null && !veAlLadron) return true;
         return !veAlLadron && posicionLadron != null && cronometroBusqueda > 0;
@@ -28,28 +31,6 @@ public class Busqueda : GuardBehavior
     {
         if (agent == null) return;
 
-        // Si acaba de perder de vista al ladrón este frame, reiniciar el cronómetro
-        if (ladronVisibleFrameAnterior && !veAlLadron)
-        {
-            ResetearLimiteBusqueda();
-        }
-        ladronVisibleFrameAnterior = veAlLadron;
-
-        // Gestionar cronómetro límite
-        if (tiempoLimiteBusqueda > 0f)
-        {
-            if (cronometroLimiteBusqueda <= 0f)
-                cronometroLimiteBusqueda = tiempoLimiteBusqueda;
-
-            cronometroLimiteBusqueda -= Time.deltaTime;
-
-            if (cronometroLimiteBusqueda <= 0f)
-            {
-                busquedaAgotada = true;
-                return;
-            }
-        }
-
         agent.speed = 6.0f;
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f && Time.time >= tiempoProximoPunto)
@@ -58,12 +39,6 @@ public class Busqueda : GuardBehavior
         }
 
         Debug.DrawLine(transform.position, agent.destination, Color.red);
-    }
-
-    public void ResetearLimiteBusqueda()
-    {
-        busquedaAgotada = false;
-        cronometroLimiteBusqueda = tiempoLimiteBusqueda;
     }
 
     private void CalcularSiguientePuntoInspeccion()

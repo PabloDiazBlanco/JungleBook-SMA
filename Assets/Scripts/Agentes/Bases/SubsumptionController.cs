@@ -21,6 +21,10 @@ public class SubsumptionController : MonoBehaviour
 
     private bool ladronVisibleFrameAnterior = false;
 
+    // Cronómetro de búsqueda limitada — avanza siempre independientemente del comportamiento activo
+    private float cronometroLimiteBusqueda = 0f;
+    public bool busquedaAgotada = false;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -51,8 +55,8 @@ public class SubsumptionController : MonoBehaviour
             ? sensorObjetos.ultimaPuertaDetectada.position
             : (Vector3?)null;
 
-        // Detectar el momento exacto en que se pierde de vista al ladrón
         bool acabaDePerderAlLadron = ladronVisibleFrameAnterior && !veAlLadron;
+        bool acabaDeVerAlLadron = !ladronVisibleFrameAnterior && veAlLadron;
 
         if (veAlLadron)
         {
@@ -75,10 +79,35 @@ public class SubsumptionController : MonoBehaviour
             cronometroBusqueda = 0f;
         }
 
-        // Si acaba de perder al ladrón, resetear comportamientos con estado interno
+        // Al volver a ver al ladrón: resetear todo para que el ciclo empiece limpio cuando lo pierda
+        if (acabaDeVerAlLadron)
+        {
+            ResetearBusqueda();
+            ResetearComprobacion();
+            Debug.Log($"{gameObject.name}: Ladrón visible de nuevo. Ciclo reseteado.");
+        }
+
+        // Al perder al ladrón: resetear para iniciar ciclo búsqueda → comprobar
         if (acabaDePerderAlLadron)
         {
-            ResetearComportamientos();
+            ResetearBusqueda();
+            ResetearComprobacion();
+            Debug.Log($"{gameObject.name}: Ladrón perdido. Iniciando ciclo búsqueda → comprobar.");
+        }
+
+        // Avanzar cronómetro solo cuando está en alerta y no ve al ladrón
+        if (enAlerta && !veAlLadron && !busquedaAgotada)
+        {
+            Busqueda busqueda = GetComponent<Busqueda>();
+            if (busqueda != null && busqueda.tiempoLimiteBusqueda > 0f)
+            {
+                cronometroLimiteBusqueda -= Time.deltaTime;
+                if (cronometroLimiteBusqueda <= 0f)
+                {
+                    busquedaAgotada = true;
+                    Debug.Log($"{gameObject.name}: Tiempo de búsqueda agotado.");
+                }
+            }
         }
 
         ladronVisibleFrameAnterior = veAlLadron;
@@ -100,17 +129,19 @@ public class SubsumptionController : MonoBehaviour
         EjecutarDecision();
     }
 
-    private void ResetearComportamientos()
+    public void ResetearBusqueda()
     {
-        // Resetear el límite de búsqueda para que empiece de nuevo
         Busqueda busqueda = GetComponent<Busqueda>();
-        if (busqueda != null) busqueda.ResetearLimiteBusqueda();
+        if (busqueda != null)
+            cronometroLimiteBusqueda = busqueda.tiempoLimiteBusqueda;
 
-        // Resetear ComprobarHoguera para que pueda volver a comprobar
+        busquedaAgotada = false;
+    }
+
+    public void ResetearComprobacion()
+    {
         ComprobarHoguera comprobar = GetComponent<ComprobarHoguera>();
         if (comprobar != null) comprobar.ResetearComprobacion();
-
-        Debug.Log($"{gameObject.name}: Comportamientos reseteados al perder al ladrón.");
     }
 
     public void EjecutarDecision()

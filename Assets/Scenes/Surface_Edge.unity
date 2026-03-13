@@ -469,7 +469,6 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 5
   tiempoLimiteBusqueda: 0
-  busquedaAgotada: 0
 --- !u!114 &10459464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +550,7 @@ MonoBehaviour:
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
   tiempoBusqueda: 10
+  busquedaAgotada: 0
 --- !u!136 &10459469
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11989,7 +11989,6 @@ MonoBehaviour:
   priority: 1
   radioInspeccion: 5
   tiempoLimiteBusqueda: 0
-  busquedaAgotada: 0
 --- !u!114 &324811757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12021,6 +12020,7 @@ MonoBehaviour:
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
   tiempoBusqueda: 10
+  busquedaAgotada: 0
 --- !u!114 &324811759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15473,15 +15473,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4802134562677756, guid: 68cbfa1438162b243ac02fb9e3e30581, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4802134562677756, guid: 68cbfa1438162b243ac02fb9e3e30581, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4802134562677756, guid: 68cbfa1438162b243ac02fb9e3e30581, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4802134562677756, guid: 68cbfa1438162b243ac02fb9e3e30581, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -19243,7 +19243,6 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
-  busquedaAgotada: 0
 --- !u!114 &529498523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19275,6 +19274,7 @@ MonoBehaviour:
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
   tiempoBusqueda: 10
+  busquedaAgotada: 0
 --- !u!114 &529498527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40804,7 +40804,6 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
-  busquedaAgotada: 0
 --- !u!114 &1019043332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40853,6 +40852,7 @@ MonoBehaviour:
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
   tiempoBusqueda: 10
+  busquedaAgotada: 0
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -42461,7 +42461,6 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
-  busquedaAgotada: 0
 --- !u!114 &1063662416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42480,6 +42479,7 @@ MonoBehaviour:
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
   tiempoBusqueda: 10
+  busquedaAgotada: 0
 --- !u!4 &1063662418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
@@ -55772,7 +55772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -80.36052
+      value: -80.94
       objectReference: {fileID: 0}
     - target: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -55780,7 +55780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.013786
+      value: 15.09
       objectReference: {fileID: 0}
     - target: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56208,7 +56208,6 @@ MonoBehaviour:
   priority: 4
   radioInspeccion: 8
   tiempoLimiteBusqueda: 5
-  busquedaAgotada: 0
 --- !u!114 &1381432412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56240,6 +56239,7 @@ MonoBehaviour:
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
   tiempoBusqueda: 5
+  busquedaAgotada: 0
 --- !u!114 &1381432416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88890,7 +88890,6 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 5
   tiempoLimiteBusqueda: 0
-  busquedaAgotada: 0
 --- !u!114 &2143201455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88972,6 +88971,7 @@ MonoBehaviour:
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
   tiempoBusqueda: 10
+  busquedaAgotada: 0
 --- !u!54 &2143201460
 Rigidbody:
   m_ObjectHideFlags: 0

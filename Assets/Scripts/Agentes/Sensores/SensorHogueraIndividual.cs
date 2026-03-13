@@ -19,7 +19,7 @@ public class SensorHogueraIndividual : MonoBehaviour
     private float cronometroSinVer = 0f;
     private Vector3 posicionHogueraConocida;
     private bool posicionConocida = false;
-    private bool haVistoFuegoAlMenos1Vez = false;
+    private bool haVistoFuegoAlMenos1Vez = true;
 
     void Start()
     {

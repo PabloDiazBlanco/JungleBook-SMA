@@ -15,6 +15,8 @@ public abstract class GuardBehavior : MonoBehaviour
     protected Vector3? posicionPuerta;
     protected float cronometroBusqueda;
     protected bool enAlerta;
+    protected bool ladronTieneFuego;
+    protected bool ladronPerdidoConFuego;
 
     protected virtual void Awake()
     {
@@ -29,7 +31,9 @@ public abstract class GuardBehavior : MonoBehaviour
         bool alarmaHogueraActiva,
         Vector3? posicionPuerta,
         float cronometroBusqueda,
-        bool enAlerta)
+        bool enAlerta,
+        bool ladronTieneFuego,
+        bool ladronPerdidoConFuego)
     {
         this.veAlLadron = veAlLadron;
         this.posicionLadron = posicionLadron;
@@ -39,6 +43,8 @@ public abstract class GuardBehavior : MonoBehaviour
         this.posicionPuerta = posicionPuerta;
         this.cronometroBusqueda = cronometroBusqueda;
         this.enAlerta = enAlerta;
+        this.ladronTieneFuego = ladronTieneFuego;
+        this.ladronPerdidoConFuego = ladronPerdidoConFuego;
     }
 
     public abstract bool CanActivate();

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class InvestigarEntorno : GuardBehavior
 {
+    private bool yaLogueado = false;
+
     public override bool CanActivate()
     {
         return cronometroBusqueda > 0 && posicionPuerta != null;
@@ -14,6 +16,10 @@ public class InvestigarEntorno : GuardBehavior
         agent.speed = 4.0f;
         agent.SetDestination(posicionPuerta.Value);
 
-        Debug.Log("COMPORTAMIENTO: Investigando puerta detectada.");
+        if (!yaLogueado)
+        {
+            Debug.Log("COMPORTAMIENTO: Investigando puerta detectada.");
+            yaLogueado = true;
+        }
     }
 }

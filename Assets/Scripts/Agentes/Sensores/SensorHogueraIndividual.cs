@@ -2,148 +2,137 @@ using UnityEngine;
 
 public class SensorHogueraIndividual : MonoBehaviour
 {
-    [Header("Detección Visual")]
-    public GuardVision sensorVision;
+    [Header("Detección")]
     public float radioDeteccion = 12f;
-    public LayerMask capaInteres;
+    public float anguloVision = 120f;
+    public LayerMask capaObstaculos;
+    public LayerMask capaHoguera;
 
-    [Header("Alarma")]
-    public float radioSeguridadAlarma = 15f;
+    [HideInInspector] public bool hogueraDetectada = false;
+    [HideInInspector] public Vector3? posicionHogueraConocida = null;
+    [HideInInspector] public bool haVistoHogueraAlgunaVez = false;
+    // NUEVO: true cuando la hoguera está en rango Y en ángulo, aunque haya obstáculo
+    // El cerebro usa esto para saber si tiene sentido incrementar el contador de frames
+    [HideInInspector] public bool hogueraEnCampoDeVision = false;
 
-    [Tooltip("Segundos mirando hacia la hoguera sin verla para activar la alarma.")]
-    public float tiempoConfirmacionAlarma = 2f;
-
-    public bool alarmaRoboDetectada = false;
-    public bool veHoguera = false;
-
-    private float cronometroSinVer = 0f;
-    private Vector3 posicionHogueraConocida;
-    private bool posicionConocida = false;
-    private bool haVistoFuegoAlMenos1Vez = true;
-
-    void Start()
-    {
-        if (sensorVision == null)
-            sensorVision = GetComponent<GuardVision>();
-
-        if (sensorVision == null)
-            Debug.LogError($"[SENSOR HOGUERA] {gameObject.name}: NO se encontró GuardVision.");
-    }
+    private bool EsAldeanoPrincipal => gameObject.name == "Aldeano3";
+    private bool hogueraDetectadaAnterior = false;
 
     void Update()
     {
-        VigilarHoguera();
+        EscanearConVision();
+
+        if (EsAldeanoPrincipal && haVistoHogueraAlgunaVez && hogueraDetectada != hogueraDetectadaAnterior)
+        {
+            if (hogueraDetectada)
+                Debug.Log($"<color=green>[SENSOR {gameObject.name}]: Hoguera visible. hogueraDetectada=true</color>");
+            else
+                Debug.Log($"<color=orange>[SENSOR {gameObject.name}]: Hoguera no detectada. hogueraDetectada=false</color>");
+        }
+        hogueraDetectadaAnterior = hogueraDetectada;
     }
 
-    private void VigilarHoguera()
+    private void EscanearConVision()
     {
-        if (alarmaRoboDetectada) return;
+        if (!haVistoHogueraAlgunaVez)
+            BuscarHogueraPorPrimeraVez();
+        else
+            ComprobarHogueraConRaycast();
+    }
 
-        // Buscar hoguera físicamente
-        Collider[] objetos = Physics.OverlapSphere(transform.position, radioDeteccion, capaInteres);
-        Transform hogueraEncontrada = null;
+    private void BuscarHogueraPorPrimeraVez()
+    {
+        hogueraDetectada = false;
+        hogueraEnCampoDeVision = false;
+
+        Collider[] objetos = Physics.OverlapSphere(transform.position, radioDeteccion, capaHoguera);
 
         foreach (Collider obj in objetos)
         {
-            if (obj.CompareTag("FuegoHoguera"))
+            if (!obj.CompareTag("FuegoHoguera")) continue;
+
+            if (PuedoVerObjeto(obj.transform.position))
             {
-                hogueraEncontrada = obj.transform;
-                break;
-            }
-        }
+                hogueraDetectada = true;
+                hogueraEnCampoDeVision = true;
+                posicionHogueraConocida = obj.transform.position;
+                haVistoHogueraAlgunaVez = true;
 
-        // Guardar posición en memoria si la detectamos físicamente
-        if (hogueraEncontrada != null)
-        {
-            posicionHogueraConocida = hogueraEncontrada.position;
-            posicionConocida = true;
-        }
-
-        if (!posicionConocida) return;
-
-        float distanciaAlSitio = Vector3.Distance(transform.position, posicionHogueraConocida);
-
-        // Solo vigilar dentro del radio de seguridad
-        if (distanciaAlSitio > radioSeguridadAlarma)
-        {
-            cronometroSinVer = 0f;
-            return;
-        }
-
-        // Comprobar si miramos hacia donde está/estaba la hoguera
-        bool mirандоHaciaHoguera = EstaMirandoHaciaHoguera(posicionHogueraConocida);
-
-        if (!mirандоHaciaHoguera)
-        {
-            // Está de espaldas o de lado — no podemos sacar conclusiones, ignorar
-            cronometroSinVer = 0f;
-            return;
-        }
-
-        // Está mirando hacia la hoguera — ahora sí comprobar si la ve
-        if (hogueraEncontrada != null)
-        {
-            veHoguera = PuedeVerHoguera(hogueraEncontrada);
-        }
-        else
-        {
-            // El objeto no existe físicamente y estamos mirando hacia donde debería estar
-            veHoguera = false;
-        }
-
-        if (veHoguera)
-        {
-            // Ve el fuego — recordar y resetear cronómetro
-            haVistoFuegoAlMenos1Vez = true;
-            cronometroSinVer = 0f;
-        }
-        else
-        {
-            // Solo contar si ya había visto el fuego antes (evita falsos positivos al inicio)
-            if (haVistoFuegoAlMenos1Vez)
-            {
-                cronometroSinVer += Time.deltaTime;
-
-                if (cronometroSinVer >= tiempoConfirmacionAlarma)
-                {
-                    alarmaRoboDetectada = true;
-                    Debug.Log($"<color=red>[SENSOR HOGUERA] ¡ALERTA! {gameObject.name} confirma que no hay fuego.</color>");
-                }
+                if (EsAldeanoPrincipal)
+                    Debug.Log($"<color=green>[SENSOR {gameObject.name}]: Hoguera descubierta en {posicionHogueraConocida}.</color>");
+                return;
             }
         }
     }
 
-    // Comprueba solo si el ángulo hacia la hoguera está dentro del campo de visión
-    private bool EstaMirandoHaciaHoguera(Vector3 posicionHoguera)
+    private void ComprobarHogueraConRaycast()
     {
-        Vector3 direccion = (posicionHoguera - transform.position).normalized;
+        hogueraDetectada = false;
+        hogueraEnCampoDeVision = false;
+
+        if (posicionHogueraConocida == null) return;
+
+        Vector3 origen = transform.position + Vector3.up * 1.5f;
+        Vector3 posicionObjetivo = posicionHogueraConocida.Value;
+        float distancia = Vector3.Distance(origen, posicionObjetivo);
+
+        if (distancia > radioDeteccion) return;
+
+        Vector3 direccion = (posicionObjetivo - origen).normalized;
         float angulo = Vector3.Angle(transform.forward, direccion);
-        return angulo < sensorVision.anguloVision;
+
+        if (angulo > anguloVision) return;
+
+        // llegados aquí la hoguera está en rango y en ángulo, aunque haya obstáculo
+        hogueraEnCampoDeVision = true;
+
+        // RaycastAll para atravesar partes decorativas de la hoguera (Piedras, FireTrigger)
+        // y detectar el fuego real aunque estén por delante
+        RaycastHit[] hits = Physics.RaycastAll(origen, direccion, distancia + 1f, capaObstaculos | capaHoguera);
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.CompareTag("FuegoHoguera"))
+            {
+                hogueraDetectada = true;
+                posicionHogueraConocida = hit.collider.transform.position;
+                Debug.DrawLine(origen, hit.point, Color.green);
+                return;
+            }
+
+            // Obstáculo real (pared, edificio) — visión bloqueada
+            if (((1 << hit.collider.gameObject.layer) & capaObstaculos.value) != 0)
+            {
+                Debug.DrawLine(origen, hit.point, Color.red);
+                if (EsAldeanoPrincipal)
+                    Debug.Log($"<color=red>[SENSOR {gameObject.name}]: Visión bloqueada por obstáculo '{hit.collider.name}'</color>");
+                return;
+            }
+
+            // En capaHoguera pero sin tag FuegoHoguera (Piedras, FireTrigger, etc.) — ignorar y continuar
+        }
+
+        Debug.DrawLine(origen, origen + direccion * (distancia + 1f), Color.yellow);
     }
 
-    // Comprueba ángulo + raycast (sin obstáculos entre medio)
-    private bool PuedeVerHoguera(Transform hoguera)
+    private bool PuedoVerObjeto(Vector3 posicion)
     {
-        if (sensorVision == null) return false;
+        Vector3 origen = transform.position + Vector3.up * 1.5f;
+        float distancia = Vector3.Distance(origen, posicion);
+        if (distancia > radioDeteccion) return false;
 
-        Vector3 origen = transform.position;
-        Vector3 direccion = (hoguera.position - origen).normalized;
-        float distancia = Vector3.Distance(origen, hoguera.position);
+        Vector3 direccion = (posicion - origen).normalized;
+        if (Vector3.Angle(transform.forward, direccion) > anguloVision) return false;
 
-        if (Vector3.Angle(transform.forward, direccion) < sensorVision.anguloVision)
-        {
-            bool bloqueado = Physics.Raycast(origen, direccion, distancia, sensorVision.capaObstaculos);
-            Debug.DrawRay(origen, direccion * distancia, bloqueado ? Color.red : Color.green);
-            return !bloqueado;
-        }
+        if (!Physics.Raycast(origen, direccion, distancia, capaObstaculos))
+            return true;
 
         return false;
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = alarmaRoboDetectada ? Color.red : Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, radioSeguridadAlarma);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, radioDeteccion);
     }

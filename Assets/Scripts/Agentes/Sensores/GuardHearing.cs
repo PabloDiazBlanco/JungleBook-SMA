@@ -19,13 +19,13 @@ public class GuardHearing : MonoBehaviour
     {
         Collider[] objetivosEnRango = Physics.OverlapSphere(
             transform.position,
-            50f, // Radio 
+            50f,
             capaLadron
         );
 
         foreach (Collider objetivo in objetivosEnRango)
         {
-            if (!objetivo.CompareTag("Thief")) continue;
+            if (!objetivo.CompareTag("Thief") && !objetivo.CompareTag("LadronConFuego")) continue;
 
             MainCharacter_Brain cerebro = objetivo.GetComponent<MainCharacter_Brain>();
             if (cerebro == null) continue;
@@ -54,13 +54,13 @@ public class GuardHearing : MonoBehaviour
         haEscuchadoAlgo = true;
     }
 
-    public bool EscuchoAlgo() => haEscuchadoAlgo;
-    public Vector3 GetPosicionRuido() => posicionRuidoDetectada;
-
     public void ResetearAudicion()
     {
         haEscuchadoAlgo = false;
     }
+
+    public bool EscuchoAlgo() => haEscuchadoAlgo;
+    public Vector3 GetPosicionRuido() => posicionRuidoDetectada;
 
     private void OnDrawGizmosSelected()
     {

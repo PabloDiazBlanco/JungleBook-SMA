@@ -6,13 +6,19 @@ public class InvestigarSonido : GuardBehavior
     public float velocidadInvestigacion = 6.0f;
     public float distanciaLlegada = 1.5f;
 
-    void Start()
+    private SubsumptionController controller;
+
+
+    protected override void Awake()
     {
-        if (sensorOido == null) sensorOido = GetComponent<GuardHearing>();
+        base.Awake();
+        controller = GetComponent<SubsumptionController>();
     }
 
     public override bool CanActivate()
     {
+        if (controller != null && controller.investigacionEnCooldown) return false;
+        if (controller != null && controller.busquedaAgotada) return false;
         return oyoAlgo;
     }
 
@@ -25,10 +31,19 @@ public class InvestigarSonido : GuardBehavior
 
         if (!agent.pathPending && agent.remainingDistance <= distanciaLlegada)
         {
-            if (sensorOido != null) sensorOido.ResetearAudicion();
-            Debug.Log($"<color=yellow>LOG: {gameObject.name} ha llegado al origen del ruido y no hay nada.</color>");
+            NotificarLlegadaAlCerebro();
         }
 
         Debug.DrawLine(transform.position, posicionRuido.Value, Color.yellow);
+    }
+
+    private void NotificarLlegadaAlCerebro()
+    {
+        if (controller != null)
+        {
+            controller.NotificarInvestigacionRuidoCompletada();
+        }
+
+        Debug.Log($"<color=yellow>LOG: {gameObject.name} ha llegado al origen del ruido y no hay nada.</color>");
     }
 }

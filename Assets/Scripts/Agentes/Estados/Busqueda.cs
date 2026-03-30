@@ -11,6 +11,7 @@ public class Busqueda : GuardBehavior
 
     private float tiempoProximoPunto = 0f;
     private SubsumptionController controller;
+    private bool EsAldeanoPrincipal => gameObject.name == "Aldeano3";
 
     protected override void Awake()
     {
@@ -20,11 +21,11 @@ public class Busqueda : GuardBehavior
 
     public override bool CanActivate()
     {
-        // Si hay límite y se agotó, no activar
-        if (tiempoLimiteBusqueda > 0f && controller != null && controller.busquedaAgotada) return false;
+        if (BusquedaLimitadaAgotada()) return false;
+        if (veAlLadron) return false;
+        if (posicionLadron == null) return false;
 
-        if (enAlerta && posicionLadron != null && !veAlLadron) return true;
-        return !veAlLadron && posicionLadron != null && cronometroBusqueda > 0;
+        return enAlerta || cronometroBusqueda > 0;
     }
 
     public override void Action()
@@ -41,6 +42,12 @@ public class Busqueda : GuardBehavior
         Debug.DrawLine(transform.position, agent.destination, Color.red);
     }
 
+    private bool BusquedaLimitadaAgotada()
+    {
+        if (tiempoLimiteBusqueda <= 0f) return false;
+        return controller != null && controller.busquedaAgotada;
+    }
+
     private void CalcularSiguientePuntoInspeccion()
     {
         if (posicionLadron == null) return;
@@ -53,6 +60,13 @@ public class Busqueda : GuardBehavior
         {
             agent.SetDestination(hit.position);
             tiempoProximoPunto = Time.time + 1.5f;
+            if (EsAldeanoPrincipal)
+                Debug.Log($"[BUSQUEDA {gameObject.name}]: Nuevo destino → {hit.position:F1}");
+        }
+        else
+        {
+            if (EsAldeanoPrincipal)
+                Debug.Log($"<color=orange>[BUSQUEDA {gameObject.name}]: NavMesh.SamplePosition falló cerca de {destinoAleatorio:F1}</color>");
         }
     }
 }

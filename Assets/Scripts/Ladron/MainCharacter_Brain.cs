@@ -34,6 +34,8 @@ public class MainCharacter_Brain : MonoBehaviour
     private GameObject antorchaSuelo;
     private bool hayFuegoCerca;
     private GameObject hogueraDetectada;
+    private string tagOriginal;
+
 
     void Start()
     {
@@ -42,6 +44,8 @@ public class MainCharacter_Brain : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         if (antorchaEnMano != null) antorchaEnMano.SetActive(false);
         if (fuegoEnAntorcha != null) fuegoEnAntorcha.SetActive(false);
+
+        tagOriginal = gameObject.tag;
     }
 
     void Update()
@@ -160,12 +164,28 @@ public class MainCharacter_Brain : MonoBehaviour
                     hogueraAApagar.SetActive(false);
                     Debug.Log("ACTUADOR: Hoguera apagada y antorcha encendida.");
                 }
-            } else {
-                Debug.LogWarning("ACTUADOR: El agente no puede encender el fuego porque no tiene la antorcha en la mano.");
+ 
+                // NUEVO: cambiar tag del ladrón para que los guardias sepan que lleva el fuego
+                // GuardVision detecta este tag con ladronTieneFuego
+                gameObject.tag = "LadronConFuego";
+                Debug.Log($"<color=orange>ACTUADOR: Tag del ladrón cambiado a 'LadronConFuego'. Los guardias ahora pueden identificar que lleva el fuego.</color>");
+            }
+            else
+            {
+                Debug.LogWarning("ACTUADOR: No puede encender el fuego sin antorcha en mano.");
             }
         }
     }
 
+    // NUEVO: método para apagar la antorcha y restaurar el tag original
+    // Llámalo si en el futuro añades lógica de perder el fuego o ser capturado
+    public void ApagarFuegoAntorcha()
+    {
+        if (fuegoEnAntorcha != null) fuegoEnAntorcha.SetActive(false);
+        gameObject.tag = tagOriginal;
+        Debug.Log($"<color=yellow>ACTUADOR: Fuego apagado. Tag restaurado a '{tagOriginal}'.</color>");
+    }
+    
     void ActualizarAnimaciones() {
         if (anim == null) return;
         anim.SetBool("isMoving", moveInput.magnitude > 0.01f);

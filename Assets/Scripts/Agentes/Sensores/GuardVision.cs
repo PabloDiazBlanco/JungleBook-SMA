@@ -7,9 +7,14 @@ public class GuardVision : MonoBehaviour
     public LayerMask capaObstaculos;
     public LayerMask capaLadron; 
     private Vector3 ultimaPosicionDetectada;
+    public bool ladronTieneFuego { get; private set; } = false;
+    private bool yaLogueadoFuego = false;
+
 
     public bool PuedeVerAlLadron()
     {
+        ladronTieneFuego = false;
+
         Collider[] objetivosEnRango = Physics.OverlapSphere(
             transform.position, 
             distanciaVision, 
@@ -26,11 +31,36 @@ public class GuardVision : MonoBehaviour
                 if (!Physics.Raycast(transform.position, direccion, distanciaActual, capaObstaculos))
                 {
                     ultimaPosicionDetectada = objetivo.transform.position;
+                    // NUEVO: buscar si el ladrón lleva el fuego activo (tag LadronConFuego en hijo)
+                    // El tag lo pone MainCharacter_Brain al activar fuegoEnAntorcha
+                    bool fuegoActivo = objetivo.CompareTag("LadronConFuego");
+                    if (!fuegoActivo)
+                    {
+                        // Por si el collider detectado es el padre y el tag está en un hijo
+                        fuegoActivo = objetivo.GetComponentInChildren<Transform>() != null &&
+                                      objetivo.transform.CompareTag("LadronConFuego");
+                    }
+ 
+                    if (fuegoActivo)
+                    {
+                        ladronTieneFuego = true;
+                        if (!yaLogueadoFuego)
+                        {
+                            Debug.Log($"<color=orange>[VISION {gameObject.name}]: Veo al ladrón CON EL FUEGO. ladronTieneFuego=true</color>");
+                            yaLogueadoFuego = true;
+                        }
+                    }
+                    else
+                    {
+                        yaLogueadoFuego = false;
+                    }
+
                     return true;
                 }
             }
         }
-
+ 
+        yaLogueadoFuego = false;
         return false;
     }
 

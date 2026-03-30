@@ -11,7 +11,7 @@ public class AldeanoIntentoAtaque : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Thief"))
+        if (other.CompareTag("Thief") || other.CompareTag("LadronConFuego"))
         {
             if (animControl != null) 
             {

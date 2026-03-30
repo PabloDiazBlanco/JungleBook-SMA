@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ComprobarHoguera : GuardBehavior
 {
     public Transform posicionHoguera;
@@ -8,24 +7,25 @@ public class ComprobarHoguera : GuardBehavior
 
     private bool haComprobado = false;
     private SubsumptionController controller;
+    private Busqueda busquedaCache;
+    private bool EsAldeanoPrincipal => gameObject.name == "Aldeano3";
 
     protected override void Awake()
     {
         base.Awake();
         controller = GetComponent<SubsumptionController>();
+        busquedaCache = GetComponent<Busqueda>();
     }
 
     public override bool CanActivate()
     {
-        // Solo activar cuando la búsqueda se ha agotado
-        if (controller != null)
-        {
-            Busqueda busqueda = GetComponent<Busqueda>();
-            if (busqueda != null && busqueda.tiempoLimiteBusqueda > 0f && !controller.busquedaAgotada)
-                return false;
-        }
+        if (!enAlerta) return false;
+        if (veAlLadron) return false;
+        if (alarmaHogueraActiva) return false;
+        if (haComprobado) return false;
+        if (!TieneBusquedaLimitadaAgotada()) return false;
 
-        return enAlerta && !veAlLadron && !alarmaHogueraActiva && !haComprobado;
+        return true;
     }
 
     public override void Action()
@@ -37,18 +37,26 @@ public class ComprobarHoguera : GuardBehavior
 
         if (!agent.pathPending && agent.remainingDistance <= distanciaLlegada)
         {
-            haComprobado = true;
-            Debug.Log($"{gameObject.name}: He comprobado la hoguera. Fuego presente: {!alarmaHogueraActiva}");
-
-            if (!alarmaHogueraActiva && controller != null)
-            {
-                // Fuego sigue ahí — reiniciar ciclo búsqueda → comprobar
-                controller.ResetearBusqueda();
-                haComprobado = false;
-                Debug.Log($"{gameObject.name}: Fuego a salvo. Reiniciando búsqueda cerca de la hoguera.");
-            }
-            // Si alarmaHogueraActiva es true, BloquearSalida tomará el control
+            ProcesarLlegadaAHoguera();
         }
+    }
+
+    private bool TieneBusquedaLimitadaAgotada()
+    {
+        if (controller == null) return true;
+        if (busquedaCache == null) return true;
+        if (busquedaCache.tiempoLimiteBusqueda <= 0f) return true;
+
+        return controller.busquedaAgotada;
+    }
+
+    private void ProcesarLlegadaAHoguera()
+    {
+        if (EsAldeanoPrincipal)
+            Debug.Log($"[COMPROBAR {gameObject.name}]: Llegué a la hoguera. Verificando presencia...");
+        haComprobado = true;
+        if (controller != null)
+            controller.NotificarComprobacionHogueraCompletada();
     }
 
     public void ResetearComprobacion()

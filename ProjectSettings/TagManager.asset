@@ -12,6 +12,7 @@ TagManager:
   - Aldeano
   - Doors_houses
   - Hoguera
+  - LadronConFuego
   layers:
   - Default
   - TransparentFX

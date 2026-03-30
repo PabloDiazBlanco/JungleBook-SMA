@@ -495,6 +495,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
+  distanciaLlegada: 1.5
+  velocidadNormal: 8
+  velocidadConFuego: 10
 --- !u!114 &10459466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,12 +547,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  behaviors: []
-  sensorVision: {fileID: 0}
-  sensorOido: {fileID: 0}
+  sensorVision: {fileID: 10459467}
+  sensorOido: {fileID: 10459473}
   sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 0}
+  sensorObjetos: {fileID: 10459466}
+  behaviors: []
   tiempoBusqueda: 10
+  framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
 --- !u!136 &10459469
 CapsuleCollider:
@@ -8522,7 +8526,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1700001683036918955, guid: 29f4c72f9a1d9d446945740c2819895b, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 5712219488875869251, guid: 29f4c72f9a1d9d446945740c2819895b, type: 3}
       propertyPath: m_Name
@@ -12002,6 +12006,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
+  distanciaLlegada: 1.5
+  velocidadNormal: 8
+  velocidadConFuego: 10
 --- !u!114 &324811758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12014,12 +12021,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  behaviors: []
-  sensorVision: {fileID: 0}
+  sensorVision: {fileID: 324811759}
   sensorOido: {fileID: 0}
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
+  behaviors: []
   tiempoBusqueda: 10
+  framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
 --- !u!114 &324811759
 MonoBehaviour:
@@ -17206,7 +17214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1460466803834280, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4415611076490568, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19208,6 +19216,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
+  distanciaLlegada: 1.5
+  velocidadNormal: 8
+  velocidadConFuego: 10
 --- !u!114 &529498521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19268,12 +19279,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  behaviors: []
-  sensorVision: {fileID: 0}
+  sensorVision: {fileID: 529498519}
   sensorOido: {fileID: 0}
   sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 0}
+  sensorObjetos: {fileID: 529498527}
+  behaviors: []
   tiempoBusqueda: 10
+  framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
 --- !u!114 &529498527
 MonoBehaviour:
@@ -23246,7 +23258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1460466803834280, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4415611076490568, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
       propertyPath: m_LocalPosition.x
@@ -32232,7 +32244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 315
+      value: 170.93
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.y
@@ -32240,7 +32252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -30
+      value: 6.27
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalRotation.w
@@ -40574,6 +40586,9 @@ PrefabInstance:
       addedObject: {fileID: 1019043334}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1019043336}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1019043333}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
@@ -40767,6 +40782,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
+  distanciaLlegada: 1.5
+  velocidadNormal: 8
+  velocidadConFuego: 10
 --- !u!114 &1019043330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40846,13 +40864,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  behaviors: []
-  sensorVision: {fileID: 0}
-  sensorOido: {fileID: 0}
+  sensorVision: {fileID: 1019043328}
+  sensorOido: {fileID: 1019043336}
   sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 0}
+  sensorObjetos: {fileID: 1019043333}
+  behaviors: []
   tiempoBusqueda: 10
+  framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
+--- !u!114 &1019043336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bd7cbc955c46842af3ef9b181ee1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuardHearing
+  agudezaAuditiva: 1
+  radioImprecision: 5
+  capaLadron:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -42426,6 +42462,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
+  distanciaLlegada: 1.5
+  velocidadNormal: 8
+  velocidadConFuego: 10
 --- !u!114 &1063662414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42473,12 +42512,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  behaviors: []
-  sensorVision: {fileID: 0}
+  sensorVision: {fileID: 1063662412}
   sensorOido: {fileID: 0}
   sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 0}
+  sensorObjetos: {fileID: 1063662424}
+  behaviors: []
   tiempoBusqueda: 10
+  framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
 --- !u!4 &1063662418 stripped
 Transform:
@@ -55772,7 +55812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -80.94
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -55780,7 +55820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.09
+      value: 10.12
       objectReference: {fileID: 0}
     - target: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56150,7 +56190,7 @@ MonoBehaviour:
   anguloVision: 120
   capaObstaculos:
     serializedVersion: 2
-    m_Bits: 78711
+    m_Bits: 13175
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
@@ -56167,6 +56207,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
+  distanciaLlegada: 1.5
+  velocidadNormal: 8
+  velocidadConFuego: 10
 --- !u!114 &1381432410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56233,12 +56276,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  sensorVision: {fileID: 1381432408}
+  sensorOido: {fileID: 1381432421}
+  sensorHoguera: {fileID: 1381432418}
+  sensorObjetos: {fileID: 1381432419}
   behaviors: []
-  sensorVision: {fileID: 0}
-  sensorOido: {fileID: 0}
-  sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 0}
   tiempoBusqueda: 5
+  framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
 --- !u!114 &1381432416
 MonoBehaviour:
@@ -56269,15 +56313,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
-  sensorVision: {fileID: 0}
   radioDeteccion: 15
-  capaInteres:
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
     serializedVersion: 2
     m_Bits: 32768
-  radioSeguridadAlarma: 10
-  tiempoConfirmacionAlarma: 2
-  alarmaRoboDetectada: 0
-  veHoguera: 0
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!114 &1381432419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57820,7 +57866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1460466803834280, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4415611076490568, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
       propertyPath: m_LocalPosition.x
@@ -62664,27 +62710,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2e3d93e75567df54780aad9ca8ed3964, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2e3d93e75567df54780aad9ca8ed3964, type: 3}
       propertyPath: m_TagString
-      value: Hoguera
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2653319524266773996, guid: 2e3d93e75567df54780aad9ca8ed3964, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2653319524266773996, guid: 2e3d93e75567df54780aad9ca8ed3964, type: 3}
       propertyPath: m_TagString
-      value: Hoguera
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8576435113889222141, guid: 2e3d93e75567df54780aad9ca8ed3964, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8576435113889222141, guid: 2e3d93e75567df54780aad9ca8ed3964, type: 3}
       propertyPath: m_TagString
-      value: Hoguera
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -76535,7 +76581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1460466803834280, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4415611076490568, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
       propertyPath: m_LocalPosition.x
@@ -87163,9 +87209,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2098856997}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: Fire (1)
-  m_TagString: Hoguera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88916,6 +88962,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Persecucion
   priority: 0
+  distanciaLlegada: 1.5
+  velocidadNormal: 8
+  velocidadConFuego: 10
 --- !u!114 &2143201457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88965,12 +89014,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  behaviors: []
-  sensorVision: {fileID: 0}
-  sensorOido: {fileID: 0}
+  sensorVision: {fileID: 2143201458}
+  sensorOido: {fileID: 2143201466}
   sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 0}
+  sensorObjetos: {fileID: 2143201457}
+  behaviors: []
   tiempoBusqueda: 10
+  framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
 --- !u!54 &2143201460
 Rigidbody:

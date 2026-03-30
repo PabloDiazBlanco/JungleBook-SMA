@@ -5,14 +5,12 @@ using UnityEngine.SceneManagement;
 public class DetectorCaptura : MonoBehaviour
 {
     public UnityEvent onCapture; 
-    private bool capturado = false;
+    private bool capturado;
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Thief") && !capturado)
+        if (other.CompareTag("Thief") || other.CompareTag("LadronConFuego"))
         {
-            capturado = true;
-
             if (onCapture != null) onCapture.Invoke();
 
             Invoke("ReiniciarEscena", 1.5f);

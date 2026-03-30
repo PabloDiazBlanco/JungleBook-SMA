@@ -11,6 +11,7 @@ public class BloquearSalida : GuardBehavior
     public float velocidadGiro = 5f;
 
     private bool haLlegado = false;
+    private bool yaLogueado = false;
 
     public override bool CanActivate()
     {
@@ -49,6 +50,10 @@ public class BloquearSalida : GuardBehavior
             }
         }
 
-        Debug.Log("¡ALERTA! ¡Han robado la hoguera!");
+        if (!yaLogueado)
+        {
+            Debug.Log("¡ALERTA! ¡Han robado la hoguera!");
+            yaLogueado = true;
+        }
     }
 }

@@ -63,7 +63,7 @@ public class Inteligent_Door_Houses : MonoBehaviour
     {
         Debug.Log("COLISIÓN: Objeto '" + other.name + "' entró en el trigger de la puerta.");
 
-        if (other.CompareTag("Thief") || other.CompareTag("Aldeano"))
+        if (other.CompareTag("Thief") || other.CompareTag("Aldeano") || other.CompareTag("LadronConFuego"))
         {
             Debug.Log("PUERTA: Acceso concedido a " + other.tag);
 

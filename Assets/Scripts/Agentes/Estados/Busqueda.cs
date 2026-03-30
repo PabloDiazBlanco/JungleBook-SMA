@@ -52,11 +52,13 @@ public class Busqueda : GuardBehavior
     {
         if (posicionLadron == null) return;
 
-        Vector2 circuloAleatorio = Random.insideUnitCircle * radioInspeccion;
-        Vector3 destinoAleatorio = posicionLadron.Value + new Vector3(circuloAleatorio.x, 0, circuloAleatorio.y);
+        Vector3 centro = ObtenerCentroReferencia();
+        float radio = ObtenerRadio();
+        Vector2 circuloAleatorio = Random.insideUnitCircle * radio;
+        Vector3 destinoAleatorio = centro + new Vector3(circuloAleatorio.x, 0, circuloAleatorio.y);
 
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(destinoAleatorio, out hit, radioInspeccion, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(destinoAleatorio, out hit, radio, NavMesh.AllAreas))
         {
             agent.SetDestination(hit.position);
             tiempoProximoPunto = Time.time + 1.5f;
@@ -68,5 +70,27 @@ public class Busqueda : GuardBehavior
             if (EsAldeanoPrincipal)
                 Debug.Log($"<color=orange>[BUSQUEDA {gameObject.name}]: NavMesh.SamplePosition falló cerca de {destinoAleatorio:F1}</color>");
         }
+    }
+
+    private bool EsCicloAmplio()
+    {
+        return controller != null && controller.ciclosBusquedaCompletados % 3 == 0
+            && controller.ciclosBusquedaCompletados > 0;
+    }
+
+    private Vector3 ObtenerCentroReferencia()
+    {
+        if (EsCicloAmplio()
+            && controller.sensorHoguera != null
+            && controller.sensorHoguera.posicionHogueraConocida.HasValue)
+            return controller.sensorHoguera.posicionHogueraConocida.Value;
+
+        return posicionLadron.Value;
+    }
+
+    private float ObtenerRadio()
+    {
+        if (EsCicloAmplio()) return controller.radioBusquedaAmplia;
+        return radioInspeccion;
     }
 }

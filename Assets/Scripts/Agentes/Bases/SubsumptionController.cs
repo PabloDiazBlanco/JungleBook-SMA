@@ -47,6 +47,11 @@ public class SubsumptionController : MonoBehaviour
     // NUEVO: contador de frames sin ver la hoguera (filtro anti-oclusión)
     private int framesSinVerHoguera = 0;
 
+    // Búsqueda rotatoria: cada 3 ciclos de ComprobarHoguera OK, el 3º usa radio amplio centrado en la hoguera
+    [Header("Búsqueda rotatoria (cada 3 ciclos)")]
+    public float radioBusquedaAmplia = 25f;
+    public int ciclosBusquedaCompletados = 0;
+
     // Período de gracia tras ComprobarHoguera OK: bloquea EvaluarEstadoHoguera
     // mientras el agente aún está físicamente junto a la hoguera
     [Header("Gracia post-comprobación (segundos)")]
@@ -219,6 +224,7 @@ public class SubsumptionController : MonoBehaviour
 
     private void ResetearCicloCompleto(string motivo)
     {
+        ciclosBusquedaCompletados = 0;
         ResetearBusqueda();
         ResetearComprobacion();
         if (EsAldeanoPrincipal)
@@ -302,10 +308,12 @@ public class SubsumptionController : MonoBehaviour
             framesSinVerHoguera = 0;
             cronometroGraciaPostComprobacion = tiempoGraciaPostComprobacion;
             graciaLogueada = false;
+            ciclosBusquedaCompletados++;
             ResetearBusqueda();
             ResetearComprobacion();
+            bool cicloAmplio = ciclosBusquedaCompletados % 3 == 0;
             if (EsAldeanoPrincipal)
-                Debug.Log($"[CEREBRO {gameObject.name}]: Comprobación OK — hoguera intacta. Gracia de {tiempoGraciaPostComprobacion}s activa.");
+                Debug.Log($"[CEREBRO {gameObject.name}]: Comprobación OK — hoguera intacta. Gracia de {tiempoGraciaPostComprobacion}s activa. Ciclo {ciclosBusquedaCompletados} → búsqueda {(cicloAmplio ? "AMPLIA" : "normal")}.");
         }
         else
         {

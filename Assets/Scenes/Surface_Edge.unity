@@ -555,6 +555,13 @@ MonoBehaviour:
   tiempoBusqueda: 10
   framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
+  radioBusquedaAmplia: 25
+  ciclosBusquedaCompletados: 0
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  investigacionEnCooldown: 0
+  tiempoCooldownPuerta: 8
+  maxInterrupcionesCiclo: 3
 --- !u!136 &10459469
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12029,6 +12036,13 @@ MonoBehaviour:
   tiempoBusqueda: 10
   framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
+  radioBusquedaAmplia: 25
+  ciclosBusquedaCompletados: 0
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  investigacionEnCooldown: 0
+  tiempoCooldownPuerta: 8
+  maxInterrupcionesCiclo: 3
 --- !u!114 &324811759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13030,8 +13044,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.025771389, y: 0.020113714, z: 0.02120445}
-  m_Center: {x: -0.005402989, y: -0.0061568627, z: 0.000624418}
+  m_Size: {x: 0.025771389, y: 0.025057431, z: 0.02120445}
+  m_Center: {x: -0.005402983, y: -0.005843748, z: 0.0006244183}
 --- !u!1 &347665821 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -19287,6 +19301,13 @@ MonoBehaviour:
   tiempoBusqueda: 10
   framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
+  radioBusquedaAmplia: 25
+  ciclosBusquedaCompletados: 0
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  investigacionEnCooldown: 0
+  tiempoCooldownPuerta: 8
+  maxInterrupcionesCiclo: 3
 --- !u!114 &529498527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32244,7 +32265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 170.93
+      value: 157.02
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.y
@@ -32252,7 +32273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.27
+      value: 16.15
       objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalRotation.w
@@ -40614,6 +40635,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043326}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043338}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043324}
@@ -40872,6 +40896,13 @@ MonoBehaviour:
   tiempoBusqueda: 10
   framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
+  radioBusquedaAmplia: 25
+  ciclosBusquedaCompletados: 0
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  investigacionEnCooldown: 0
+  tiempoCooldownPuerta: 8
+  maxInterrupcionesCiclo: 3
 --- !u!114 &1019043336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40889,6 +40920,22 @@ MonoBehaviour:
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &1019043338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04eafc10ce1aa444cbe36bb5f90022a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InvestigarSonido
+  priority: 1
+  sensorOido: {fileID: 0}
+  velocidadInvestigacion: 6
+  distanciaLlegada: 1.5
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -42520,6 +42567,13 @@ MonoBehaviour:
   tiempoBusqueda: 10
   framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
+  radioBusquedaAmplia: 25
+  ciclosBusquedaCompletados: 0
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  investigacionEnCooldown: 0
+  tiempoCooldownPuerta: 8
+  maxInterrupcionesCiclo: 3
 --- !u!4 &1063662418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
@@ -56248,7 +56302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 4
+  priority: 5
   radioInspeccion: 8
   tiempoLimiteBusqueda: 5
 --- !u!114 &1381432412
@@ -56263,7 +56317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 3
+  priority: 4
 --- !u!114 &1381432413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56284,6 +56338,13 @@ MonoBehaviour:
   tiempoBusqueda: 5
   framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
+  radioBusquedaAmplia: 25
+  ciclosBusquedaCompletados: 0
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  investigacionEnCooldown: 0
+  tiempoCooldownPuerta: 8
+  maxInterrupcionesCiclo: 3
 --- !u!114 &1381432416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56386,7 +56447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 5
+  priority: 3
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
@@ -89022,6 +89083,13 @@ MonoBehaviour:
   tiempoBusqueda: 10
   framesParaAlarmaHoguera: 5
   busquedaAgotada: 0
+  radioBusquedaAmplia: 25
+  ciclosBusquedaCompletados: 0
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  investigacionEnCooldown: 0
+  tiempoCooldownPuerta: 8
+  maxInterrupcionesCiclo: 3
 --- !u!54 &2143201460
 Rigidbody:
   m_ObjectHideFlags: 0

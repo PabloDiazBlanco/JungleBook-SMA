@@ -65,6 +65,13 @@ public class SubsumptionController : MonoBehaviour
     public float tiempoCooldownInvestigacion = 5f;
     private float cronometroInvestigacion = 0f;
     public bool investigacionEnCooldown = false;
+
+    // Cooldown tras investigar una puerta: evita que el agente vuelva a entrar en bucle
+    [Header("Cooldown investigación puerta (segundos)")]
+    public float tiempoCooldownPuerta = 8f;
+    private float cronometroPuerta = 0f;
+    private bool puertaEnCooldown = false;
+    private bool puertaSupresionLogueada = false;
  
     // NUEVO: el sensor de visión detectó que el ladrón lleva el fuego
     private bool ladronTieneFuego = false;
@@ -77,6 +84,12 @@ public class SubsumptionController : MonoBehaviour
 
     private bool ladronPerdidoConFuego = false;
     private bool busquedaEsPorFuego = false;
+
+    // Anti-bucle: fuerza ComprobarHoguera tras N interrupciones por visión del ladrón
+    [Header("Anti-bucle persecución")]
+    public int maxInterrupcionesCiclo = 3;
+    private int contadorResetsCiclo = 0;
+    private bool busquedaForzada = false;
 
     // ===================== INICIALIZACIÓN =====================
 
@@ -124,6 +137,7 @@ public class SubsumptionController : MonoBehaviour
         AvanzarCronometroBusquedaLimitada();
         AvanzarGraciaPostComprobacion();
         AvanzarCooldownInvestigacion();
+        AvanzarCooldownPuerta();
         EvaluarEstadoHoguera();
         RegistrarFrameAnterior();
         PropagarInformacionACapas();
@@ -137,7 +151,14 @@ public class SubsumptionController : MonoBehaviour
         veAlLadron = sensorVision != null && sensorVision.PuedeVerAlLadron();
         oyoAlgo = sensorOido != null && sensorOido.EscuchoAlgo();
         posicionRuido = oyoAlgo ? sensorOido.GetPosicionRuido() : (Vector3?)null;
-        posicionPuerta = (sensorObjetos != null && sensorObjetos.ultimaPuertaDetectada != null)
+        bool puertaFisicaDetectada = sensorObjetos != null && sensorObjetos.ultimaPuertaDetectada != null;
+        if (puertaFisicaDetectada && puertaEnCooldown && !puertaSupresionLogueada)
+        {
+            Debug.Log($"[CEREBRO {gameObject.name}]: Puerta detectada físicamente pero suprimida por cooldown ({cronometroPuerta:F1}s restantes).");
+            puertaSupresionLogueada = true;
+        }
+        if (!puertaEnCooldown) puertaSupresionLogueada = false;
+        posicionPuerta = (!puertaEnCooldown && puertaFisicaDetectada)
             ? sensorObjetos.ultimaPuertaDetectada.position
             : (Vector3?)null;
         
@@ -198,13 +219,13 @@ public class SubsumptionController : MonoBehaviour
     {
         if (acabaDeVerAlLadron)
         {
+            if (enAlerta) contadorResetsCiclo++;
             ladronPerdidoConFuego = false;
             busquedaEsPorFuego = false;
             investigacionEnCooldown = false;
             cronometroInvestigacion = 0f;
             ResetearCicloCompleto("Ladrón visible de nuevo. Ciclo reseteado.");
         }
-        // NUEVO: si perdemos al ladrón y sabemos que lleva el fuego, alarma directa
         if (acabaDePerderAlLadron)
         {
             investigacionEnCooldown = false;
@@ -214,6 +235,15 @@ public class SubsumptionController : MonoBehaviour
                 ladronPerdidoConFuego = true;
                 if (EsAldeanoPrincipal)
                     Debug.Log($"<color=red>[CEREBRO {gameObject.name}]: Perdí al ladrón CON el fuego. Manteniendo persecución hasta la última posición conocida.</color>");
+            }
+            else if (contadorResetsCiclo >= maxInterrupcionesCiclo)
+            {
+                contadorResetsCiclo = 0;
+                busquedaForzada = true;
+                busquedaAgotada = true;
+                ResetearComprobacion();
+                if (EsAldeanoPrincipal)
+                    Debug.Log($"[CEREBRO {gameObject.name}]: {maxInterrupcionesCiclo} interrupciones sin comprobar hoguera. Forzando ComprobarHoguera.");
             }
             else
             {
@@ -253,7 +283,8 @@ public class SubsumptionController : MonoBehaviour
     {
         if (!enAlerta) return false;
         if (veAlLadron) return false;
-        if (oyoAlgo) return false;   // no consumir tiempo de búsqueda mientras se investiga un sonido
+        if (oyoAlgo) return false;        // no consumir tiempo de búsqueda mientras se investiga un sonido
+        if (posicionPuerta != null) return false; // no consumir tiempo de búsqueda mientras se investiga una puerta
         if (busquedaAgotada) return false;
         if (busquedaCache == null) return false;
         if (busquedaCache.tiempoLimiteBusqueda <= 0f) return false;
@@ -280,6 +311,19 @@ public class SubsumptionController : MonoBehaviour
         }
     }
 
+    private void AvanzarCooldownPuerta()
+    {
+        if (cronometroPuerta > 0f)
+        {
+            cronometroPuerta -= Time.deltaTime;
+            if (cronometroPuerta <= 0f)
+            {
+                puertaEnCooldown = false;
+                Debug.Log($"[CEREBRO {gameObject.name}]: Cooldown de puerta terminado. Puede volver a detectar puertas.");
+            }
+        }
+    }
+
     private void MarcarBusquedaAgotada()
     {
         busquedaAgotada = true;
@@ -294,6 +338,8 @@ public class SubsumptionController : MonoBehaviour
     {
         ladronPerdidoConFuego = false;
         busquedaEsPorFuego = true;
+        busquedaForzada = false;
+        contadorResetsCiclo = 0;
         ResetearCicloCompleto("Llegué a última posición del ladrón con fuego. Iniciando búsqueda local.");
     }
 
@@ -309,6 +355,8 @@ public class SubsumptionController : MonoBehaviour
             cronometroGraciaPostComprobacion = tiempoGraciaPostComprobacion;
             graciaLogueada = false;
             ciclosBusquedaCompletados++;
+            busquedaForzada = false;
+            contadorResetsCiclo = 0;
             ResetearBusqueda();
             ResetearComprobacion();
             bool cicloAmplio = ciclosBusquedaCompletados % 3 == 0;
@@ -362,7 +410,7 @@ public class SubsumptionController : MonoBehaviour
                 if (EsAldeanoPrincipal)
                     Debug.Log($"<color=orange>[CEREBRO {gameObject.name}]: {framesParaAlarmaHoguera} frames sin ver hoguera. Yendo a comprobar físicamente.</color>");
                 enAlerta = true;
-                busquedaAgotada = true;
+                MarcarBusquedaAgotada();
             }
         }
         else
@@ -408,6 +456,8 @@ public class SubsumptionController : MonoBehaviour
     {
         alarmaHogueraActiva = true;
         framesSinVerHoguera = 0;
+        busquedaForzada = false;
+        contadorResetsCiclo = 0;
         Debug.Log($"<color=red>[CEREBRO] {gameObject.name}: ¡ALARMA! La hoguera ha sido robada.</color>");
     }
 
@@ -468,6 +518,13 @@ public class SubsumptionController : MonoBehaviour
 
     // ===================== NOTIFICACIONES DESDE COMPORTAMIENTOS =====================
 
+    public void NotificarInvestigacionPuertaCompletada()
+    {
+        puertaEnCooldown = true;
+        cronometroPuerta = tiempoCooldownPuerta;
+        Debug.Log($"[CEREBRO {gameObject.name}]: Puerta investigada. Cooldown {tiempoCooldownPuerta:F1}s activo. posicionPuerta se suprime hasta que expire.");
+    }
+
     public void NotificarInvestigacionRuidoCompletada()
     {
         if (sensorOido != null)
@@ -487,7 +544,8 @@ public class SubsumptionController : MonoBehaviour
         if (busquedaCache != null)
             cronometroLimiteBusqueda = busquedaCache.tiempoLimiteBusqueda;
 
-        busquedaAgotada = false;
+        if (!busquedaForzada)
+            busquedaAgotada = false;
         cronometroLimiteBusquedaIniciadoLogueado = false;
     }
 

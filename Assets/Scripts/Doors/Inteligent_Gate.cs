@@ -5,17 +5,13 @@ public class SlidingGate : MonoBehaviour
 {
     public Transform doorLeft;
     public Transform doorRight;
-
     public float slideDistance = 2f;
     public float speed = 2f;
-
     private Vector3 leftClosedPos;
     private Vector3 rightClosedPos;
     private Vector3 leftOpenPos;
     private Vector3 rightOpenPos;
-
     private bool isOpen = false;
-
     private NavMeshObstacle obstacleLeft;
     private NavMeshObstacle obstacleRight;
 
@@ -23,10 +19,8 @@ public class SlidingGate : MonoBehaviour
     {
         leftClosedPos = doorLeft.localPosition;
         rightClosedPos = doorRight.localPosition;
-
         leftOpenPos = leftClosedPos - doorLeft.right * slideDistance;
         rightOpenPos = rightClosedPos + doorRight.right * slideDistance;
-
         obstacleLeft = doorLeft.GetComponent<NavMeshObstacle>();
         obstacleRight = doorRight.GetComponent<NavMeshObstacle>();
         
@@ -44,13 +38,13 @@ public class SlidingGate : MonoBehaviour
     {
         Vector3 targetLeft = isOpen ? leftOpenPos : leftClosedPos;
         Vector3 targetRight = isOpen ? rightOpenPos : rightClosedPos;
-
         doorLeft.localPosition = Vector3.MoveTowards(doorLeft.localPosition, targetLeft, speed * Time.deltaTime);
         doorRight.localPosition = Vector3.MoveTowards(doorRight.localPosition, targetRight, speed * Time.deltaTime);
     }
 
     private void ActualizarObstaculosNavMesh()
     {
+        // Si la puerta se abre, desactivamos los obstáculos definitivamente
         if (obstacleLeft) obstacleLeft.enabled = !isOpen;
         if (obstacleRight) obstacleRight.enabled = !isOpen;
     }
@@ -59,15 +53,9 @@ public class SlidingGate : MonoBehaviour
     {
         if (other.CompareTag("Thief") || other.CompareTag("LadronConFuego"))
         {
-            isOpen = true;
+            isOpen = true; // Se abre y no hay vuelta atrás
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Thief") || other.CompareTag("LadronConFuego"))
-        {
-            isOpen = false;
-        }
-    }
+    // He eliminado el método OnTriggerExit para que el estado 'isOpen' permanezca en true
 }

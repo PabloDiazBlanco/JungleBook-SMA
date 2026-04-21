@@ -385,52 +385,52 @@ Frame N+2:
 
 Todos van en `Assets/Scripts/MAS/`:
 
-| Fichero | Tipo | Descripción |
-|---|---|---|
-| `FIPAMessage.cs` | struct/clase de datos | Campos del mensaje: performativa, emisor, receptor, contenido, conversationId, timestamp, inReplyTo |
-| `FIPAPerformativa.cs` | enum | `INFORM`, `CFP`, `PROPOSE`, `ACCEPT_PROPOSAL`, `REFUSE`, `FAILURE` |
-| `MessageBus.cs` | MonoBehaviour singleton | Cola de mensajes por agente + historial de conversaciones |
-| `AgentCommunicator.cs` | MonoBehaviour por agente | Nombre del agente, Send(), Receive(), GetConversationHistory() |
-| `BeliefBase.cs` | clase de datos por agente | Campos de creencia: posición ladrón, fuego robado, posiciones guardias, rol propio, etc. |
-| `DeliberativeLayer.cs` | MonoBehaviour por agente | Procesa inbox, actualiza BeliefBase, inyecta en controlador, envía mensajes |
+| Fichero | Tipo | Descripción | Estado |
+|---|---|---|---|
+| `FIPAPerformativa.cs` | enum | `INFORM`, `CFP`, `PROPOSE`, `ACCEPT_PROPOSAL`, `REFUSE`, `FAILURE` | ✅ Hecho |
+| `FIPAMessage.cs` | clase de datos | Campos: performativa, emisor, receptor, contenido, conversationId, timestamp, inReplyTo | ✅ Hecho |
+| `MessageBus.cs` | MonoBehaviour singleton | Cola de mensajes por agente + historial de conversaciones | ⬜ Pendiente |
+| `AgentCommunicator.cs` | MonoBehaviour por agente | Nombre del agente, Send(), Receive(), GetConversationHistory() | ⬜ Pendiente |
+| `BeliefBase.cs` | clase de datos por agente | Campos de creencia: posición ladrón, fuego robado, posiciones guardias, rol propio, etc. | ⬜ Pendiente |
+| `DeliberativeLayer.cs` | MonoBehaviour por agente | Procesa inbox, actualiza BeliefBase, inyecta en controlador, envía mensajes | ⬜ Pendiente |
 
 Modificaciones en ficheros existentes:
 
-| Fichero | Cambio |
-|---|---|
-| `SubsumptionController.cs` | Añadir referencias a los 3 nuevos componentes, añadir `ActualizarBeliefBaseConSensores()` en Update(), añadir métodos de inyección públicos, llamar a `deliberativa.Procesar()` en Update() |
+| Fichero | Cambio | Estado |
+|---|---|---|
+| `SubsumptionController.cs` | Añadir referencias a los 3 nuevos componentes, añadir `ActualizarBeliefBaseConSensores()` en Update(), añadir métodos de inyección públicos, llamar a `deliberativa.Procesar()` en Update() | ⬜ Pendiente |
 
 ---
 
 ## 10. Orden de implementación
 
 ### Fase 1 — Infraestructura (sin esto nada funciona)
-1. `FIPAPerformativa.cs` y `FIPAMessage.cs` — solo estructuras de datos
-2. `MessageBus.cs` — singleton con cola y historial
-3. `AgentCommunicator.cs` — componente básico, Send y Receive
-4. Verificar que los mensajes llegan: enviar un INFORM desde Aldeano1 y loguearlo en Aldeano2
+- [x] **1. `FIPAPerformativa.cs`** — enum con las 6 performativas: `INFORM`, `CFP`, `PROPOSE`, `ACCEPT_PROPOSAL`, `REFUSE`, `FAILURE`
+- [x] **2. `FIPAMessage.cs`** — clase de datos con 7 campos (performativa, emisor, receptor, contenido, conversationId, timestamp, inReplyTo). El timestamp se asigna automáticamente en el constructor con `Time.time`. `inReplyTo` tiene valor por defecto vacío.
+- [ ] **3. `MessageBus.cs`** — singleton con cola y historial
+- [ ] **4. Verificar** que los mensajes llegan: enviar un INFORM desde Aldeano1 y loguearlo en Aldeano2
 
 ### Fase 2 — BeliefBase y conexión con sensores
-5. `BeliefBase.cs` — estructura de datos
-6. Modificar `SubsumptionController` para crear BeliefBase y llamar a `ActualizarBeliefBaseConSensores()` en Update()
-7. Verificar que la BeliefBase refleja correctamente el estado del sensor
+- [ ] **5. `BeliefBase.cs`** — estructura de datos
+- [ ] **6. Modificar `SubsumptionController`** para crear BeliefBase y llamar a `ActualizarBeliefBaseConSensores()` en Update()
+- [ ] **7. Verificar** que la BeliefBase refleja correctamente el estado del sensor
 
 ### Fase 3 — Capa deliberativa básica
-8. `DeliberativeLayer.cs` con el ciclo de procesado de inbox
-9. Implementar `INFORM` de avistamiento (7.1) — el más simple
-10. Implementar `INFORM` de alarma de hoguera (7.2)
-11. Verificar que los guardias reaccionan a información que no detectaron sus sensores
+- [ ] **8. `DeliberativeLayer.cs`** con el ciclo de procesado de inbox
+- [ ] **9. Implementar `INFORM` de avistamiento** (7.1) — el más simple
+- [ ] **10. Implementar `INFORM` de alarma de hoguera** (7.2)
+- [ ] **11. Verificar** que los guardias reaccionan a información que no detectaron sus sensores
 
 ### Fase 4 — Comportamientos de coordinación
-12. Broadcast periódico de posición propia (7.5) — sustrato de los demás
-13. Negociación perseguir/cubrir hoguera (7.3) — el más complejo
-14. División de zonas de búsqueda (7.4)
+- [ ] **12. Broadcast periódico de posición propia** (7.5) — sustrato de los demás
+- [ ] **13. Negociación perseguir/cubrir hoguera** (7.3) — el más complejo
+- [ ] **14. División de zonas de búsqueda** (7.4)
 
 ### Fase 5 — Pulido y memoria
-15. TTL de creencias (descartar datos viejos)
-16. Historial de conversaciones accesible
-17. Gestión de conversaciones interrumpidas (ladrón desaparece durante negociación)
-18. Limpieza de roles cuando la situación cambia
+- [ ] **15. TTL de creencias** (descartar datos viejos)
+- [ ] **16. Historial de conversaciones** accesible
+- [ ] **17. Gestión de conversaciones interrumpidas** (ladrón desaparece durante negociación)
+- [ ] **18. Limpieza de roles** cuando la situación cambia
 
 ---
 

@@ -310,10 +310,7 @@ PrefabInstance:
       addedObject: {fileID: 10459460}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 10459475}
-    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 10459477}
+      addedObject: {fileID: 10459474}
   m_SourcePrefab: {fileID: 100100000, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
 --- !u!4 &10459458 stripped
 Transform:
@@ -495,7 +492,7 @@ MonoBehaviour:
   investigacionEnCooldown: 0
   tiempoCooldownPuerta: 8
   maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 10459477}
+  deliberativa: {fileID: 0}
 --- !u!136 &10459469
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -601,7 +598,7 @@ MonoBehaviour:
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
---- !u!114 &10459475
+--- !u!114 &10459474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -614,19 +611,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentCommunicator
   nombreAgente: Campesino2
---- !u!114 &10459477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 10459459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e389c01ac723904a87ab78d329d1c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
-  tiempoEsperaPropuestas: 0.5
 --- !u!1001 &12447510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13237,10 +13221,7 @@ PrefabInstance:
       addedObject: {fileID: 1353491079}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1353491094}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1353491096}
+      addedObject: {fileID: 1353491093}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1672014933}
@@ -19129,10 +19110,7 @@ PrefabInstance:
       addedObject: {fileID: 529498517}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 529498529}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 529498531}
+      addedObject: {fileID: 529498528}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529498515}
@@ -19379,7 +19357,7 @@ MonoBehaviour:
   investigacionEnCooldown: 0
   tiempoCooldownPuerta: 8
   maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 529498531}
+  deliberativa: {fileID: 0}
 --- !u!114 &529498527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19397,7 +19375,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   ultimaPuertaDetectada: {fileID: 0}
---- !u!114 &529498529
+--- !u!114 &529498528
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19410,19 +19388,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentCommunicator
   nombreAgente: Aldeano2
---- !u!114 &529498531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529498513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e389c01ac723904a87ab78d329d1c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
-  tiempoEsperaPropuestas: 0.5
 --- !u!1001 &533515261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22270,8 +22235,8 @@ MonoBehaviour:
   investigacionEnCooldown: 0
   tiempoCooldownPuerta: 8
   maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 586697702}
---- !u!114 &586697700
+  deliberativa: {fileID: 0}
+--- !u!114 &586697699
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22284,19 +22249,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentCommunicator
   nombreAgente: Aldeano6
---- !u!114 &586697702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 586697685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e389c01ac723904a87ab78d329d1c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
-  tiempoEsperaPropuestas: 0.5
 --- !u!1001 &586706943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35673,10 +35625,7 @@ PrefabInstance:
       addedObject: {fileID: 2143201462}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2143201468}
-    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2143201470}
+      addedObject: {fileID: 2143201467}
   m_SourcePrefab: {fileID: 100100000, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
 --- !u!1 &896257779
 GameObject:
@@ -41118,10 +41067,7 @@ PrefabInstance:
       addedObject: {fileID: 1019043338}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1019043340}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1019043342}
+      addedObject: {fileID: 1019043339}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043324}
@@ -41387,7 +41333,7 @@ MonoBehaviour:
   investigacionEnCooldown: 0
   tiempoCooldownPuerta: 8
   maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 1019043342}
+  deliberativa: {fileID: 0}
 --- !u!114 &1019043336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41421,7 +41367,7 @@ MonoBehaviour:
   sensorOido: {fileID: 0}
   velocidadInvestigacion: 6
   distanciaLlegada: 1.5
---- !u!114 &1019043340
+--- !u!114 &1019043339
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41434,19 +41380,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentCommunicator
   nombreAgente: Aldeano4
---- !u!114 &1019043342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019043322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e389c01ac723904a87ab78d329d1c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
-  tiempoEsperaPropuestas: 0.5
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -42904,10 +42837,7 @@ PrefabInstance:
       addedObject: {fileID: 1063662423}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1063662426}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1063662428}
+      addedObject: {fileID: 1063662425}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 256116487}
@@ -43018,7 +42948,7 @@ MonoBehaviour:
   investigacionEnCooldown: 0
   tiempoCooldownPuerta: 8
   maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 1063662428}
+  deliberativa: {fileID: 0}
 --- !u!4 &1063662418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
@@ -43117,7 +43047,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   ultimaPuertaDetectada: {fileID: 0}
---- !u!114 &1063662426
+--- !u!114 &1063662425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43130,19 +43060,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentCommunicator
   nombreAgente: Aldeano1
---- !u!114 &1063662428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063662411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e389c01ac723904a87ab78d329d1c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
-  tiempoEsperaPropuestas: 0.5
 --- !u!1001 &1063838872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54720,8 +54637,8 @@ MonoBehaviour:
   investigacionEnCooldown: 0
   tiempoCooldownPuerta: 8
   maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 1353491096}
---- !u!114 &1353491094
+  deliberativa: {fileID: 0}
+--- !u!114 &1353491093
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54734,19 +54651,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentCommunicator
   nombreAgente: Aldeano5
---- !u!114 &1353491096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353491076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e389c01ac723904a87ab78d329d1c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
-  tiempoEsperaPropuestas: 0.5
 --- !u!1001 &1354259370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56628,10 +56532,7 @@ PrefabInstance:
       addedObject: {fileID: 1381432423}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1381432425}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1381432427}
+      addedObject: {fileID: 1381432424}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432404}
@@ -56884,7 +56785,7 @@ MonoBehaviour:
   investigacionEnCooldown: 0
   tiempoCooldownPuerta: 8
   maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 1381432427}
+  deliberativa: {fileID: 0}
 --- !u!114 &1381432416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56991,7 +56892,7 @@ MonoBehaviour:
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
---- !u!114 &1381432425
+--- !u!114 &1381432424
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57004,19 +56905,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentCommunicator
   nombreAgente: Aldeano3
---- !u!114 &1381432427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381432402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e389c01ac723904a87ab78d329d1c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
-  tiempoEsperaPropuestas: 0.5
 --- !u!1 &1382708965 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}
@@ -64566,6 +64454,52 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1948906169}
   m_SourcePrefab: {fileID: 100100000, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
+--- !u!1 &1566958511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1566958513}
+  - component: {fileID: 1566958512}
+  m_Layer: 0
+  m_Name: TestMensajeria
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1566958512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566958511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b9cf58829f06745ada556075a4ac43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestMensajeria
+  emisor: Aldeano1
+  esperaInicialSegundos: 2
+--- !u!4 &1566958513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566958511}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 162.65178, y: -71.08792, z: -30.63174}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1567656375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68176,10 +68110,7 @@ PrefabInstance:
       addedObject: {fileID: 586697688}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 586697700}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 586697702}
+      addedObject: {fileID: 586697699}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 202995253}
@@ -71658,6 +71589,50 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: f867a2534aa85914d9e6b62f681cdf69, type: 3}
+--- !u!1 &1706068329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1706068331}
+  - component: {fileID: 1706068330}
+  m_Layer: 0
+  m_Name: Messagebus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1706068330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706068329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e9c841b7398a04db4c043606e9bbe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MessageBus
+--- !u!4 &1706068331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706068329}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 189.70442, y: -67.51345, z: -36.46267}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1708967284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90074,7 +90049,7 @@ MonoBehaviour:
   investigacionEnCooldown: 0
   tiempoCooldownPuerta: 8
   maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 2143201470}
+  deliberativa: {fileID: 0}
 --- !u!54 &2143201460
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -90221,7 +90196,7 @@ MonoBehaviour:
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
---- !u!114 &2143201468
+--- !u!114 &2143201467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90234,19 +90209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentCommunicator
   nombreAgente: Campesino1
---- !u!114 &2143201470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2143201451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e389c01ac723904a87ab78d329d1c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
-  tiempoEsperaPropuestas: 0.5
 --- !u!1 &2144177625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}
@@ -90658,3 +90620,5 @@ SceneRoots:
   - {fileID: 538205328}
   - {fileID: 1177169437}
   - {fileID: 606721809}
+  - {fileID: 1706068331}
+  - {fileID: 1566958513}

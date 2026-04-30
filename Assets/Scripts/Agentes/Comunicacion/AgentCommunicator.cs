@@ -6,132 +6,122 @@ public class AgentCommunicator : MonoBehaviour
     [Header("Identidad del agente")]
     public string nombreAgente;
 
-    // Mensajes recibidos en el frame actual, listos para que la capa deliberativa los procese
+    // Registro global de todos los agentes (peer-to-peer, sin MessageBus)
+    private static Dictionary<string, AgentCommunicator> registro = new Dictionary<string, AgentCommunicator>();
+
+    // Mensajes encolados por otros agentes en frames anteriores
+    private Queue<FIPAMessage> pendientes = new Queue<FIPAMessage>();
+
+    // Mensajes listos para leer este frame
     private List<FIPAMessage> inbox = new List<FIPAMessage>();
 
-    // Contador para generar conversationIds únicos
     private int contadorConversaciones = 0;
+    // Nueva lista para cumplir el requisito de almacenamiento persistente
+    private List<FIPAMessage> historialMensajes = new List<FIPAMessage>();
 
+    public List<FIPAMessage> GetHistorial() => historialMensajes;
     // ===================== CICLO DE VIDA =====================
 
     void Start()
     {
         if (string.IsNullOrEmpty(nombreAgente))
         {
-            Debug.LogError($"[AgentCommunicator] en '{gameObject.name}': nombreAgente no está asignado en el Inspector. El agente no funcionará.");
+            Debug.LogError($"[AgentCommunicator] en '{gameObject.name}': nombreAgente no asignado.");
             return;
         }
 
-        if (MessageBus.Instance == null)
-        {
-            Debug.LogError($"[AgentCommunicator] '{nombreAgente}': No se encontró MessageBus en la escena. Asegúrate de que existe un GameObject con MessageBus.");
-            return;
-        }
-
-        MessageBus.Instance.Registrar(nombreAgente, this);
-        Debug.Log($"<color=green>[AgentCommunicator] '{nombreAgente}': Registrado correctamente en el MessageBus.</color>");
+        registro[nombreAgente] = this;
+        Debug.Log($"<color=cyan>[AgentCommunicator] '{nombreAgente}': registrado. Agentes activos: [{string.Join(", ", registro.Keys)}]</color>");
     }
 
     void OnDestroy()
     {
-        if (MessageBus.Instance != null && !string.IsNullOrEmpty(nombreAgente))
+        if (!string.IsNullOrEmpty(nombreAgente))
         {
-            MessageBus.Instance.Desregistrar(nombreAgente);
-            Debug.Log($"[AgentCommunicator] '{nombreAgente}': Desregistrado del MessageBus.");
+            registro.Remove(nombreAgente);
+            Debug.Log($"[AgentCommunicator] '{nombreAgente}': desregistrado.");
         }
     }
 
     void Update()
     {
-        RecogerMensajes();
+        // Limpiamos el buzón del frame actual y procesamos los pendientes
+        inbox.Clear();
+        ProcesarMensajesPendientes();
     }
 
-    // ===================== RECOGIDA DE MENSAJES =====================
-
-    private void RecogerMensajes()
+    private void ProcesarMensajesPendientes()
     {
-        if (MessageBus.Instance == null) return;
-
-        // Limpiar inbox del frame anterior
-        inbox.Clear();
-
-        // Recoger los nuevos mensajes del buzón
-        List<FIPAMessage> nuevos = MessageBus.Instance.Recoger(nombreAgente);
-
-        if (nuevos.Count > 0)
+        while (pendientes.Count > 0)
         {
-            inbox.AddRange(nuevos);
-            Debug.Log($"<color=green>[AgentCommunicator] '{nombreAgente}': {inbox.Count} mensaje(s) nuevo(s) en inbox este frame.</color>");
-
-            foreach (FIPAMessage msg in inbox)
-            {
-                Debug.Log($"<color=green>[AgentCommunicator] '{nombreAgente}':   → [{msg.performativa}] de '{msg.emisor}' " +
-                          $"| ConvID: '{msg.conversationId}' | Contenido: '{msg.contenido}'</color>");
-            }
+            FIPAMessage msg = pendientes.Dequeue();
+            
+            // ALMACENAMIENTO: Guardamos en el histórico antes de pasar al inbox
+            historialMensajes.Add(msg); 
+            
+            inbox.Add(msg);
+            Debug.Log($"<color=green>[AgentCommunicator] '{nombreAgente}': inbox ← [{msg.performativa}] de '{msg.emisor}' | ConvID: '{msg.conversationId}'</color>");
         }
     }
 
-    // ===================== ENVÍO DE MENSAJES =====================
+    // ===================== RECEPCIÓN DIRECTA (llamada por el emisor) =====================
+
+    public void RecibirMensaje(FIPAMessage msg)
+    {
+        pendientes.Enqueue(msg);
+    }
+
+    // ===================== ENVÍO =====================
 
     public void Enviar(FIPAMessage mensaje, List<string> destinatarios)
     {
-        if (MessageBus.Instance == null)
+        if (destinatarios == null || destinatarios.Count == 0) return;
+
+        historialMensajes.Add(mensaje); // ALMACENAMIENTO: Guardamos el mensaje enviado en el histórico
+        
+        foreach (string dest in destinatarios)
         {
-            Debug.LogError($"[AgentCommunicator] '{nombreAgente}': No hay MessageBus. No se puede enviar.");
-            return;
+            if (dest == nombreAgente)
+            {
+                Debug.LogWarning($"[AgentCommunicator] '{nombreAgente}': intento de enviarse mensaje a sí mismo. Ignorado.");
+                continue;
+            }
+
+            if (!registro.TryGetValue(dest, out AgentCommunicator target))
+            {
+                Debug.LogWarning($"[AgentCommunicator] '{nombreAgente}': destinatario '{dest}' no registrado. Mensaje no entregado.");
+                continue;
+            }
+
+            target.RecibirMensaje(mensaje);
+            Debug.Log($"<color=orange>[AgentCommunicator] '{nombreAgente}': [{mensaje.performativa}] → '{dest}' | ConvID: '{mensaje.conversationId}' | '{mensaje.contenido}'</color>");
         }
-
-        Debug.Log($"<color=orange>[AgentCommunicator] '{nombreAgente}': Enviando [{mensaje.performativa}] " +
-                  $"a [{string.Join(", ", destinatarios)}] | ConvID: '{mensaje.conversationId}'</color>");
-
-        MessageBus.Instance.Enviar(mensaje, destinatarios);
     }
 
     public void EnviarATodos(FIPAMessage mensaje)
     {
-        if (MessageBus.Instance == null)
+        List<string> companeros = GetCompaneros();
+
+        if (companeros.Count == 0)
         {
-            Debug.LogError($"[AgentCommunicator] '{nombreAgente}': No hay MessageBus. No se puede enviar.");
+            Debug.LogWarning($"[AgentCommunicator] '{nombreAgente}': EnviarATodos sin otros agentes registrados.");
             return;
         }
 
-        List<string> todosExceptoYo = MessageBus.Instance.GetNombresExcepto(nombreAgente);
-
-        if (todosExceptoYo.Count == 0)
-        {
-            Debug.LogWarning($"[AgentCommunicator] '{nombreAgente}': EnviarATodos llamado pero no hay otros agentes registrados.");
-            return;
-        }
-
-        Debug.Log($"<color=orange>[AgentCommunicator] '{nombreAgente}': EnviarATodos [{mensaje.performativa}] " +
-                  $"→ {todosExceptoYo.Count} agente(s): [{string.Join(", ", todosExceptoYo)}]</color>");
-
-        MessageBus.Instance.Enviar(mensaje, todosExceptoYo);
+        Debug.Log($"<color=orange>[AgentCommunicator] '{nombreAgente}': broadcast [{mensaje.performativa}] → [{string.Join(", ", companeros)}]</color>");
+        Enviar(mensaje, companeros);
     }
 
     // ===================== CONSULTAS =====================
 
-    public List<FIPAMessage> GetInbox()
-    {
-        return inbox;
-    }
+    public List<FIPAMessage> GetInbox() => inbox;
 
     public List<string> GetCompaneros()
     {
-        if (MessageBus.Instance == null) return new List<string>();
-        return MessageBus.Instance.GetNombresExcepto(nombreAgente);
-    }
-
-    public List<string> GetTodosLosAgentes()
-    {
-        if (MessageBus.Instance == null) return new List<string>();
-        return MessageBus.Instance.GetTodosLosNombres();
-    }
-
-    public List<FIPAMessage> GetHistorialConversacion(string conversationId)
-    {
-        if (MessageBus.Instance == null) return new List<FIPAMessage>();
-        return MessageBus.Instance.GetHistorialConversacion(conversationId);
+        List<string> resultado = new List<string>();
+        foreach (string nombre in registro.Keys)
+            if (nombre != nombreAgente) resultado.Add(nombre);
+        return resultado;
     }
 
     // ===================== GENERADOR DE IDs =====================
@@ -139,8 +129,6 @@ public class AgentCommunicator : MonoBehaviour
     public string GenerarConversationId(string tipo)
     {
         contadorConversaciones++;
-        string id = $"{nombreAgente}-{tipo}-{contadorConversaciones}-{Time.time:F1}";
-        Debug.Log($"[AgentCommunicator] '{nombreAgente}': Nuevo conversationId generado: '{id}'");
-        return id;
+        return $"{nombreAgente}-{tipo}-{contadorConversaciones}-{Time.time:F1}";
     }
 }

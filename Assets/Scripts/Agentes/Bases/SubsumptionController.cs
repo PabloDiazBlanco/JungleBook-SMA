@@ -91,17 +91,8 @@ public class SubsumptionController : MonoBehaviour
     private int contadorResetsCiclo = 0;
     private bool busquedaForzada = false;
 
-    [Header("Comunicación FIPA")]
-    public AgentCommunicator communicator;
-
-    [Header("Contract Net Protocol")]
-    public float tiempoEsperaPropuestas = 0.5f;
-    private bool cnpIniciado = false;
-    private float cronometroCNP = 0f;
-    private string convIdCNP = "";
-    private string tipoCNP = "";  // "hoguera" o "salida"
-    private List<FIPAMessage> propuestasCNP = new List<FIPAMessage>();
-    private bool alarmaHogueraActivaFrameAnterior = false;
+    [Header("Capa Deliberativa")]
+    public DeliberativeLayer deliberativa;
 
     // ===================== INICIALIZACIÓN =====================
 
@@ -143,7 +134,6 @@ public class SubsumptionController : MonoBehaviour
     void Update()
     {
         LeerSensores();
-        ProcesarMensajes();
         DetectarTransiciones();
         ActualizarEstadoAlerta();
         GestionarResetsPorTransicion();
@@ -153,7 +143,7 @@ public class SubsumptionController : MonoBehaviour
         AvanzarCooldownPuerta();
         EvaluarEstadoHoguera();
         RegistrarFrameAnterior();
-        ComunicarEstado();
+        deliberativa?.Procesar();
         PropagarInformacionACapas();
         EjecutarDecision();
     }
@@ -569,252 +559,32 @@ public class SubsumptionController : MonoBehaviour
             comprobarCache.ResetearComprobacion();
     }
 
-    // ===================== COMUNICACIÓN FIPA-ACL =====================
+    // ===================== PROPIEDADES PÚBLICAS (leídas por DeliberativeLayer) =====================
 
-    private void ProcesarMensajes()
+    public bool VeAlLadron           => veAlLadron;
+    public bool AcabaDeVerAlLadron   => acabaDeVerAlLadron;
+    public bool LadronTieneFuego     => ladronTieneFuego;
+    public bool AlarmaHogueraActiva  => alarmaHogueraActiva;
+    public bool EnAlerta             => enAlerta;
+    public Vector3? UltimaPosicionLadron => ultimaPosicionLadron;
+
+    // ===================== INYECCIÓN DESDE CAPA DELIBERATIVA =====================
+
+    public void InyectarPosicionLadron(Vector3 pos)
     {
-        if (communicator == null) return;
-
-        foreach (FIPAMessage msg in communicator.GetInbox())
-        {
-            switch (msg.performativa)
-            {
-                case FIPAPerformativa.INFORM:
-                    ProcesarInform(msg);
-                    break;
-                case FIPAPerformativa.CFP:
-                    ProcesarCFP(msg);
-                    break;
-                case FIPAPerformativa.PROPOSE:
-                case FIPAPerformativa.REFUSE:
-                    ProcesarPropuesta(msg);
-                    break;
-                case FIPAPerformativa.ACCEPT_PROPOSAL:
-                    ProcesarAceptacion(msg);
-                    break;
-            }
-        }
+        enAlerta             = true;
+        ultimaPosicionLadron = pos;
+        cronometroBusqueda   = tiempoBusqueda;
     }
 
-    private void ProcesarInform(FIPAMessage msg)
+    public void InyectarAlarmaHoguera()
     {
-        if (msg.contenido != "alarma_hoguera") return;
-        if (alarmaHogueraActiva) return;
-
         alarmaHogueraActiva = true;
-        Debug.Log($"<color=red>[CEREBRO {gameObject.name}]: INFORM de '{msg.emisor}' — ¡ALARMA HOGUERA! Activando BloquearSalida.</color>");
     }
 
-    // 7.3: Soy participante del CNP — evalúo el CFP y respondo con mis dos distancias
-    private void ProcesarCFP(FIPAMessage msg)
+    public void InyectarCubrirHoguera()
     {
-        // Formato: "tipo|ladron:x,y,z|obj:x,y,z"
-        string[] partes = msg.contenido.Split('|');
-        if (partes.Length != 3) return;
-        if (partes[0] != "hoguera" && partes[0] != "salida") return;
-        if (!partes[1].StartsWith("ladron:") || !partes[2].StartsWith("obj:")) return;
-
-        Vector3? posLadron = ParsearPosicion(partes[1].Substring("ladron:".Length));
-        Vector3? posObj    = ParsearPosicion(partes[2].Substring("obj:".Length));
-        if (posLadron == null || posObj == null) return;
-
-        if (enAlerta || alarmaHogueraActiva)
-        {
-            FIPAMessage rechazo = new FIPAMessage(
-                FIPAPerformativa.REFUSE, communicator.nombreAgente, msg.emisor,
-                "ocupado", msg.conversationId, msg.conversationId);
-            communicator.Enviar(rechazo, new List<string> { msg.emisor });
-            Debug.Log($"[CEREBRO {gameObject.name}]: REFUSE a '{msg.emisor}' — estoy ocupado.");
-        }
-        else
-        {
-            int dl   = Mathf.RoundToInt(Vector3.Distance(transform.position, posLadron.Value));
-            int dobj = Mathf.RoundToInt(Vector3.Distance(transform.position, posObj.Value));
-            FIPAMessage propuesta = new FIPAMessage(
-                FIPAPerformativa.PROPOSE, communicator.nombreAgente, msg.emisor,
-                $"dl:{dl},do:{dobj}", msg.conversationId, msg.conversationId);
-            communicator.Enviar(propuesta, new List<string> { msg.emisor });
-            Debug.Log($"[CEREBRO {gameObject.name}]: PROPOSE a '{msg.emisor}' — dl:{dl}m, do:{dobj}m.");
-        }
-    }
-
-    // Soy el iniciador: recojo las respuestas al CFP que lancé
-    private void ProcesarPropuesta(FIPAMessage msg)
-    {
-        if (msg.conversationId != convIdCNP) return;
-        propuestasCNP.Add(msg);
-        Debug.Log($"[CEREBRO {gameObject.name}]: Respuesta CNP de '{msg.emisor}' [{msg.performativa}].");
-    }
-
-    // 7.3: Soy el ganador del CNP — ejecuto el rol que me asignaron
-    private void ProcesarAceptacion(FIPAMessage msg)
-    {
-        if (msg.contenido.StartsWith("perseguir:"))
-        {
-            Vector3? pos = ParsearPosicion(msg.contenido.Substring("perseguir:".Length));
-            if (pos == null) return;
-            enAlerta = true;
-            ultimaPosicionLadron = pos;
-            cronometroBusqueda = tiempoBusqueda;
-            Debug.Log($"<color=cyan>[CEREBRO {gameObject.name}]: ACCEPT_PROPOSAL de '{msg.emisor}' — voy a perseguir al ladrón.</color>");
-        }
-        else if (msg.contenido == "cubrir_hoguera")
-        {
-            enAlerta = true;
-            busquedaAgotada = true;
-            Debug.Log($"<color=cyan>[CEREBRO {gameObject.name}]: ACCEPT_PROPOSAL de '{msg.emisor}' — voy a cubrir la hoguera.</color>");
-        }
-        else if (msg.contenido == "cubrir_salida")
-        {
-            alarmaHogueraActiva = true;
-            Debug.Log($"<color=cyan>[CEREBRO {gameObject.name}]: ACCEPT_PROPOSAL de '{msg.emisor}' — voy a cubrir la salida.</color>");
-        }
-    }
-
-    private Vector3? ParsearPosicion(string coords)
-    {
-        string[] partes = coords.Split(',');
-        if (partes.Length != 3) return null;
-
-        if (int.TryParse(partes[0], out int x) &&
-            int.TryParse(partes[1], out int y) &&
-            int.TryParse(partes[2], out int z))
-        {
-            return new Vector3(x, y, z);
-        }
-
-        Debug.LogWarning($"[CEREBRO {gameObject.name}]: No se pudo parsear posición: '{coords}'");
-        return null;
-    }
-
-    private void ComunicarEstado()
-    {
-        if (communicator == null) return;
-
-        // 7.3: CNP de cobertura — sin fuego: cubrir hoguera; con fuego: cubrir salida
-        if (acabaDeVerAlLadron && !cnpIniciado)
-            IniciarCNP();
-
-        if (cnpIniciado)
-            AvanzarCNP();
-
-        // Broadcast de alarma hoguera: solo la primera vez que se activa
-        if (alarmaHogueraActiva && !alarmaHogueraActivaFrameAnterior)
-        {
-            FIPAMessage msg = new FIPAMessage(
-                FIPAPerformativa.INFORM,
-                communicator.nombreAgente,
-                "broadcast",
-                "alarma_hoguera",
-                communicator.GenerarConversationId("alarma_hoguera")
-            );
-            communicator.EnviarATodos(msg);
-            Debug.Log($"<color=red>[CEREBRO {gameObject.name}]: INFORM 'alarma_hoguera' enviado a todos.</color>");
-        }
-
-        alarmaHogueraActivaFrameAnterior = alarmaHogueraActiva;
-    }
-
-    private void IniciarCNP()
-    {
-        if (sensorHoguera == null || sensorHoguera.posicionHogueraConocida == null) return;
-        if (!ultimaPosicionLadron.HasValue) return;
-
-        cnpIniciado = true;
-        propuestasCNP.Clear();
-        cronometroCNP = tiempoEsperaPropuestas;
-
-        Vector3 posLadron = ultimaPosicionLadron.Value;
-        string ladronStr = $"{Mathf.RoundToInt(posLadron.x)},{Mathf.RoundToInt(posLadron.y)},{Mathf.RoundToInt(posLadron.z)}";
-
-        if (!ladronTieneFuego)
-        {
-            // Ladrón sin fuego: uno persigue, otro cubre la hoguera
-            tipoCNP = "hoguera";
-            convIdCNP = communicator.GenerarConversationId("cnp_hoguera");
-            Vector3 posHoguera = sensorHoguera.posicionHogueraConocida.Value;
-            string objStr = $"{Mathf.RoundToInt(posHoguera.x)},{Mathf.RoundToInt(posHoguera.y)},{Mathf.RoundToInt(posHoguera.z)}";
-            string contenido = $"hoguera|ladron:{ladronStr}|obj:{objStr}";
-            FIPAMessage cfp = new FIPAMessage(FIPAPerformativa.CFP, communicator.nombreAgente, "broadcast", contenido, convIdCNP);
-            communicator.EnviarATodos(cfp);
-            Debug.Log($"<color=yellow>[CEREBRO {gameObject.name}]: CFP — perseguir ladrón + cubrir hoguera.</color>");
-        }
-        else
-        {
-            // Ladrón con fuego: uno persigue, otro cubre la salida
-            tipoCNP = "salida";
-            convIdCNP = communicator.GenerarConversationId("cnp_salida");
-            string contenido = $"salida|ladron:{ladronStr}|obj:{ladronStr}";
-            FIPAMessage cfp = new FIPAMessage(FIPAPerformativa.CFP, communicator.nombreAgente, "broadcast", contenido, convIdCNP);
-            communicator.EnviarATodos(cfp);
-            Debug.Log($"<color=yellow>[CEREBRO {gameObject.name}]: CFP — perseguir ladrón + cubrir salida.</color>");
-        }
-    }
-
-    private void AvanzarCNP()
-    {
-        cronometroCNP -= Time.deltaTime;
-        if (cronometroCNP <= 0f)
-        {
-            ResolverCNP();
-            cnpIniciado = false;
-        }
-    }
-
-    private void ResolverCNP()
-    {
-        List<FIPAMessage> propuestas = new List<FIPAMessage>();
-        foreach (FIPAMessage msg in propuestasCNP)
-            if (msg.performativa == FIPAPerformativa.PROPOSE) propuestas.Add(msg);
-
-        if (propuestas.Count == 0)
-        {
-            Debug.Log($"[CEREBRO {gameObject.name}]: CNP sin candidatos — actúo solo.");
-            return;
-        }
-
-        // Buscar al más cercano al ladrón y al objetivo de cobertura
-        FIPAMessage perseguidor = null, cubridor = null;
-        int minDl = int.MaxValue, minDo = int.MaxValue;
-
-        foreach (FIPAMessage msg in propuestas)
-        {
-            string[] partes = msg.contenido.Split(',');
-            if (partes.Length != 2) continue;
-            if (!partes[0].StartsWith("dl:") || !partes[1].StartsWith("do:")) continue;
-            if (!int.TryParse(partes[0].Substring(3), out int dl)) continue;
-            if (!int.TryParse(partes[1].Substring(3), out int dobj)) continue;
-
-            if (dl < minDl)   { minDl = dl;     perseguidor = msg; }
-            if (dobj < minDo) { minDo = dobj;   cubridor = msg; }
-        }
-
-        string contenidoCubrir     = tipoCNP == "hoguera" ? "cubrir_hoguera" : "cubrir_salida";
-        Vector3 posLadron          = ultimaPosicionLadron.Value;
-        string contenidoPerseguir  = $"perseguir:{Mathf.RoundToInt(posLadron.x)},{Mathf.RoundToInt(posLadron.y)},{Mathf.RoundToInt(posLadron.z)}";
-
-        if (perseguidor != cubridor)
-        {
-            // Caso ideal: roles distintos — uno persigue, el otro cubre
-            EnviarAccept(perseguidor, contenidoPerseguir);
-            EnviarAccept(cubridor, contenidoCubrir);
-        }
-        else
-        {
-            // Un solo candidato disponible: que cubra (yo ya persigo)
-            // Si hay un segundo, también le mando a perseguir
-            EnviarAccept(cubridor, contenidoCubrir);
-            foreach (FIPAMessage msg in propuestas)
-                if (msg != cubridor) EnviarAccept(msg, contenidoPerseguir);
-        }
-    }
-
-    private void EnviarAccept(FIPAMessage propuesta, string contenido)
-    {
-        FIPAMessage accept = new FIPAMessage(
-            FIPAPerformativa.ACCEPT_PROPOSAL, communicator.nombreAgente, propuesta.emisor,
-            contenido, convIdCNP, convIdCNP);
-        communicator.Enviar(accept, new List<string> { propuesta.emisor });
-        Debug.Log($"<color=cyan>[CEREBRO {gameObject.name}]: ACCEPT → '{propuesta.emisor}' ({contenido}).</color>");
+        enAlerta      = true;
+        busquedaAgotada = true;
     }
 }

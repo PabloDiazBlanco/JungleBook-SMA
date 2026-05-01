@@ -4,6 +4,9 @@ using UnityEngine.AI;
 
 public class SubsumptionController : MonoBehaviour
 {
+    [Header("Módulos del Cerebro")]
+    public AgentBlackboard blackboard;
+    public AgentTimerManager timers;
 
     [Header("Sensores")]
     public GuardVision sensorVision;
@@ -14,15 +17,11 @@ public class SubsumptionController : MonoBehaviour
     [Header("Comportamientos")]
     public List<GuardBehavior> behaviors = new List<GuardBehavior>();
 
-    [Header("Configuración")]
-    public float tiempoBusqueda = 10f;
-
     [Header("Filtro hoguera")]
     public int framesParaAlarmaHoguera = 10;
 
     private NavMeshAgent agent;
     private GuardBehavior capaAnterior;
-
     private Busqueda busquedaCache;
     private ComprobarHoguera comprobarCache;
 
@@ -144,6 +143,7 @@ public class SubsumptionController : MonoBehaviour
         EvaluarEstadoHoguera();
         RegistrarFrameAnterior();
         deliberativa?.Procesar();
+        SincronizarConCapaDeliberativa();
         PropagarInformacionACapas();
         EjecutarDecision();
     }
@@ -492,6 +492,23 @@ public class SubsumptionController : MonoBehaviour
                 ladronTieneFuego,
                 ladronPerdidoConFuego
             );
+        }
+    }
+    private void SincronizarConCapaDeliberativa()
+    {
+        // Si existe la capa deliberativa y su creencia de posición ha caducado (es null)
+        if (deliberativa != null && deliberativa.creencias.posicionLadron == null)
+        {
+            // Solo limpiamos si no lo estamos viendo actualmente (la visión real manda)
+            if (!veAlLadron && ultimaPosicionLadron != null)
+            {
+                ultimaPosicionLadron = null;
+                enAlerta = false;
+                cronometroBusqueda = 0f;
+                
+                if (EsAldeanoPrincipal)
+                    Debug.Log($"<color=gray>[CEREBRO {gameObject.name}]: Sincronización TTL — Olvidando posición inyectada por obsolescencia.</color>");
+            }
         }
     }
 

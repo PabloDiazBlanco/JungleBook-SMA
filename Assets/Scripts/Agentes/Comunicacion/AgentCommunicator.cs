@@ -100,23 +100,23 @@ public class AgentCommunicator : MonoBehaviour
 
     public void EnviarATodos(FIPAMessage mensaje)
     {
-        List<string> companeros = GetCompaneros();
+        List<string> compañero = Getcompañero();
 
-        if (companeros.Count == 0)
+        if (compañero.Count == 0)
         {
             Debug.LogWarning($"[AgentCommunicator] '{nombreAgente}': EnviarATodos sin otros agentes registrados.");
             return;
         }
 
-        Debug.Log($"<color=orange>[AgentCommunicator] '{nombreAgente}': broadcast [{mensaje.performativa}] → [{string.Join(", ", companeros)}]</color>");
-        Enviar(mensaje, companeros);
+        Debug.Log($"<color=orange>[AgentCommunicator] '{nombreAgente}': broadcast [{mensaje.performativa}] → [{string.Join(", ", compañero)}]</color>");
+        Enviar(mensaje, compañero);
     }
 
     // ===================== CONSULTAS =====================
 
     public List<FIPAMessage> GetInbox() => inbox;
 
-    public List<string> GetCompaneros()
+    public List<string> Getcompañero()
     {
         List<string> resultado = new List<string>();
         foreach (string nombre in registro.Keys)

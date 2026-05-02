@@ -5,13 +5,47 @@ public class ModuleTactical : DeliberativeModule
 {
     private SensorHogueraIndividual sensorHoguera;
 
+    [Header("Configuración de Predicción")]
+    public float tiempoProyeccionFutura = 2.0f;
+
     public override void Inicializar(BeliefBase b, AgentCommunicator comm, SubsumptionController ctrl)
     {
         base.Inicializar(b, comm, ctrl);
         sensorHoguera = controller.GetComponent<SensorHogueraIndividual>();
     }
 
-    public override void Procesar() { }
+    public override void Procesar()
+    {
+        if (creencias.TienePlanActivo)
+        {
+            Vector3 destinoActual = creencias.SectorActual.Value;
+            float distanciaAlPunto = Vector3.Distance(controller.transform.position, destinoActual);
+
+            if (distanciaAlPunto < 2.0f)
+            {
+                Debug.Log($"[TACTICAL {communicator.nombreAgente}]: Punto de sector registrado. Avanzando...");
+                creencias.AvanzarSector(); 
+            }
+            else
+            {
+                controller.InyectarPosicionLadron(destinoActual); 
+            }
+        }
+    }
+
+    public void PredecirPosicionLadron()
+    {
+        if (!creencias.posicionLadron.HasValue || creencias.velocidadLadron < 0.1f) return;
+
+        Vector3 ultimaPos = creencias.posicionLadron.Value;
+        Vector3 direccion = creencias.direccionLadron.HasValue ? creencias.direccionLadron.Value : Vector3.zero;
+        
+        Vector3 posicionFutura = ultimaPos + (direccion * creencias.velocidadLadron * tiempoProyeccionFutura);
+
+        creencias.posicionLadron = posicionFutura;
+        
+        Debug.DrawLine(ultimaPos, posicionFutura, Color.magenta, 1.0f);
+    }
 
     // ===================== PLANIFICACIÓN A* DE SECTORES =====================
 
@@ -169,15 +203,40 @@ public class ModuleTactical : DeliberativeModule
         if (contenido.StartsWith("perseguir:"))
         {
             Vector3? pos = ParsearPosicion(contenido.Substring("perseguir:".Length));
-            if (pos.HasValue) controller.InyectarPosicionLadron(pos.Value);
+            if (pos.HasValue)
+            {
+                creencias.rolActual = BeliefBase.RolCNP.Perseguidor;
+                controller.InyectarPosicionLadron(pos.Value);
+            }
         }
         else if (contenido == "cubrir_hoguera")
         {
+            creencias.rolActual = BeliefBase.RolCNP.Bloqueador;
             controller.InyectarCubrirHoguera();
         }
         else if (contenido == "cubrir_salida")
         {
+            creencias.rolActual = BeliefBase.RolCNP.Bloqueador;
             controller.InyectarAlarmaHoguera();
+        }
+        else if (contenido.StartsWith("explorar_sector:"))
+        {
+            string idsStr = contenido.Substring("explorar_sector:".Length);
+            string[] ids = idsStr.Split(',');
+
+            creencias.sectoresAsignados.Clear();
+            foreach (string idStr in ids)
+            {
+                if (int.TryParse(idStr.Trim(), out int id) && id < SectorMap.Sectores.Count)
+                    creencias.sectoresAsignados.Add(SectorMap.Sectores[id]);
+            }
+
+            if (creencias.sectoresAsignados.Count > 0)
+            {
+                creencias.rolActual = BeliefBase.RolCNP.BuscadorSectores;
+                GenerarPlanBusqueda();
+                Debug.Log($"[TACTICAL {communicator.nombreAgente}]: Sector(es) asignados y plan A* generado.");
+            }
         }
     }
 

@@ -3,6 +3,9 @@ using UnityEngine;
 public class AgentBlackboard : MonoBehaviour
 {
     [Header("Percepción del ladrón")]
+    public float velocidadLadron;
+    public Vector3 direccionLadron;
+    public float velocidadLadronFrameAnterior;
     public bool veAlLadron;
     public Vector3? ultimaPosicionLadron;
     public bool ladronTieneFuego;

@@ -6,10 +6,15 @@ public class GuardVision : MonoBehaviour
     public float anguloVision = 45f;
     public LayerMask capaObstaculos;
     public LayerMask capaLadron; 
+    
     private Vector3 ultimaPosicionDetectada;
+    
+    // NUEVO: Propiedades cinemáticas para la predicción BDI
     public bool ladronTieneFuego { get; private set; } = false;
-    private bool yaLogueadoFuego = false;
+    public float velocidadLadron { get; private set; } = 0f; 
+    public Vector3 direccionLadron { get; private set; } = Vector3.zero; 
 
+    private bool yaLogueadoFuego = false;
 
     public bool PuedeVerAlLadron()
     {
@@ -23,20 +28,27 @@ public class GuardVision : MonoBehaviour
 
         foreach (Collider objetivo in objetivosEnRango)
         {
-            Vector3 direccion = (objetivo.transform.position - transform.position).normalized;
+            Vector3 direccionHaciaObjetivo = (objetivo.transform.position - transform.position).normalized;
             float distanciaActual = Vector3.Distance(transform.position, objetivo.transform.position);
 
-            if (Vector3.Angle(transform.forward, direccion) < anguloVision)
+            if (Vector3.Angle(transform.forward, direccionHaciaObjetivo) < anguloVision)
             {
-                if (!Physics.Raycast(transform.position, direccion, distanciaActual, capaObstaculos))
+                if (!Physics.Raycast(transform.position, direccionHaciaObjetivo, distanciaActual, capaObstaculos))
                 {
                     ultimaPosicionDetectada = objetivo.transform.position;
-                    // NUEVO: buscar si el ladrón lleva el fuego activo (tag LadronConFuego en hijo)
-                    // El tag lo pone MainCharacter_Brain al activar fuegoEnAntorcha
+
+                    // EXTRACCIÓN CINEMÁTICA: Capturamos datos del CharacterController
+                    CharacterController ccLadron = objetivo.GetComponent<CharacterController>();
+                    if (ccLadron != null)
+                    {
+                        velocidadLadron = ccLadron.velocity.magnitude; 
+                        direccionLadron = ccLadron.velocity.normalized; 
+                    }
+
+                    // Comprobación de tag para fuego
                     bool fuegoActivo = objetivo.CompareTag("LadronConFuego");
                     if (!fuegoActivo)
                     {
-                        // Por si el collider detectado es el padre y el tag está en un hijo
                         fuegoActivo = objetivo.GetComponentInChildren<Transform>() != null &&
                                       objetivo.transform.CompareTag("LadronConFuego");
                     }
@@ -46,7 +58,7 @@ public class GuardVision : MonoBehaviour
                         ladronTieneFuego = true;
                         if (!yaLogueadoFuego)
                         {
-                            Debug.Log($"<color=orange>[VISION {gameObject.name}]: Veo al ladrón CON EL FUEGO. ladronTieneFuego=true</color>");
+                            Debug.Log($"<color=orange>[VISION {gameObject.name}]: Veo al ladrón CON EL FUEGO a {velocidadLadron:F1} m/s</color>");
                             yaLogueadoFuego = true;
                         }
                     }
@@ -60,6 +72,7 @@ public class GuardVision : MonoBehaviour
             }
         }
  
+        // Si no se detecta en este frame, mantenemos la última posición pero reseteamos inercia
         yaLogueadoFuego = false;
         return false;
     }

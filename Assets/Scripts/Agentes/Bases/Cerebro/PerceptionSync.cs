@@ -31,8 +31,9 @@ public class PerceptionSync : MonoBehaviour
     // Llamar al final de la fase de estado, antes de la capa deliberativa
     public void RegistrarFrame()
     {
-        bb.ladronVisibleFrameAnterior           = bb.veAlLadron;
+        bb.ladronVisibleFrameAnterior = bb.veAlLadron;
         bb.ladronVisibleFrameAnteriorTeniaFuego = bb.ladronTieneFuego;
+        bb.velocidadLadronFrameAnterior = bb.velocidadLadron;
     }
 
     // ===================== PRIVADO =====================
@@ -42,6 +43,16 @@ public class PerceptionSync : MonoBehaviour
         bb.veAlLadron    = sensorVision != null && sensorVision.PuedeVerAlLadron();
         bb.oyoAlgo       = sensorOido   != null && sensorOido.EscuchoAlgo();
         bb.posicionRuido = bb.oyoAlgo ? sensorOido.GetPosicionRuido() : (Vector3?)null;
+
+        if (bb.veAlLadron && sensorVision != null)
+        {
+            bb.velocidadLadron = sensorVision.velocidadLadron;
+            bb.direccionLadron = sensorVision.direccionLadron;
+        }
+        else
+        {
+            bb.velocidadLadron = 0f;
+        }
 
         bool puertaFisicaDetectada = sensorObjetos != null && sensorObjetos.ultimaPuertaDetectada != null;
         if (puertaFisicaDetectada && timers.PuertaEnCooldown && !timers.PuertaSupresionLogueada)

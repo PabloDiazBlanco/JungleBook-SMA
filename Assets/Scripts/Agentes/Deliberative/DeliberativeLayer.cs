@@ -39,9 +39,16 @@ public class DeliberativeLayer : MonoBehaviour
 
         crisis.Procesar();
 
-        if (controller.AcabaDeVerAlLadron && !social.IsCnpIniciado())
+        // Solo inicia CNP si no tiene rol asignado y no hay ya uno en curso
+        if (controller.AcabaDeVerAlLadron && !social.IsCnpIniciado() && creencias.rolActual == BeliefBase.RolCNP.Ninguno)
         {
             social.IniciarCNP();
+        }
+
+        // Solo predice en el frame exacto en que se pierde al ladrón (no acumula error cada frame)
+        if (controller.blackboard.acabaDePerderAlLadron && creencias.posicionLadron.HasValue)
+        {
+            tactical.PredecirPosicionLadron();
         }
 
         social.Procesar();
@@ -54,9 +61,11 @@ public class DeliberativeLayer : MonoBehaviour
         creencias.ladronTieneFuego = controller.LadronTieneFuego;
         creencias.alarmaHogueraActiva = controller.AlarmaHogueraActiva;
 
-        if (controller.VeAlLadron && controller.UltimaPosicionLadron.HasValue)
+        if (controller.VeAlLadron && controller.blackboard != null)
         {
             creencias.posicionLadron = controller.UltimaPosicionLadron;
+            creencias.direccionLadron = controller.blackboard.direccionLadron; 
+            creencias.velocidadLadron = controller.blackboard.velocidadLadron;
             creencias.timestampPosicionLadron = Time.time;
         }
         else if (creencias.posicionLadron.HasValue)
@@ -66,7 +75,9 @@ public class DeliberativeLayer : MonoBehaviour
             if (tiempoDesdeUltimoAvistamiento > creencias.tiempoVidaCreenciaLadron)
             {
                 creencias.posicionLadron = null;
-                Debug.Log($"<color=gray>[DELIBERATIVA {communicator.nombreAgente}]: Creencia de posición caducada. Olvidando al ladrón.</color>");
+                creencias.direccionLadron = Vector3.zero;
+                creencias.velocidadLadron = 0f;
+                Debug.Log($"<color=gray>[DELIBERATIVA {communicator.nombreAgente}]: Creencia caducada. Objetivo perdido.</color>");
             }
         }
     }

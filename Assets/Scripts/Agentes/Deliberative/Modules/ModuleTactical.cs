@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ModuleTactical : DeliberativeModule
 {
@@ -7,12 +8,119 @@ public class ModuleTactical : DeliberativeModule
     public override void Inicializar(BeliefBase b, AgentCommunicator comm, SubsumptionController ctrl)
     {
         base.Inicializar(b, comm, ctrl);
-        
         sensorHoguera = controller.GetComponent<SensorHogueraIndividual>();
     }
 
-    public override void Procesar()
+    public override void Procesar() { }
+
+    // ===================== PLANIFICACIÓN A* DE SECTORES =====================
+
+    public void GenerarPlanBusqueda()
     {
+        List<Vector3> sectores = creencias.sectoresAsignados;
+        if (sectores == null || sectores.Count == 0) return;
+
+        Vector3 origen = controller.transform.position;
+        List<Vector3> plan = AEstrellaSectores(origen, sectores);
+
+        creencias.planBusqueda = plan;
+        creencias.indiceSectorActual = 0;
+
+        Debug.Log($"[TACTICAL {communicator.nombreAgente}]: Plan A* generado — {plan.Count} sectores.");
+    }
+
+    private List<Vector3> AEstrellaSectores(Vector3 inicio, List<Vector3> sectores)
+    {
+        int n = sectores.Count;
+        // Cada nodo: (sectorActual=-1 es origen, visitados como bitmask, costeAcumulado, heuristica, padre)
+        var abiertos = new SortedList<float, NodoSector>();
+        var cerrados = new HashSet<string>();
+
+        NodoSector raiz = new NodoSector(-1, 0, 0f, Heuristica(-1, 0, inicio, sectores), null, inicio);
+        Insertar(abiertos, raiz);
+
+        while (abiertos.Count > 0)
+        {
+            NodoSector actual = ExtraerMinimo(abiertos);
+            string clave = actual.Clave();
+
+            if (cerrados.Contains(clave)) continue;
+            cerrados.Add(clave);
+
+            if (actual.Visitados == (1 << n) - 1)
+                return ReconstruirPlan(actual);
+
+            for (int i = 0; i < n; i++)
+            {
+                if ((actual.Visitados & (1 << i)) != 0) continue;
+
+                Vector3 posActual = actual.SectorIdx == -1 ? inicio : sectores[actual.SectorIdx];
+                float coste = actual.Coste + Vector3.Distance(posActual, sectores[i]);
+                int visitados = actual.Visitados | (1 << i);
+                float h = Heuristica(i, visitados, sectores[i], sectores);
+
+                NodoSector hijo = new NodoSector(i, visitados, coste, h, actual, sectores[i]);
+                if (!cerrados.Contains(hijo.Clave()))
+                    Insertar(abiertos, hijo);
+            }
+        }
+
+        return new List<Vector3>(sectores);
+    }
+
+    private float Heuristica(int sectorActual, int visitados, Vector3 posActual, List<Vector3> sectores)
+    {
+        float minDist = float.MaxValue;
+        for (int i = 0; i < sectores.Count; i++)
+        {
+            if ((visitados & (1 << i)) == 0)
+                minDist = Mathf.Min(minDist, Vector3.Distance(posActual, sectores[i]));
+        }
+        return minDist == float.MaxValue ? 0f : minDist;
+    }
+
+    private List<Vector3> ReconstruirPlan(NodoSector nodo)
+    {
+        List<Vector3> plan = new List<Vector3>();
+        NodoSector actual = nodo;
+        while (actual != null && actual.SectorIdx != -1)
+        {
+            plan.Insert(0, actual.Posicion);
+            actual = actual.Padre;
+        }
+        return plan;
+    }
+
+    private void Insertar(SortedList<float, NodoSector> lista, NodoSector nodo)
+    {
+        float prioridad = nodo.Coste + nodo.H;
+        while (lista.ContainsKey(prioridad)) prioridad += 0.0001f;
+        lista.Add(prioridad, nodo);
+    }
+
+    private NodoSector ExtraerMinimo(SortedList<float, NodoSector> lista)
+    {
+        NodoSector nodo = lista.Values[0];
+        lista.RemoveAt(0);
+        return nodo;
+    }
+
+    private class NodoSector
+    {
+        public int SectorIdx;
+        public int Visitados;
+        public float Coste;
+        public float H;
+        public NodoSector Padre;
+        public Vector3 Posicion;
+
+        public NodoSector(int idx, int visitados, float coste, float h, NodoSector padre, Vector3 pos)
+        {
+            SectorIdx = idx; Visitados = visitados; Coste = coste;
+            H = h; Padre = padre; Posicion = pos;
+        }
+
+        public string Clave() => $"{SectorIdx}_{Visitados}";
     }
 
 

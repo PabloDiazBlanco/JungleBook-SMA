@@ -90,7 +90,7 @@ public class Busqueda : GuardBehavior
 
     private float ObtenerRadio()
     {
-        if (EsCicloAmplio()) return controller.radioBusquedaAmplia;
+        if (EsCicloAmplio()) return controller.alertCycle.radioBusquedaAmplia;
         return radioInspeccion;
     }
 }

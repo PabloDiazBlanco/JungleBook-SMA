@@ -20,6 +20,9 @@ public class AgentCommunicator : MonoBehaviour
     private List<FIPAMessage> historialMensajes = new List<FIPAMessage>();
 
     public List<FIPAMessage> GetHistorial() => historialMensajes;
+
+    public List<FIPAMessage> GetHistorialPorConversacion(string convId) =>
+        historialMensajes.FindAll(m => m.conversationId == convId);
     // ===================== CICLO DE VIDA =====================
 
     void Start()

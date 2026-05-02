@@ -277,7 +277,22 @@ PrefabInstance:
       addedObject: {fileID: 10459469}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 10459468}
+      addedObject: {fileID: 10459482}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459481}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459480}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459484}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459485}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459487}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 10459467}
@@ -468,34 +483,6 @@ MonoBehaviour:
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
---- !u!114 &10459468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 10459459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 10459467}
-  sensorOido: {fileID: 10459473}
-  sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 10459466}
-  behaviors: []
-  tiempoBusqueda: 10
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 10459479}
 --- !u!136 &10459469
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -626,6 +613,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79aeacb65252443b8634933a3bd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
+--- !u!114 &10459480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &10459481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &10459482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 10459481}
+  timers: {fileID: 10459480}
+  perceptionSync: {fileID: 10459484}
+  fireAlarm: {fileID: 10459485}
+  alertCycle: {fileID: 10459487}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 10459479}
+--- !u!114 &10459484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &10459485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &10459487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1001 &12447510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11681,10 +11776,25 @@ PrefabInstance:
       addedObject: {fileID: 324811760}
     - targetCorrespondingSourceObject: {fileID: 8867960657160430145, guid: 3e82f3d8ae06f98498e073919a0bddf3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 324811759}
+      addedObject: {fileID: 324811771}
     - targetCorrespondingSourceObject: {fileID: 8867960657160430145, guid: 3e82f3d8ae06f98498e073919a0bddf3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 324811758}
+      addedObject: {fileID: 324811773}
+    - targetCorrespondingSourceObject: {fileID: 8867960657160430145, guid: 3e82f3d8ae06f98498e073919a0bddf3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 324811772}
+    - targetCorrespondingSourceObject: {fileID: 8867960657160430145, guid: 3e82f3d8ae06f98498e073919a0bddf3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 324811774}
+    - targetCorrespondingSourceObject: {fileID: 8867960657160430145, guid: 3e82f3d8ae06f98498e073919a0bddf3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 324811775}
+    - targetCorrespondingSourceObject: {fileID: 8867960657160430145, guid: 3e82f3d8ae06f98498e073919a0bddf3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 324811778}
+    - targetCorrespondingSourceObject: {fileID: 8867960657160430145, guid: 3e82f3d8ae06f98498e073919a0bddf3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 324811759}
     - targetCorrespondingSourceObject: {fileID: 8867960657160430145, guid: 3e82f3d8ae06f98498e073919a0bddf3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 324811757}
@@ -11754,34 +11864,6 @@ MonoBehaviour:
   distanciaLlegada: 1.5
   velocidadNormal: 8
   velocidadConFuego: 10
---- !u!114 &324811758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324811754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 324811759}
-  sensorOido: {fileID: 0}
-  sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 0}
-  behaviors: []
-  tiempoBusqueda: 10
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 0}
 --- !u!114 &324811759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11843,6 +11925,114 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LoboAnimationController
   umbralCaminar: 0.1
   umbralCorrer: 4.5
+--- !u!114 &324811771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324811754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 324811773}
+  timers: {fileID: 324811772}
+  perceptionSync: {fileID: 324811774}
+  fireAlarm: {fileID: 324811775}
+  alertCycle: {fileID: 324811778}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 0}
+--- !u!114 &324811772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324811754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &324811773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324811754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &324811774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324811754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &324811775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324811754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &324811778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324811754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1 &327604740
 GameObject:
   m_ObjectHideFlags: 0
@@ -13195,7 +13385,22 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1353491092}
+      addedObject: {fileID: 1353491101}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1353491100}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1353491099}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1353491103}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1353491104}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1353491106}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1353491091}
@@ -19102,7 +19307,22 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 529498524}
+      addedObject: {fileID: 529498536}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529498535}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529498534}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529498538}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529498539}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529498541}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529498527}
@@ -19355,34 +19575,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
   priority: 2
---- !u!114 &529498524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529498513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 529498519}
-  sensorOido: {fileID: 0}
-  sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 529498527}
-  behaviors: []
-  tiempoBusqueda: 10
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 529498533}
 --- !u!114 &529498527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19425,6 +19617,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79aeacb65252443b8634933a3bd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
+--- !u!114 &529498534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &529498535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &529498536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 529498535}
+  timers: {fileID: 529498534}
+  perceptionSync: {fileID: 529498538}
+  fireAlarm: {fileID: 529498539}
+  alertCycle: {fileID: 529498541}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 529498533}
+--- !u!114 &529498538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &529498539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &529498541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1001 &533515261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22253,34 +22553,6 @@ MonoBehaviour:
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
---- !u!114 &586697698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 586697685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 586697691}
-  sensorOido: {fileID: 586697697}
-  sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 586697696}
-  behaviors: []
-  tiempoBusqueda: 10
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 586697704}
 --- !u!114 &586697700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22306,6 +22578,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79aeacb65252443b8634933a3bd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
+--- !u!114 &586697705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &586697706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &586697707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 586697706}
+  timers: {fileID: 586697705}
+  perceptionSync: {fileID: 586697709}
+  fireAlarm: {fileID: 586697710}
+  alertCycle: {fileID: 586697712}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 586697704}
+--- !u!114 &586697709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &586697710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &586697712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1001 &586706943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35657,7 +36037,22 @@ PrefabInstance:
       addedObject: {fileID: 2143201464}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2143201459}
+      addedObject: {fileID: 2143201475}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201474}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201473}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201477}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201478}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201480}
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2143201458}
@@ -41112,7 +41507,22 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1019043334}
+      addedObject: {fileID: 1019043347}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043346}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043345}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043349}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043350}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043352}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043336}
@@ -41390,34 +41800,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   ultimaPuertaDetectada: {fileID: 0}
---- !u!114 &1019043334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019043322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 1019043328}
-  sensorOido: {fileID: 1019043336}
-  sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 1019043333}
-  behaviors: []
-  tiempoBusqueda: 10
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 1019043344}
 --- !u!114 &1019043336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41476,6 +41858,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79aeacb65252443b8634933a3bd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
+--- !u!114 &1019043345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &1019043346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &1019043347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 1019043346}
+  timers: {fileID: 1019043345}
+  perceptionSync: {fileID: 1019043349}
+  fireAlarm: {fileID: 1019043350}
+  alertCycle: {fileID: 1019043352}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 1019043344}
+--- !u!114 &1019043349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &1019043350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &1019043352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -42903,7 +43393,22 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1063662416}
+      addedObject: {fileID: 1063662433}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063662432}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063662431}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063662435}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063662436}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063662438}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1063662424}
@@ -43020,34 +43525,6 @@ MonoBehaviour:
   priority: 3
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
---- !u!114 &1063662416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063662411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 1063662412}
-  sensorOido: {fileID: 0}
-  sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 1063662424}
-  behaviors: []
-  tiempoBusqueda: 10
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 1063662430}
 --- !u!4 &1063662418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3611817473983491392, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
@@ -43171,6 +43648,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79aeacb65252443b8634933a3bd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
+--- !u!114 &1063662431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &1063662432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &1063662433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 1063662432}
+  timers: {fileID: 1063662431}
+  perceptionSync: {fileID: 1063662435}
+  fireAlarm: {fileID: 1063662436}
+  alertCycle: {fileID: 1063662438}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 1063662430}
+--- !u!114 &1063662435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &1063662436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &1063662438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1001 &1063838872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54734,34 +55319,6 @@ MonoBehaviour:
   hogueraDetectada: 0
   haVistoHogueraAlgunaVez: 0
   hogueraEnCampoDeVision: 0
---- !u!114 &1353491092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353491076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 1353491089}
-  sensorOido: {fileID: 1353491088}
-  sensorHoguera: {fileID: 1353491091}
-  sensorObjetos: {fileID: 1353491090}
-  behaviors: []
-  tiempoBusqueda: 5
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 1353491098}
 --- !u!114 &1353491094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54787,6 +55344,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79aeacb65252443b8634933a3bd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
+--- !u!114 &1353491099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353491076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &1353491100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353491076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &1353491101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353491076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 1353491100}
+  timers: {fileID: 1353491099}
+  perceptionSync: {fileID: 1353491103}
+  fireAlarm: {fileID: 1353491104}
+  alertCycle: {fileID: 1353491106}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 1353491098}
+--- !u!114 &1353491103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353491076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &1353491104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353491076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &1353491106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353491076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1001 &1354259370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56623,7 +57288,22 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1381432413}
+      addedObject: {fileID: 1381432432}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432431}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432430}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432434}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432435}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432437}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432418}
@@ -56897,34 +57577,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
   priority: 4
---- !u!114 &1381432413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381432402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 1381432408}
-  sensorOido: {fileID: 1381432421}
-  sensorHoguera: {fileID: 1381432418}
-  sensorObjetos: {fileID: 1381432419}
-  behaviors: []
-  tiempoBusqueda: 5
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 1381432429}
 --- !u!114 &1381432416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57056,6 +57708,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79aeacb65252443b8634933a3bd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
+--- !u!114 &1381432430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &1381432431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &1381432432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 1381432431}
+  timers: {fileID: 1381432430}
+  perceptionSync: {fileID: 1381432434}
+  fireAlarm: {fileID: 1381432435}
+  alertCycle: {fileID: 1381432437}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 1381432429}
+--- !u!114 &1381432434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &1381432435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &1381432437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1 &1382708965 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}
@@ -68179,7 +68939,22 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 586697698}
+      addedObject: {fileID: 586697707}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586697706}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586697705}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586697709}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586697710}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586697712}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 586697697}
@@ -90096,34 +90871,6 @@ MonoBehaviour:
   capaLadron:
     serializedVersion: 2
     m_Bits: 2048
---- !u!114 &2143201459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2143201451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a853cba276ab84f83bb15e58655694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
-  sensorVision: {fileID: 2143201458}
-  sensorOido: {fileID: 2143201466}
-  sensorHoguera: {fileID: 0}
-  sensorObjetos: {fileID: 2143201457}
-  behaviors: []
-  tiempoBusqueda: 10
-  framesParaAlarmaHoguera: 5
-  busquedaAgotada: 0
-  radioBusquedaAmplia: 25
-  ciclosBusquedaCompletados: 0
-  tiempoGraciaPostComprobacion: 5
-  tiempoCooldownInvestigacion: 5
-  investigacionEnCooldown: 0
-  tiempoCooldownPuerta: 8
-  maxInterrupcionesCiclo: 3
-  deliberativa: {fileID: 2143201472}
 --- !u!54 &2143201460
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -90295,6 +91042,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79aeacb65252443b8634933a3bd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliberativeLayer
+--- !u!114 &2143201473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d0004f9fc0fbc46be7cedc1c954bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentTimerManager
+  tiempoBusqueda: 10
+  tiempoGraciaPostComprobacion: 5
+  tiempoCooldownInvestigacion: 5
+  tiempoCooldownPuerta: 8
+--- !u!114 &2143201474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6f06bf9cc52584ea56c7df89e032c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBlackboard
+  veAlLadron: 0
+  ladronTieneFuego: 0
+  ladronPerdidoConFuego: 0
+  ladronVisibleFrameAnterior: 0
+  ladronVisibleFrameAnteriorTeniaFuego: 0
+  acabaDeVerAlLadron: 0
+  acabaDePerderAlLadron: 0
+  oyoAlgo: 0
+  hogueraDetectada: 0
+  hogueraEnCampoDeVision: 0
+  enAlerta: 0
+  alarmaHogueraActiva: 0
+  busquedaAgotada: 0
+  busquedaEsPorFuego: 0
+  busquedaForzada: 0
+  framesSinVerHoguera: 0
+  ciclosBusquedaCompletados: 0
+  contadorResetsCiclo: 0
+--- !u!114 &2143201475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d853f794091ee5459d06b81a68f5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubsumptionController
+  blackboard: {fileID: 2143201474}
+  timers: {fileID: 2143201473}
+  perceptionSync: {fileID: 2143201477}
+  fireAlarm: {fileID: 2143201478}
+  alertCycle: {fileID: 2143201480}
+  sensorVision: {fileID: 0}
+  sensorOido: {fileID: 0}
+  sensorHoguera: {fileID: 0}
+  sensorObjetos: {fileID: 0}
+  behaviors: []
+  deliberativa: {fileID: 2143201472}
+--- !u!114 &2143201477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b375c6aa726bcd42aa4c2f41af5e19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerceptionSync
+--- !u!114 &2143201478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0dfd304b9cf5c2439e5a11ad7014ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireAlarmMonitor
+  framesParaAlarmaHoguera: 10
+--- !u!114 &2143201480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4f02711a5d2b04e84f8f88fc53c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
+  maxInterrupcionesCiclo: 3
+  radioBusquedaAmplia: 25
 --- !u!1 &2144177625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}

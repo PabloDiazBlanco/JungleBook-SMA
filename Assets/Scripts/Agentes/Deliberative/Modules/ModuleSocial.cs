@@ -91,6 +91,10 @@ public class ModuleSocial : DeliberativeModule
 
     private void ResolverCNP()
     {
+        List<FIPAMessage> conversacion = communicator.GetHistorialPorConversacion(convIdCNP);
+        int rechazos = conversacion.FindAll(m => m.performativa == FIPAPerformativa.REFUSE).Count;
+        Debug.Log($"[SOCIAL {communicator.nombreAgente}]: CNP '{convIdCNP}' — {conversacion.Count} mensajes, {rechazos} rechazos.");
+
         List<FIPAMessage> propuestas = new List<FIPAMessage>();
         foreach (FIPAMessage msg in propuestasCNP)
             if (msg.performativa == FIPAPerformativa.PROPOSE) propuestas.Add(msg);

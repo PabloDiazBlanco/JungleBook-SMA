@@ -168,7 +168,6 @@ public class SubsumptionController : MonoBehaviour
     public void NotificarInvestigacionPuertaCompletada()
     {
         timers.IniciarCooldownPuerta();
-        Debug.Log($"[CEREBRO {gameObject.name}]: Puerta investigada. Cooldown {timers.tiempoCooldownPuerta:F1}s activo. posicionPuerta se suprime hasta que expire.");
     }
 
     public void NotificarInvestigacionRuidoCompletada()

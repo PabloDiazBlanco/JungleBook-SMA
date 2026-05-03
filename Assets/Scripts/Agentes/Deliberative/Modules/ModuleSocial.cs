@@ -13,6 +13,7 @@ public class ModuleSocial : DeliberativeModule
     private float cronometroCNP;
     private string convIdCNP = "";
     private string tipoCNP = "";
+    private string convIdCFPRespondido = "";
     private List<FIPAMessage> propuestasCNP = new List<FIPAMessage>();
     
     // Referencia al nuevo módulo táctico para delegar cálculos y acciones físicas
@@ -95,6 +96,7 @@ public class ModuleSocial : DeliberativeModule
     {
         // El iniciador ya cuenta como perseguidor; solo asignamos 2 más desde propuestas
         const int MAX_PERSEGUIDORES_PROPUESTAS = 2;
+        const int MAX_BLOQUEADORES_SALIDA = 2;
 
         List<FIPAMessage> propuestas = new List<FIPAMessage>();
         foreach (FIPAMessage msg in propuestasCNP)
@@ -132,8 +134,8 @@ public class ModuleSocial : DeliberativeModule
 
         int numPerseguidores = Mathf.Min(MAX_PERSEGUIDORES_PROPUESTAS, candidatos.Count);
 
-        // Si el CNP es de tipo hoguera, asignar el candidato más cercano a ella como Bloqueador
-        int idxBloqueador = -1;
+        // Bloqueadores hoguera: 1 candidato más cercano a la hoguera (dobj), solo para CNP hoguera
+        int idxBloqueadorHoguera = -1;
         if (tipoCNP == "hoguera" && candidatos.Count > numPerseguidores)
         {
             int minDobj = int.MaxValue;
@@ -142,9 +144,22 @@ public class ModuleSocial : DeliberativeModule
                 if (candidatos[i].dobj < minDobj)
                 {
                     minDobj = candidatos[i].dobj;
-                    idxBloqueador = i;
+                    idxBloqueadorHoguera = i;
                 }
             }
+        }
+
+        // Bloqueadores salida: 2 candidatos más cercanos a la puerta (dobj), solo para CNP salida
+        var idxsBloqueadoresSalida = new System.Collections.Generic.HashSet<int>();
+        if (tipoCNP == "salida" && candidatos.Count > numPerseguidores)
+        {
+            var restantes = new List<(int idx, int dobj)>();
+            for (int i = numPerseguidores; i < candidatos.Count; i++)
+                restantes.Add((i, candidatos[i].dobj));
+            restantes.Sort((a, b) => a.dobj.CompareTo(b.dobj));
+            int numBloq = Mathf.Min(MAX_BLOQUEADORES_SALIDA, restantes.Count);
+            for (int i = 0; i < numBloq; i++)
+                idxsBloqueadoresSalida.Add(restantes[i].idx);
         }
 
         // Preparar lista de IDs de sector disponibles para los buscadores
@@ -152,7 +167,9 @@ public class ModuleSocial : DeliberativeModule
         var idsDisponibles = new List<int>();
         for (int i = 0; i < totalSectores; i++) idsDisponibles.Add(i);
 
-        int numBuscadores = candidatos.Count - numPerseguidores - (idxBloqueador >= 0 ? 1 : 0);
+        int numBuscadores = candidatos.Count - numPerseguidores
+            - (idxBloqueadorHoguera >= 0 ? 1 : 0)
+            - idxsBloqueadoresSalida.Count;
 
         int buscadorIdx = 0;
         for (int i = 0; i < candidatos.Count; i++)
@@ -162,10 +179,15 @@ public class ModuleSocial : DeliberativeModule
                 EnviarAccept(candidatos[i].msg, contenidoPerseguir);
                 Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} PERSEGUIDOR (dl={candidatos[i].dl})");
             }
-            else if (i == idxBloqueador)
+            else if (i == idxBloqueadorHoguera)
             {
                 EnviarAccept(candidatos[i].msg, "cubrir_hoguera");
                 Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} BLOQUEADOR hoguera (dobj={candidatos[i].dobj})");
+            }
+            else if (idxsBloqueadoresSalida.Contains(i))
+            {
+                EnviarAccept(candidatos[i].msg, "cubrir_salida");
+                Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} BLOQUEADOR salida (dobj={candidatos[i].dobj})");
             }
             else
             {
@@ -209,6 +231,7 @@ public class ModuleSocial : DeliberativeModule
             string respuestaPropuesta = tactical.CalcularPropuesta(msg.contenido);
             if (string.IsNullOrEmpty(respuestaPropuesta)) return;
 
+            convIdCFPRespondido = msg.conversationId;
             FIPAMessage propuesta = new FIPAMessage(
                 FIPAPerformativa.PROPOSE, communicator.nombreAgente, msg.emisor,
                 respuestaPropuesta, msg.conversationId, msg.conversationId);
@@ -224,7 +247,7 @@ public class ModuleSocial : DeliberativeModule
 
     private void ProcesarAceptacion(FIPAMessage msg)
     {
-        if (creencias.alarmaHogueraActiva) return;
+        if (msg.conversationId != convIdCFPRespondido) return;
         if (tactical == null) tactical = controller.GetComponent<ModuleTactical>();
 
         creencias.rolAsignadoExternamente = true;

@@ -17,6 +17,7 @@ public class SensorHogueraIndividual : MonoBehaviour
 
     private bool EsAldeanoPrincipal => gameObject.name == "Aldeano3";
     private bool hogueraDetectadaAnterior = false;
+    private bool visionBloqueadaLogueada = false;
 
     void Update()
     {
@@ -96,6 +97,7 @@ public class SensorHogueraIndividual : MonoBehaviour
             if (hit.collider.CompareTag("FuegoHoguera"))
             {
                 hogueraDetectada = true;
+                visionBloqueadaLogueada = false;
                 posicionHogueraConocida = hit.collider.transform.position;
                 Debug.DrawLine(origen, hit.point, Color.green);
                 return;
@@ -105,8 +107,11 @@ public class SensorHogueraIndividual : MonoBehaviour
             if (((1 << hit.collider.gameObject.layer) & capaObstaculos.value) != 0)
             {
                 Debug.DrawLine(origen, hit.point, Color.red);
-                if (EsAldeanoPrincipal)
-                    Debug.Log($"<color=red>[SENSOR {gameObject.name}]: Visión bloqueada por obstáculo '{hit.collider.name}'</color>");
+                if (EsAldeanoPrincipal && !visionBloqueadaLogueada)
+                {
+                    Debug.Log($"<color=red>[SENSOR {gameObject.name}]: Visión bloqueada por '{hit.collider.name}'</color>");
+                    visionBloqueadaLogueada = true;
+                }
                 return;
             }
 

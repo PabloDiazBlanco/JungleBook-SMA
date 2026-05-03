@@ -55,11 +55,6 @@ public class PerceptionSync : MonoBehaviour
         }
 
         bool puertaFisicaDetectada = sensorObjetos != null && sensorObjetos.ultimaPuertaDetectada != null;
-        if (puertaFisicaDetectada && timers.PuertaEnCooldown && !timers.PuertaSupresionLogueada)
-        {
-            Debug.Log($"[CEREBRO {gameObject.name}]: Puerta detectada físicamente pero suprimida por cooldown.");
-            timers.PuertaSupresionLogueada = true;
-        }
         if (!timers.PuertaEnCooldown) timers.PuertaSupresionLogueada = false;
 
         bb.posicionPuerta = (!timers.PuertaEnCooldown && puertaFisicaDetectada)

@@ -42,10 +42,7 @@ public class AgentTimerManager : MonoBehaviour
         {
             cronometroPuerta -= dt;
             if (cronometroPuerta <= 0f)
-            {
                 puertaSupresionLogueada = false;
-                Debug.Log($"[TIMERS {gameObject.name}]: Cooldown de puerta terminado.");
-            }
         }
     }
 

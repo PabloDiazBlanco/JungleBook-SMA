@@ -12,10 +12,19 @@ public class BloquearSalida : GuardBehavior
 
     private bool haLlegado = false;
     private bool yaLogueado = false;
+    private SubsumptionController controller;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        controller = GetComponent<SubsumptionController>();
+    }
 
     public override bool CanActivate()
     {
-        return alarmaHogueraActiva;
+        if (!alarmaHogueraActiva) return false;
+        var rol = controller?.deliberativa?.creencias.rolActual;
+        return rol == BeliefBase.RolCNP.Bloqueador;
     }
 
     public override void Action()

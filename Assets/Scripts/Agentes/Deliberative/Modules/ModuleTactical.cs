@@ -174,6 +174,8 @@ public class ModuleTactical : DeliberativeModule
         return $"{Mathf.RoundToInt(p.x)},{Mathf.RoundToInt(p.y)},{Mathf.RoundToInt(p.z)}";
     }
 
+    private static readonly Vector3 PosicionSalida = new Vector3(40.06f, 0.7621841f, 10.15f);
+
     public string GetPosicionObjetivo(string tipo)
     {
         if (tipo == "hoguera" && sensorHoguera?.posicionHogueraConocida != null)
@@ -181,7 +183,13 @@ public class ModuleTactical : DeliberativeModule
             Vector3 p = sensorHoguera.posicionHogueraConocida.Value;
             return $"{Mathf.RoundToInt(p.x)},{Mathf.RoundToInt(p.y)},{Mathf.RoundToInt(p.z)}";
         }
-        
+
+        if (tipo == "salida")
+        {
+            Vector3 p = PosicionSalida;
+            return $"{Mathf.RoundToInt(p.x)},{Mathf.RoundToInt(p.y)},{Mathf.RoundToInt(p.z)}";
+        }
+
         return GetPosicionLadron();
     }
 

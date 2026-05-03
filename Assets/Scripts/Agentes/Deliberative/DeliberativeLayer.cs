@@ -40,12 +40,12 @@ public class DeliberativeLayer : MonoBehaviour
 
         crisis.Procesar();
 
-        // Solo liberar rol si fue asignado externamente (por otro agente vía CNP)
-        // Un perseguidor auto-asignado no cancela su rol al volver a ver al ladrón
-        if (controller.AcabaDeVerAlLadron && creencias.rolAsignadoExternamente)
+        // Solo BuscadorSectores abandona su misión al ver al ladrón; Perseguidor y Bloqueador la mantienen
+        if (controller.AcabaDeVerAlLadron && creencias.rolAsignadoExternamente
+            && creencias.rolActual == BeliefBase.RolCNP.BuscadorSectores)
         {
             creencias.CancelarPlan();
-            Debug.Log($"[DELIBERATIVA {communicator.nombreAgente}]: Rol liberado al ver al ladrón — relanzando CNP.");
+            Debug.Log($"[DELIBERATIVA {communicator.nombreAgente}]: BuscadorSectores libera rol al ver al ladrón — relanzando CNP.");
         }
 
         // Al activarse la alarma de hoguera (transición), liberar roles para participar en el CNP de salida

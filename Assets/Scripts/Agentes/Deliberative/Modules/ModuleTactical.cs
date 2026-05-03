@@ -202,6 +202,17 @@ public class ModuleTactical : DeliberativeModule
     public string CalcularPropuesta(string contenidoCFP)
     {
         string[] partes = contenidoCFP.Split('|');
+
+        // Formato crisis: "bloqueo|puerta:{x},{y},{z}"
+        if (partes.Length == 2 && partes[0] == "bloqueo")
+        {
+            Vector3? posPuerta = ParsearPosicion(partes[1].Substring("puerta:".Length));
+            if (!posPuerta.HasValue) return "";
+            int dp = Mathf.RoundToInt(Vector3.Distance(controller.transform.position, posPuerta.Value));
+            return $"dp:{dp}";
+        }
+
+        // Formato normal: "{tipo}|ladron:{x},{y},{z}|obj:{x},{y},{z}"
         if (partes.Length != 3) return "";
 
         Vector3? posLadron = ParsearPosicion(partes[1].Substring("ladron:".Length));
@@ -231,6 +242,11 @@ public class ModuleTactical : DeliberativeModule
         else if (contenido == "cubrir_hoguera")
         {
             creencias.rolActual = BeliefBase.RolCNP.Bloqueador;
+            controller.InyectarCubrirHoguera();
+        }
+        else if (contenido == "comprobar_hoguera")
+        {
+            creencias.rolActual = BeliefBase.RolCNP.Vigilante;
             controller.InyectarCubrirHoguera();
         }
         else if (contenido == "cubrir_salida")

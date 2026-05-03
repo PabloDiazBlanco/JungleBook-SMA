@@ -94,8 +94,6 @@ public class ModuleSocial : DeliberativeModule
 
     private void ResolverCNP()
     {
-        // El iniciador ya cuenta como perseguidor; solo asignamos 2 más desde propuestas
-        const int MAX_PERSEGUIDORES_PROPUESTAS = 2;
         const int MAX_BLOQUEADORES_SALIDA = 2;
 
         List<FIPAMessage> propuestas = new List<FIPAMessage>();
@@ -114,7 +112,7 @@ public class ModuleSocial : DeliberativeModule
             return;
         }
 
-        // El iniciador se asigna como perseguidor al confirmar que hay colaboradores
+        // El manager se asigna Perseguidor (acompañante): también persigue al ladrón
         creencias.rolActual = BeliefBase.RolCNP.Perseguidor;
         creencias.rolAsignadoExternamente = false;
 
@@ -132,10 +130,12 @@ public class ModuleSocial : DeliberativeModule
 
         string contenidoPerseguir = tactical.GetComandoPersecucion();
 
-        int numPerseguidores = Mathf.Min(MAX_PERSEGUIDORES_PROPUESTAS, candidatos.Count);
+        // hoguera: 1 perseguidor de propuestas + manager como acompañante
+        // salida:  2 perseguidores de propuestas
+        int numPerseguidores = Mathf.Min(tipoCNP == "hoguera" ? 1 : 2, candidatos.Count);
 
-        // Bloqueadores hoguera: 1 candidato más cercano a la hoguera (dobj), solo para CNP hoguera
-        int idxBloqueadorHoguera = -1;
+        // Vigilante hoguera: más cercano a la hoguera (dobj) de los restantes, solo CNP hoguera
+        int idxVigilanteHoguera = -1;
         if (tipoCNP == "hoguera" && candidatos.Count > numPerseguidores)
         {
             int minDobj = int.MaxValue;
@@ -144,12 +144,12 @@ public class ModuleSocial : DeliberativeModule
                 if (candidatos[i].dobj < minDobj)
                 {
                     minDobj = candidatos[i].dobj;
-                    idxBloqueadorHoguera = i;
+                    idxVigilanteHoguera = i;
                 }
             }
         }
 
-        // Bloqueadores salida: 2 candidatos más cercanos a la puerta (dobj), solo para CNP salida
+        // Bloqueadores salida: 2 más cercanos a la puerta (dobj), solo CNP salida
         var idxsBloqueadoresSalida = new System.Collections.Generic.HashSet<int>();
         if (tipoCNP == "salida" && candidatos.Count > numPerseguidores)
         {
@@ -168,7 +168,7 @@ public class ModuleSocial : DeliberativeModule
         for (int i = 0; i < totalSectores; i++) idsDisponibles.Add(i);
 
         int numBuscadores = candidatos.Count - numPerseguidores
-            - (idxBloqueadorHoguera >= 0 ? 1 : 0)
+            - (idxVigilanteHoguera >= 0 ? 1 : 0)
             - idxsBloqueadoresSalida.Count;
 
         int buscadorIdx = 0;
@@ -179,10 +179,10 @@ public class ModuleSocial : DeliberativeModule
                 EnviarAccept(candidatos[i].msg, contenidoPerseguir);
                 Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} PERSEGUIDOR (dl={candidatos[i].dl})");
             }
-            else if (i == idxBloqueadorHoguera)
+            else if (i == idxVigilanteHoguera)
             {
-                EnviarAccept(candidatos[i].msg, "cubrir_hoguera");
-                Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} BLOQUEADOR hoguera (dobj={candidatos[i].dobj})");
+                EnviarAccept(candidatos[i].msg, "comprobar_hoguera");
+                Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} VIGILANTE hoguera (dobj={candidatos[i].dobj})");
             }
             else if (idxsBloqueadoresSalida.Contains(i))
             {
@@ -218,8 +218,18 @@ public class ModuleSocial : DeliberativeModule
     {
         if (tactical == null) tactical = controller.GetComponent<ModuleTactical>();
 
-        // Perseguidor y Bloqueador rechazan (misiones críticas); BuscadorSectores puede reasignarse
-        if (creencias.rolActual == BeliefBase.RolCNP.Perseguidor || creencias.rolActual == BeliefBase.RolCNP.Bloqueador)
+        string tipoCFP = msg.contenido.Split('|')[0];
+        bool esCrisis = tipoCFP == "bloqueo";
+
+        // CNP crisis (bloqueo): solo rechaza quien está en persecución
+        // CNP normal: solo rechazan Perseguidor y Bloqueador (misiones críticas)
+        // Vigilante puede participar en nuevos CNP (su rol se liberará al aceptar uno nuevo)
+        bool debeRechazar = esCrisis
+            ? creencias.rolActual == BeliefBase.RolCNP.Perseguidor
+            : (creencias.rolActual == BeliefBase.RolCNP.Perseguidor
+               || creencias.rolActual == BeliefBase.RolCNP.Bloqueador);
+
+        if (debeRechazar)
         {
             FIPAMessage rechazo = new FIPAMessage(
                 FIPAPerformativa.REFUSE, communicator.nombreAgente, msg.emisor,

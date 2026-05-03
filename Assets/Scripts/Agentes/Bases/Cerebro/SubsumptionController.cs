@@ -128,6 +128,12 @@ public class SubsumptionController : MonoBehaviour
     {
         if (deliberativa != null && deliberativa.creencias.posicionLadron == null)
         {
+            // Si el agente tiene rol Perseguidor y aún tiene cronómetro de búsqueda activo,
+            // no borrar la última posición: debe investigar el entorno donde perdió al ladrón.
+            bool esPerseguidor = deliberativa.creencias.rolActual == BeliefBase.RolCNP.Perseguidor;
+            bool busquedaViva  = timers.CronometroBusqueda > 0f;
+            if (esPerseguidor && busquedaViva) return;
+
             if (!bb.veAlLadron && !bb.oyoAlgo && bb.ultimaPosicionLadron != null)
             {
                 bb.ultimaPosicionLadron = null;

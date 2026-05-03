@@ -34,9 +34,10 @@ public class DeliberativeLayer : MonoBehaviour
 
     public void Procesar()
     {
-        if (communicator == null) return;
-
+        // ActualizarCreencias no requiere communicator — el lobo también necesita actualizar
         ActualizarCreencias();
+
+        if (communicator == null) return;
 
         crisis.Procesar();
 
@@ -74,6 +75,8 @@ public class DeliberativeLayer : MonoBehaviour
         tactical.Procesar();
     }
 
+    private bool ladronTeniaFuegoFrameAnterior = false;
+
     private void ActualizarCreencias()
     {
         creencias.ladronVisto = controller.VeAlLadron;
@@ -91,7 +94,13 @@ public class DeliberativeLayer : MonoBehaviour
         {
             float tiempoDesdeUltimoAvistamiento = Time.time - creencias.timestampPosicionLadron;
 
-            if (tiempoDesdeUltimoAvistamiento > creencias.tiempoVidaCreenciaLadron)
+            // Si el ladrón tiene fuego, extender el TTL para no perder la creencia
+            // justo cuando más la necesitamos para lanzar el CNP de salida
+            float ttlEfectivo = creencias.ladronTieneFuego
+                ? creencias.tiempoVidaCreenciaLadron * 2f
+                : creencias.tiempoVidaCreenciaLadron;
+
+            if (tiempoDesdeUltimoAvistamiento > ttlEfectivo)
             {
                 creencias.posicionLadron = null;
                 creencias.direccionLadron = Vector3.zero;
@@ -105,5 +114,19 @@ public class DeliberativeLayer : MonoBehaviour
                 Debug.Log($"<color=gray>[DELIBERATIVA {communicator.nombreAgente}]: Creencia caducada. Objetivo perdido.</color>");
             }
         }
+
+        // Detectar transición: ladrón acaba de coger el fuego
+        // Lanzar CNP de salida inmediatamente si tenemos creencia de posición
+        bool ladronAcabaDeCogeFuego = creencias.ladronTieneFuego && !ladronTeniaFuegoFrameAnterior;
+        if (ladronAcabaDeCogeFuego && creencias.posicionLadron.HasValue
+            && !social.IsCnpIniciado() && social.CooldownExpirado())
+        {
+            // Liberar rol actual para poder participar como manager
+            if (creencias.rolActual != BeliefBase.RolCNP.Ninguno)
+                creencias.CancelarPlan();
+            social.IniciarCNP();
+            Debug.Log($"<color=orange>[DELIBERATIVA {communicator.nombreAgente}]: Ladrón cogió fuego — CNP salida lanzado inmediatamente.</color>");
+        }
+        ladronTeniaFuegoFrameAnterior = creencias.ladronTieneFuego;
     }
 }

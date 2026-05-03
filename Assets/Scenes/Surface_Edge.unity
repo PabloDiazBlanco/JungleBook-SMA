@@ -335,6 +335,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 10459490}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459491}
   m_SourcePrefab: {fileID: 100100000, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
 --- !u!4 &10459458 stripped
 Transform:
@@ -420,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 5
   tiempoLimiteBusqueda: 0
 --- !u!114 &10459464
@@ -435,7 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!114 &10459465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,10 +762,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 3
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
+--- !u!114 &10459491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  radioDeteccion: 15
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
+    serializedVersion: 2
+    m_Bits: 32768
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!1001 &12447510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13569,6 +13595,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1353491098}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1353491108}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1672014933}
@@ -19488,6 +19517,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529498550}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529498551}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529498515}
@@ -19691,7 +19723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
 --- !u!114 &529498523
@@ -19706,7 +19738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!114 &529498527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19922,10 +19954,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 3
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
+--- !u!114 &529498551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  radioDeteccion: 15
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
+    serializedVersion: 2
+    m_Bits: 32768
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!1001 &533515261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22704,7 +22759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
 --- !u!114 &586697695
@@ -22719,7 +22774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!114 &586697696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22919,10 +22974,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 3
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
+--- !u!114 &586697716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  radioDeteccion: 15
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
+    serializedVersion: 2
+    m_Bits: 32768
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!1001 &586706943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36394,6 +36472,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2143201483}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201484}
   m_SourcePrefab: {fileID: 100100000, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
 --- !u!1 &896257779
 GameObject:
@@ -41873,6 +41954,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043355}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043356}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043324}
@@ -42078,7 +42162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
 --- !u!114 &1019043332
@@ -42093,7 +42177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!114 &1019043333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42309,10 +42393,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 3
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
+--- !u!114 &1019043356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  radioDeteccion: 15
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
+    serializedVersion: 2
+    m_Bits: 32768
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -43832,6 +43939,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1063662447}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063662448}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 256116487}
@@ -43912,7 +44022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 8
   tiempoLimiteBusqueda: 0
 --- !u!4 &1063662418 stripped
@@ -43968,7 +44078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!54 &1063662423
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -44211,10 +44321,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 3
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
+--- !u!114 &1063662448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  radioDeteccion: 15
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
+    serializedVersion: 2
+    m_Bits: 32768
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!1001 &1063838872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55666,7 +55799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 3
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
@@ -55760,7 +55893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 8
   tiempoLimiteBusqueda: 5
 --- !u!114 &1353491084
@@ -55775,7 +55908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!114 &1353491085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56038,6 +56171,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
   maxInterrupcionesCiclo: 3
   radioBusquedaAmplia: 25
+--- !u!114 &1353491108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353491076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  radioDeteccion: 15
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
+    serializedVersion: 2
+    m_Bits: 32768
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!1001 &1354259370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57892,9 +58048,6 @@ PrefabInstance:
       addedObject: {fileID: 1381432437}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1381432418}
-    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1381432419}
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
@@ -57938,6 +58091,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432429}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381432439}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1381432404}
@@ -58147,7 +58303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 8
   tiempoLimiteBusqueda: 5
 --- !u!114 &1381432412
@@ -58162,7 +58318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!114 &1381432416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58180,29 +58336,6 @@ MonoBehaviour:
   direccionVigilancia: {fileID: 924417181}
   distanciaLlegada: 1.5
   velocidadGiro: 5
---- !u!114 &1381432418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381432402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
-  radioDeteccion: 15
-  anguloVision: 120
-  capaObstaculos:
-    serializedVersion: 2
-    m_Bits: 29303
-  capaHoguera:
-    serializedVersion: 2
-    m_Bits: 32768
-  hogueraDetectada: 0
-  haVistoHogueraAlgunaVez: 0
-  hogueraEnCampoDeVision: 0
 --- !u!114 &1381432419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58265,7 +58398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 3
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
@@ -58405,6 +58538,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
   maxInterrupcionesCiclo: 3
   radioBusquedaAmplia: 25
+--- !u!114 &1381432439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381432402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  radioDeteccion: 15
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
+    serializedVersion: 2
+    m_Bits: 32768
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!1 &1382708965 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}
@@ -69660,6 +69816,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 586697715}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586697716}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 202995253}
@@ -91468,7 +91627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d709d8d98dfdc8f44bf9486a28520f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Busqueda
-  priority: 5
+  priority: 4
   radioInspeccion: 5
   tiempoLimiteBusqueda: 0
 --- !u!114 &2143201455
@@ -91483,7 +91642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572ccc2b04b15434ca7db175e3857122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvestigarEntorno
-  priority: 4
+  priority: 3
 --- !u!114 &2143201456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91848,10 +92007,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
-  priority: 3
+  priority: 5
   posicionHoguera: {fileID: 1533431827}
   distanciaLlegada: 2
   velocidad: 7
+--- !u!114 &2143201484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babb3ed8e9036a54db3195d7183e5efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SensorHogueraIndividual
+  radioDeteccion: 15
+  anguloVision: 120
+  capaObstaculos:
+    serializedVersion: 2
+    m_Bits: 29303
+  capaHoguera:
+    serializedVersion: 2
+    m_Bits: 32768
+  hogueraDetectada: 0
+  haVistoHogueraAlgunaVez: 0
+  hogueraEnCampoDeVision: 0
 --- !u!1 &2144177625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}

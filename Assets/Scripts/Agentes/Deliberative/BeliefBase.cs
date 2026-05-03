@@ -13,7 +13,7 @@ public class BeliefBase
     public float timestampPosicionLadron;
     public float tiempoVidaCreenciaLadron = 30f;
 
-    public enum RolCNP { Ninguno, Perseguidor, BuscadorSectores, Bloqueador }
+    public enum RolCNP { Ninguno, Perseguidor, BuscadorSectores, Bloqueador, Vigilante }
     public RolCNP rolActual = RolCNP.Ninguno;
     public bool rolAsignadoExternamente = false;
 

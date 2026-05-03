@@ -329,6 +329,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 10459479}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459489}
   m_SourcePrefab: {fileID: 100100000, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
 --- !u!4 &10459458 stripped
 Transform:
@@ -724,6 +727,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
   maxInterrupcionesCiclo: 3
   radioBusquedaAmplia: 25
+--- !u!114 &10459489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faf2c3ad7914ae4791a74624bf05d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloquearSalida
+  priority: 1
+  puntoPuertaPueblo: {fileID: 451576569}
+  direccionVigilancia: {fileID: 924417181}
+  distanciaLlegada: 1.5
+  velocidadGiro: 5
 --- !u!1001 &12447510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19443,6 +19463,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529498543}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529498549}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529498515}
@@ -19848,6 +19871,23 @@ MonoBehaviour:
   sensorOido: {fileID: 0}
   velocidadInvestigacion: 6
   distanciaLlegada: 1.5
+--- !u!114 &529498549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faf2c3ad7914ae4791a74624bf05d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloquearSalida
+  priority: 1
+  puntoPuertaPueblo: {fileID: 451576569}
+  direccionVigilancia: {fileID: 924417181}
+  distanciaLlegada: 1.5
+  velocidadGiro: 5
 --- !u!1001 &533515261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22812,6 +22852,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
   maxInterrupcionesCiclo: 3
   radioBusquedaAmplia: 25
+--- !u!114 &586697714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faf2c3ad7914ae4791a74624bf05d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloquearSalida
+  priority: 1
+  puntoPuertaPueblo: {fileID: 451576569}
+  direccionVigilancia: {fileID: 924417181}
+  distanciaLlegada: 1.5
+  velocidadGiro: 5
 --- !u!1001 &586706943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36277,6 +36334,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2143201472}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201482}
   m_SourcePrefab: {fileID: 100100000, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
 --- !u!1 &896257779
 GameObject:
@@ -41750,6 +41810,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043344}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043354}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043324}
@@ -42157,6 +42220,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
   maxInterrupcionesCiclo: 3
   radioBusquedaAmplia: 25
+--- !u!114 &1019043354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faf2c3ad7914ae4791a74624bf05d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloquearSalida
+  priority: 1
+  puntoPuertaPueblo: {fileID: 451576569}
+  direccionVigilancia: {fileID: 924417181}
+  distanciaLlegada: 1.5
+  velocidadGiro: 5
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -43670,6 +43750,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1063662440}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063662446}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 256116487}
@@ -43946,7 +44029,8 @@ MonoBehaviour:
   sensorOido: {fileID: 0}
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
-  behaviors: []
+  behaviors:
+  - {fileID: 0}
   deliberativa: {fileID: 1063662430}
 --- !u!114 &1063662435
 MonoBehaviour:
@@ -44020,6 +44104,23 @@ MonoBehaviour:
   sensorOido: {fileID: 0}
   velocidadInvestigacion: 6
   distanciaLlegada: 1.5
+--- !u!114 &1063662446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faf2c3ad7914ae4791a74624bf05d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloquearSalida
+  priority: 1
+  puntoPuertaPueblo: {fileID: 451576569}
+  direccionVigilancia: {fileID: 924417181}
+  distanciaLlegada: 1.5
+  velocidadGiro: 5
 --- !u!1001 &1063838872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69459,6 +69560,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 586697704}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586697714}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 202995253}
@@ -91618,6 +91722,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AlertCycleManager
   maxInterrupcionesCiclo: 3
   radioBusquedaAmplia: 25
+--- !u!114 &2143201482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faf2c3ad7914ae4791a74624bf05d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloquearSalida
+  priority: 1
+  puntoPuertaPueblo: {fileID: 451576569}
+  direccionVigilancia: {fileID: 924417181}
+  distanciaLlegada: 1.5
+  velocidadGiro: 5
 --- !u!1 &2144177625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}

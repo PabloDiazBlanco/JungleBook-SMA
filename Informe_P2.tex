@@ -1,0 +1,581 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{subcaption}
+\captionsetup{justification=centering}
+% Formato de secciones principales
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {}
+  {0pt}
+  {}
+
+\titlespacing*{\section}
+  {0pt}{1.5em}{0.8em}
+
+% Formato de subsecciones
+\titleformat{\subsection}
+  {\normalfont\bfseries}
+  {}
+  {0pt}
+  {}
+
+\titlespacing*{\subsection}
+  {0pt}{1em}{0.4em}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    
+    % Logo
+    \includegraphics[width=\textwidth]{Imaxes/udc.png}
+    
+    \vfill
+    
+    % Línea superior decorativa
+    \noindent\rule{\textwidth}{0.8pt}\\[0.4em]
+    
+    % Título principal
+    {\LARGE\bfseries Práctica 2: Comunicación y\\[0.3em]
+    comportamiento social\par}
+    
+    \noindent\rule{\textwidth}{0.8pt}
+    
+    \vspace{1.5em}
+    
+    % Subtítulos
+    {\large Sistemas Multiagente\par}
+    \vspace{0.4em}
+    {\large Grado en Intelixencia Artificial\par}
+    
+    \vfill
+    
+    % Autores
+    {\large
+    \begin{tabular}{c}
+        Guillermo Blanco Núñez \\[0.4em]
+        Pablo Díaz Blanco
+    \end{tabular}
+    \par}
+    
+    \vspace{1.5em}
+    
+    % Grupo y fecha
+    {\normalsize Grupo Martes\par}
+    \vspace{0.5em}
+    {\normalsize 3 de mayo de 2026\par}
+    
+\end{titlepage}
+\newpage
+
+\tableofcontents
+\newpage
+
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Mundo Virtual}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Hemos optado por un enfoque continuista respecto a la P1 en cuanto al mundo virtual. Sin embargo, se ha optado por una disposición más compacta: se ha reducido el espacio dentro de las vallas y se han añadido más agentes, lo que hace más relevante la coordinación multiagente. Fuera del recinto de la villa, el cambio más destacado es la incorporación de una segunda hoguera destino que define la condición de victoria.
+
+
+\subsection{Estructura y distribución del escenario}
+
+\begin{itemize}
+
+    \item El mundo virtual representa una aldea medieval amurallado que el jugador (ladrón) debe infiltrar. El escenario incluye la muralla de madera, tiendas de campaña, casas, caminos con pasarelas de madera y una zona de cultivos.
+
+    \item El pueblo tiene una única entrada y salida: una puerta corredera lateral (\texttt{SlidingGate}) situada en la muralla. Cuando el ladrón entra en su zona de activación, la puerta se abre de forma permanente y ya no vuelve a cerrarse. Que sea la única entrada y salida la convierte en el objetivo estratégico
+    principal de los guardias cuando se activa la alarma, ya que aunque el ladrón robe el fuego no puede ganar la partida hasta que no sale de la aldea y enciende su propia hoguera.
+
+    \item Las casas disponen de puertas inteligentes
+    (\texttt{Inteligent\_Door\_Houses}) que se abren automáticamente por proximidad mediante un trigger. Al abrirse, la puerta desliza
+    lateralmente y desactiva su \texttt{NavMeshObstacle} para
+    permitir el paso de agentes; al cerrarse lo reactiva, restaurando el obstáculo de navegación.
+
+    \item Hay dos hogueras con roles diferenciados: la \textbf{hoguera
+    origen}, en el centro del pueblo, es donde el ladrón debe encender su antorcha robada y robar el fuego. La \textbf{hoguera destino} es la meta final; depositar el fuego robado en ella activa la condición de victoria. Es también en la ubicación de esta hoguera destino donde aparece el jugador (ladrón) al iniciar el juego.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{Imaxes/hog_destino.png}
+        \caption{Zona de la hoguera destino (apagada) al inicio de la partida, con el jugador delante y el poblado donde debe entrar de fondo.}
+    \end{figure}
+
+    \item El mapa está dividido en \textbf{sectores de búsqueda},
+    representados como \texttt{GameObjects} con el tag \texttt{Sector}.
+    Son cargados al inicio por \texttt{SectorMap} y usados por la capa
+    deliberativa para planificar búsquedas coordinadas cuando el ladrón
+    no está a la vista.
+
+\end{itemize}
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{Imaxes/pueblo_cenital.png}
+        \caption{Vista cenital del poblado. Con la entrada a la izquierda y la hoguera de la cual el jugador debe robar el fuego en la plaza de la derecha.}
+    \end{figure}
+
+
+\subsection{Agentes del escenario}
+
+Contamos con nueve agentes en el mundo virtual, además del jugador (ladrón). Además de mantener los siete que teníamos en la práctica 1, añadimos dos más. Tenemos tres tipos de agentes:
+
+\begin{itemize}
+
+    \item \textbf{Aldeanos (6) -} tienen posiciones iniciales
+    distribuidas por el pueblo, cada uno con una ruta de patrulla propia formada por puntos de control que recorren de forma cíclica. Hay dos en la entrada, en la zona de las tiendas de campaña, dos en la zona de las casas, y otros dos en la zona de la plaza donde la hoguera. Estos dos últimos tienen también sensor de oído y comportamientos especiales relacionados con la hoguera.
+
+    \item \textbf{Campesinos (2) -} se encuentran en la zona de los cultivos, uno a cada lado, tienes comportamientos similares a los aldeanos pero estos cuentan ambos con sensor de oído.
+
+    \item \textbf{Lobo (1) -} Se encuentra patrullando muy cerca de la puerta de entrada al poblado, por fuera. Es el único agente sin la posibilidad de abri puertas de casas ni del poblado. No participa en la comunicación ni en la estrategia multiagente, pero representan un peligro adicional para el jugador incluso antes de entrar en el poblado y también cuando sale del poblado con el fuego y quiere ir a la hoguera destino para ganar la partida.
+
+\end{itemize}    
+
+La condición de derrota se gestiona mediante
+\texttt{DetectorCaptura}: cuando uno de los agentes entra en contacto con el ladrón, se dispara el evento de captura y la escena se reinicia tras 1,5\,s.
+
+
+
+
+\subsection{Interacción con visión y sonido}
+
+Hemos cambiado significativamente los sensores de los agentes con respecto a la práctica 1 para que sean lo más realistas posibles. 
+
+\subsubsection{Percepción auditiva}
+
+El \textbf{sonido} es simulado mediante un radio de detección
+numérico asociado al movimiento del ladrón: 0\,m cuando está quieto,
+10\,m cuando corre y 15\,m cuando salta. Este valor es leído cada frame
+directamente por el sensor \texttt{GuardHearing} de cada guardia.
+
+\subsubsection{Percepción visual}
+
+La \textbf{visión} de los guardias es un cono de 45° de apertura y
+15\,m de alcance. El sensor \texttt{GuardVision} realiza primero un
+\texttt{OverlapSphere} para obtener candidatos en rango y luego un
+raycast hacia cada candidato para verificar que no hay obstáculos físicos
+(muros, casas) en la línea de visión. También detecta si el ladrón lleva
+fuego comprobando el tag \texttt{"LadronConFuego"}.\\
+
+El \textbf{sensor de hoguera} (\texttt{SensorHogueraIndividual})
+tiene un campo de visión más amplio: 120° de apertura y 12\,m de radio.
+La primera vez que el guardia la detecta, memoriza su posición de forma
+permanente \\(\texttt{haVistoHogueraAlgunaVez}). En frames sucesivos
+comprueba esa posición memorizada con un raycast, permitiendo detectar
+su desaparición aunque la hoguera no esté directamente en el campo de
+visión. El raycast usa \texttt{RaycastAll} para atravesar objetos
+decorativos sin colisión real.\\
+
+Los obstáculos decorativos (casas, cultivos, objetos, etc.) se
+configuran en capas específicas (\texttt{capaObstaculos}) de modo que
+bloqueen la visión solo cuando representan una ocultación real, y sean
+transparentes para los raycasts en los demás casos.
+
+\subsubsection{Sensores específicos}
+
+El sensor de puertas (\texttt{SensorPercepcionObjetos}) realiza
+un \texttt{OverlapSphere} buscando objetos con el tag
+\texttt{"Doors\_houses"}, lo que permite al guardia detectar y acercarse
+a comprobar puertas cercanas durante la búsqueda.
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{Imaxes/sensoresGuardia.png}
+        \caption{Visualización en tiempo de ejecución de los sensores de un guardia  en la ventana \textit{Scene} de Unity con Gizmos activados: cono de visión de 45° y 15\,m 
+(\texttt{GuardVision}, verde), radio de audición variable 
+(\texttt{GuardHearing}, amarillo) y línea de detección de hoguera 
+(\texttt{SensorHogueraIndividual}, verde).}
+    \end{figure}
+
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Arquitectura individual}
+% ─────────────────────────────────────────────────────────────────────────────
+
+La arquitectura individual de los guardias ha experimentado una evolución
+considerable desde la práctica 1. En P1 se empleaba una arquitectura reactiva
+basada en una máquina de estados con cinco comportamientos (patrulla,
+persecución, búsqueda, investigación de entorno y bloqueo de salida) y con la
+comunicación entre agentes expresamente prohibida. Para P2 esa estructura se ha
+formalizado y ampliado: la capa reactiva se convierte en una arquitectura de
+subsumption con siete comportamientos, la lógica temporal y de gestión de estado
+se extrae en módulos independientes, y se añade una capa deliberativa BDI que, por primera vez,
+permite que los guardias se coordinen mediante mensajes FIPA-ACL. El ladrón, en
+cambio, mantiene en esencia la misma arquitectura de la P1, con ajustes
+en la mecánica de inventario para la secuencia de victoria en dos hogueras.
+
+
+\subsection{Guardias: capa reactiva (subsumption)}
+
+
+Se adopta una \textbf{arquitectura híbrida} que combina una capa reactiva (subsumption) con una capa deliberativa (BDI). La capa reactiva gestiona las respuestas inmediatas al entorno; la deliberativa, la coordinación entre agentes.
+
+La \textbf{capa reactiva} sigue la arquitectura de subsumption de Brooks: un conjunto de comportamientos ordenados por prioridad donde el de mayor prioridad cuyo \texttt{CanActivate()} retorna \texttt{true} suprime a todos los inferiores y ejecuta su \texttt{Action()} en ese frame. No existe máquina de estados explícita: la prioridad reemplaza las transiciones.
+\\\\Los \textbf{siete comportamientos}, de mayor a menor prioridad:
+    \begin{enumerate}
+        \item \texttt{Persecución} (priority = 0): activo cuando el guardia ve al ladrón o lo
+        perdió mientras llevaba fuego. Persigue la última posición conocida
+        (10\,m/s con fuego, 8\,m/s sin él).
+        \item \texttt{BloquearSalida} (priority = 1): activo cuando la alarma de que falta la hoguera está
+        encendida. El guardia corre a la puerta del pueblo (10\,m/s) y la
+        bloquea vigilando el interior.
+        
+        
+        \item \texttt{InvestigarSonido} (priority = 2): activo al detectar ruido y sin
+        cooldown. El guardia va a la posición estimada del ruido (imprecisión
+        $\pm$5\,m).
+        \item \texttt{ComprobarHoguera} (priority = 3): activo cuando la búsqueda se agota y
+        no hay alarma. El guardia camina físicamente hasta la hoguera para
+        verificar que sigue ahí.
+        \item \texttt{InvestigarEntorno} (priority = 4): activo si hay una puerta detectada y
+        el cronómetro de búsqueda está en curso. El guardia se acerca a la
+        puerta para comprobarla.
+        
+        \item \texttt{Busqueda} (priority = 5): activo en alerta cuando no ve al ladrón pero
+        tiene su última posición. Busca en radio $\sim$5\,m; cada 3 ciclos
+        amplía el radio a 25\,m desde la hoguera.
+        \item \texttt{Patrulla (priority = 6)}: comportamiento por defecto. Recorre sus puntos
+        de control cíclicamente a 2\,m/s.
+    \end{enumerate}
+El \texttt{SubsumptionController} actúa como orquestador central: cada frame 
+sincroniza percepciones, actualiza el estado de alerta, gestiona cronómetros y 
+toma la decisión final de comportamiento. Toda la información del agente se 
+centraliza en el \texttt{AgentBlackboard}, que almacena las creencias del frame 
+actual (posición del ladrón, alertas, ruidos, puertas, etc.) y es accesible por 
+todos los módulos. El \texttt{AlertCycleManager} controla las transiciones de 
+alerta, incluyendo la persecución hasta la última posición conocida si el ladrón 
+porta fuego. El \texttt{AgentTimerManager} mantiene cronómetros independientes 
+para búsqueda (10\,s), investigación de sonidos (5\,s) y puertas (8\,s). 
+Por último, el \texttt{FireAlarmMonitor} detecta la desaparición de la hoguera 
+tras 10 frames sin detectarla y activa la alarma correspondiente.
+
+
+\subsection{Guardias: capa deliberativa (BDI)}
+
+
+
+    La \textbf{capa deliberativa} (\texttt{DeliberativeLayer}) se ejecuta
+    cada frame, antes de la decisión reactiva, y está compuesta por tres
+    módulos especializados:
+\begin{itemize}
+    \item \texttt{ModuleCrisis}: detecta mensajes de alarma de hoguera 
+    (\texttt{INFORM "alarma\_hoguera"}) y la difunde al resto de guardias 
+    mediante broadcast cuando se activa.
+    \item \texttt{ModuleSocial}: implementa el Contract Net Protocol (CNP) 
+    para negociar roles de perseguidor y cubridor, gestionando los estados 
+    de la negociación y el intercambio de mensajes CFP, PROPOSE y 
+    ACCEPT\_PROPOSAL.
+    \item \texttt{ModuleTactical}: calcula distancias para las propuestas del 
+    CNP, inyecta los comandos resultantes en el \texttt{SubsumptionController} 
+    y ordena los sectores de búsqueda mediante A*.
+\end{itemize}
+
+La \texttt{BeliefBase} de la capa deliberativa mantiene creencias de largo plazo 
+independientes del blackboard reactivo: la posición del ladrón se olvida tras 
+10\,s sin avistarlo, y se registran además si porta fuego, si la alarma está 
+activa y el plan de sectores de búsqueda asignado. La integración con las 
+comunicaciones es inmediata: el \texttt{AgentCommunicator} procesa los mensajes 
+entrantes cada frame y los resultados de la negociación se inyectan directamente 
+en el \texttt{SubsumptionController}, alterando el blackboard y, por tanto, el 
+comportamiento reactivo en ese mismo frame.
+
+
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{Imaxes/SubsControl_Inspector.png}
+        \caption{Inspector de Unity del \texttt{SubsumptionController}: componentes
+    de la arquitectura híbrida y jerarquía de comportamientos.}
+    \end{figure}
+
+
+\subsection{Ladrón: arquitectura PECA}
+
+El ladrón sigue una arquitectura \textbf{PECA} (Percepción $\rightarrow$ Estado 
+$\rightarrow$ Consideración $\rightarrow$ Acción), implementada en 
+\texttt{MainCharacter\_Brain.cs}.
+
+\begin{description}
+    \item[Percepción] Lectura del input del jugador cada frame: WASD para 
+    moverse, ratón para rotar la cámara, espacio para saltar, E para recoger 
+    o interactuar y F para depositar.
+    
+    \item[Estado] Comprobación del estado físico (\texttt{isGrounded}) y del 
+    bloqueo por animación (\texttt{isActionLocked}), que impide interrumpir 
+    una acción en curso.
+    
+    \item[Consideración] Cálculo del radio de ruido según el movimiento: 0\,m 
+    en reposo, 10\,m corriendo y 15\,m saltando. Este valor se almacena en 
+    \texttt{radioRuidoActual} y es leído directamente por \texttt{GuardHearing} 
+    sin mediación de mensajes.
+    
+    \item[Acción] Movimiento físico mediante \texttt{CharacterController} con 
+    gravedad y salto simulados, rotación de cámara e interacciones de recogida 
+    y depósito a través de callbacks de animación.
+\end{description}
+
+\subsubsection*{Secuencia de victoria}
+La condición de victoria se desarrolla en tres pasos: 
+\begin{enumerate}
+    
+    \item Recoger la antorcha (tecla E)
+    \item Encenderla en la hoguera origen (tecla E), lo que cambia el tag 
+del \texttt{GameObject} a \texttt{"LadronConFuego"} y activa la detección de 
+urgencia en los guardias
+    \item Depositar el fuego en la hoguera destino 
+(tecla F), activando los efectos de victoria y pausando el juego.
+\end{enumerate}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Comunicación entre agentes}
+% ─────────────────────────────────────────────────────────────────────────────
+
+La comunicación entre agentes es la principal novedad de esta práctica respecto
+a la P1, donde los agentes operaban de forma completamente aislada. Se ha
+implementado un sistema de mensajería basado en el estándar FIPA-ACL con dos
+protocolos diferenciados: un protocolo de notificación simple mediante mensajes
+\texttt{INFORM} (para difusión de posición del ladrón y propagación de alarmas)
+y el Contract Net Protocol (CNP) para la negociación y asignación dinámica de
+roles entre guardias.
+
+
+\subsection{Estructura de los mensajes FIPA-ACL}
+
+\begin{itemize}
+
+    \item Los mensajes siguen el estándar \textbf{FIPA-ACL} y están
+    implementados en la clase \texttt{FIPAMessage}, con los campos:
+    \texttt{performativa} (tipo de acto comunicativo), \texttt{emisor} y
+    \texttt{receptor} (nombres de los agentes como strings), \texttt{contenido}
+    (payload en texto plano), \texttt{conversationId} (identifica el hilo de
+    una negociación), \texttt{timestamp} (\texttt{Time.time} en el momento del
+    envío) e \texttt{inReplyTo} (referencia al mensaje al que se responde).
+
+    \item Se implementan \textbf{seis performativas} (enum
+    \texttt{FIPAPerformativa}): \texttt{INFORM} (notificación de hechos),
+    \texttt{CFP} (\textit{Call For Proposals}), \texttt{PROPOSE} (oferta de
+    un contratista), \texttt{ACCEPT\_PROPOSAL} (aceptación y asignación de
+    rol), \texttt{REFUSE} (rechazo de participación) y \texttt{FAILURE}
+    (notificación de fallo).
+
+    \item Los mensajes se almacenan en un \textbf{historial persistente}
+    (\texttt{historialMensajes}) y pueden recuperarse agrupados por conversación
+    mediante \\ \texttt{GetHistorialPorConversacion(conversationId)}, lo que
+    permite reconstruir el hilo completo de una negociación.
+
+\end{itemize}
+
+
+\subsection{Infraestructura de comunicación}
+
+\begin{itemize}
+
+    \item La infraestructura es \textbf{P2P sin bus central}:
+    \texttt{AgentCommunicator} mantiene un registro global estático
+    (\texttt{Dictionary<string, AgentCommunicator>}). Cada agente se registra
+    automáticamente en \texttt{Start()} con su nombre y se desregistra en
+    \texttt{OnDestroy()}. No existe componente intermediario centralizado.
+
+    \item \textbf{Flujo de envío}: el emisor llama a
+    \texttt{Enviar(mensaje, destinatarios)} para envío unicast o a
+    \texttt{EnviarATodos(mensaje)} para broadcast. El sistema busca a cada
+    destinatario en el registro y encola el mensaje directamente en su cola
+    \texttt{pendientes}.
+
+    \item \textbf{Flujo de recepción}: en cada frame,
+    \texttt{AgentCommunicator} vacía \texttt{pendientes} hacia el
+    \texttt{inbox} del frame. \texttt{DeliberativeLayer.Procesar()} lee el
+    inbox al inicio de su ejecución y despacha cada mensaje al módulo
+    correspondiente (\texttt{ModuleCrisis} o \texttt{ModuleSocial}) según la
+    performativa y el contenido.
+
+    \item El \texttt{conversationId} sigue el formato
+    \texttt{"agente-tipo-contador-tiempo"}, generado de forma única por
+    \texttt{AgentCommunicator.GenerarConversationId()} al iniciar cada
+    negociación.
+
+\end{itemize}
+
+
+\subsection{Protocolos implementados}
+
+\begin{itemize}
+
+    \item \textbf{Protocolo 1 --- INFORM periódico de posición}: cuando un
+    guardia tiene al ladrón a la vista, el \texttt{SubsumptionController}
+    envía periódicamente (cada 0,5\,s) un \texttt{INFORM} con la posición del
+    ladrón a los demás guardias. Esto permite que los guardias que no lo ven
+    directamente actualicen sus creencias y respondan con mayor rapidez.
+
+    \item \textbf{Protocolo 2 --- INFORM de alarma hoguera}: cuando
+    \texttt{FireAlarmMonitor} confirma la ausencia de la hoguera, activa la
+    alarma localmente y \texttt{ModuleCrisis} envía un \texttt{INFORM}
+    broadcast con contenido \texttt{"alarma\_hoguera"} a todos los demás
+    guardias. Al recibirlo, \texttt{ModuleCrisis} de cada receptor inyecta la
+    alarma en su propio \texttt{SubsumptionController}, propagando la crisis de
+    forma reactiva e inmediata sin negociación.
+
+    \item \textbf{Protocolo 3 --- Contract Net Protocol (CNP)}: se activa
+    cuando un guardia avista al ladrón (\texttt{AcabaDeVerAlLadron == true}) y
+    no hay ya una negociación en curso. El guardia que lo detecta actúa como
+    \textbf{manager}:
+    \begin{enumerate}
+        \item El manager envía un \texttt{CFP} broadcast indicando la posición
+        del ladrón y el objetivo a cubrir (hoguera o salida, según si el ladrón
+        lleva fuego).
+        \item Cada guardia receptor (\textbf{contractor}) calcula su distancia
+        al ladrón y al objetivo, y responde con \texttt{PROPOSE}. Si ya está en
+        otra negociación, responde \texttt{REFUSE}.
+        \item Tras un tiempo de espera de 0,5\,s, el manager evalúa las
+        propuestas, designa el perseguidor (mínima distancia al
+        ladrón) y el cubridor (mínima distancia al objetivo), y envía
+        \texttt{ACCEPT\_PROPOSAL} a cada uno con el rol asignado en el campo
+        contenido.
+        \item Los guardias seleccionados ejecutan el rol recibido:
+        \texttt{ModuleTactical} inyecta \texttt{"perseguir:x,y,z"} para el
+        perseguidor o \\ \texttt{"cubrir\_hoguera"}/\texttt{"cubrir\_salida"} para
+        el cubridor en el \\ \texttt{SubsumptionController}.
+    \end{enumerate}
+\end{itemize}
+
+    La modificación sobre el CNP estándar consiste en la
+    asignación simultánea de dos roles diferenciados (perseguidor y cubridor)
+    en un único ciclo de negociación. El CNP estándar asigna una tarea a un
+    único contractor; aquí se seleccionan dos contractors óptimos de forma
+    simultánea con una sola ronda de mensajes.
+
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.88\textwidth]{Imaxes/AUML_CNP.png}
+        \caption{Diagrama AUML del Contract Net Protocol modificado: el manager asigna simultáneamente un rol de perseguidor y un rol de cubridor en una única ronda de negociación}
+    \end{figure}
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{Imaxes/comunicacion_prop_hoguera.png}
+        \caption{Flujo de comunicación para la propagación reactiva de la alarma de hoguera mediante mensajes \texttt{INFORM} broadcast}
+    \end{figure}
+
+
+
+\section{Formato del contenido de los mensajes}
+
+El contenido de los mensajes se representa como texto plano en español en el 
+campo \texttt{string} de \texttt{FIPAMessage}, sin JSON, XML ni KQML, lo que 
+reduce el coste de serialización y facilita la depuración durante el desarrollo.
+
+\subsection*{Formatos por performativa}
+
+El formato del campo \texttt{contenido} varía según la performativa:
+
+\begin{description}
+    \item[INFORM posición del ladrón] \texttt{"ladron:x,y,z"} --- clave fija 
+    más las tres coordenadas float separadas por comas.
+
+    \item[INFORM alarma hoguera] Literal fijo \texttt{"alarma\_hoguera"}, 
+    comprobado por igualdad de cadena sin parsing adicional.
+
+    \item[CFP] \texttt{"tipo|ladron:x,y,z|obj:x,y,z"} --- tres campos separados 
+    por \texttt{|}. El primero es el tipo de misión (\texttt{"hoguera"} o 
+    \texttt{"salida"}), el segundo la posición del ladrón y el tercero la 
+    posición del objetivo a cubrir.
+
+    \item[PROPOSE] \texttt{"dl:valor,do:valor"} --- dos pares clave-valor 
+    separados por coma; \texttt{dl} es la distancia euclidea al ladrón y 
+    \texttt{do} la distancia al objetivo, ambos como floats.
+
+    \item[ACCEPT\_PROPOSAL (perseguidor)] \texttt{"perseguir:x,y,z"} --- acción 
+    fija más las coordenadas de la última posición conocida del ladrón.
+
+    \item[ACCEPT\_PROPOSAL (cubridor hoguera)] Literal fijo 
+    \texttt{"cubrir\_hoguera"}.
+
+    \item[ACCEPT\_PROPOSAL (cubridor salida)] Literal fijo 
+    \texttt{"cubrir\_salida"}.
+\end{description}
+
+\subsection*{Procesamiento y deserialización}
+
+El procesamiento emplea operaciones básicas de string: \texttt{string.Split('|')} 
+para los campos del CFP, \texttt{string.Split(':')} para separar clave y valor, 
+y \texttt{string.Split(',')} para las coordenadas individuales. Los literales 
+fijos se comprueban con \texttt{string.Equals()} o el operador \texttt{==}. La 
+conversión de coordenadas a \texttt{Vector3} está encapsulada en 
+\texttt{ParsearPosicion()} de \texttt{ModuleTactical}, centralizando toda la 
+lógica de deserialización en un único lugar.
+
+\subsection*{Gestión del hilo de conversación}
+
+El campo \texttt{conversationId} se incluye en todos los mensajes de un mismo 
+hilo (CFP, PROPOSE, ACCEPT\_PROPOSAL), permitiendo recuperar el historial 
+completo de una negociación. El campo \texttt{inReplyTo} almacena el 
+\texttt{conversationId} del mensaje original al que se responde, estableciendo 
+la cadena causal entre mensajes.
+
+\section{Estrategia Multiagente}
+
+La estrategia cooperativa gira en torno a un objetivo común: impedir que el
+ladrón escape con el fuego de la hoguera. Para lograrlo, los guardias combinan
+comportamiento reactivo coordinado (a través de mensajes \texttt{INFORM}) con
+negociación deliberativa de roles (mediante el CNP), de modo que la cooperación
+emerge de las interacciones locales entre agentes sin necesidad de un
+coordinador global.
+
+\subsection{Mecanismos de coordinación y roles dinámicos}
+
+La estrategia se articula en dos mecanismos complementarios: negociación de
+roles mediante CNP para coordinar la respuesta cuando el ladrón es avistado, y
+propagación reactiva de alarma mediante \texttt{INFORM} broadcast para la fase
+de crisis.
+
+No existe jerarquía fija entre guardias: cualquier guardia puede actuar como
+manager del CNP al avistar al ladrón. Los roles de perseguidor y cubridor se
+asignan en cada ronda en función de las distancias en ese momento. El manager
+designa como \textbf{perseguidor} al guardia con menor distancia euclidea al
+ladrón y como \textbf{cubridor} al de menor distancia al objetivo a proteger;
+si ambos roles corresponden al mismo guardia, ese guardia cubre el objetivo y
+el resto persigue.
+
+El objetivo de cobertura cambia dinámicamente según el estado del ladrón: si no
+lleva fuego, se cubre la hoguera para evitar que la encienda; si porta el tag
+\texttt{"LadronConFuego"}, se cubre la puerta de salida para evitar que escape.
+Esta lógica se codifica directamente en el tipo del CFP.
+
+\subsection{Respuesta en crisis y búsqueda colaborativa}
+
+Cuando un guardia detecta que la hoguera ha desaparecido, activa la alarma
+localmente y la difunde mediante \texttt{INFORM} broadcast. Todos los guardias
+que reciben el mensaje activan \texttt{BloquearSalida} de máxima prioridad y
+convergen hacia la única salida del pueblo. La respuesta es puramente reactiva,
+no requiere nueva negociación, y se propaga en el mismo frame en que se recibe
+el mensaje.
+
+Cuando ningún guardia avista al ladrón pero hay alerta activa,
+\texttt{ModuleTactical} genera un plan de búsqueda ordenando los sectores del
+mapa mediante un algoritmo A* que minimiza la distancia total recorrida
+(solución aproximada al TSP). Los sectores se almacenan en la
+\texttt{BeliefBase} y se inyectan en el comportamiento \texttt{Busqueda},
+guiando la exploración de forma sistemática en lugar de aleatoria.
+
+\subsection{Propiedades del sistema}
+
+El sistema opera sin coordinador central: cualquier guardia puede iniciar un
+CNP, y el timeout de 0,5\,s garantiza que la negociación se resuelve aunque
+algún contractor no responda. El flag \texttt{cnpIniciado} evita negociaciones
+solapadas en el mismo guardia, y el mensaje \texttt{REFUSE} permite que
+guardias ya ocupados rechacen participar sin bloquear el sistema.
+Para evitar bucles de persecución indefinida, el \texttt{AlertCycleManager}
+tras 3 ciclos de búsqueda interrumpidos fuerza una comprobación física de la
+hoguera, garantizando que los guardias verifiquen su objetivo principal.
+Aunque el ladrón carece de estrategia multiagente, actúa como estímulo
+central del sistema: su visibilidad activa el CNP, su cambio de tag al llevar
+fuego modifica el objetivo de cobertura, y su ruido variable puede desviar
+guardias mediante \texttt{InvestigarSonido}, creando ventanas de oportunidad
+para el jugador.
+\end{document}

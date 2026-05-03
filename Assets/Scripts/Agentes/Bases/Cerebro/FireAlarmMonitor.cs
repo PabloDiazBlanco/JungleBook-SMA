@@ -9,6 +9,7 @@ public class FireAlarmMonitor : MonoBehaviour
     private AgentTimerManager timers;
     private SensorHogueraIndividual sensorHoguera;
     private SubsumptionController mediador;
+    private AgentCommunicator communicator;
 
     private bool EsAldeanoPrincipal => gameObject.name == "Aldeano3";
 
@@ -18,6 +19,7 @@ public class FireAlarmMonitor : MonoBehaviour
         timers        = GetComponent<AgentTimerManager>();
         sensorHoguera = GetComponent<SensorHogueraIndividual>();
         mediador      = GetComponent<SubsumptionController>();
+        communicator  = GetComponent<AgentCommunicator>();
     }
 
     // ===================== LOOP PRINCIPAL =====================
@@ -87,6 +89,19 @@ public class FireAlarmMonitor : MonoBehaviour
         bb.busquedaForzada     = false;
         bb.contadorResetsCiclo = 0;
         Debug.Log($"<color=red>[CEREBRO] {gameObject.name}: ¡ALARMA! La hoguera ha sido robada.</color>");
+
+        if (communicator != null)
+        {
+            FIPAMessage msg = new FIPAMessage(
+                FIPAPerformativa.INFORM,
+                communicator.nombreAgente,
+                "broadcast",
+                "alarma_hoguera",
+                communicator.GenerarConversationId("alarma_hoguera")
+            );
+            communicator.EnviarATodos(msg);
+            Debug.Log($"<color=red>[CEREBRO] {gameObject.name}: broadcast alarma_hoguera enviado.</color>");
+        }
     }
 
     // ===================== PRIVADO =====================

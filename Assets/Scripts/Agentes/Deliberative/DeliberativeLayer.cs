@@ -12,6 +12,7 @@ public class DeliberativeLayer : MonoBehaviour
     private ModuleTactical tactical;
 
     private List<DeliberativeModule> modulos = new List<DeliberativeModule>();
+    private bool alarmaAnterior = false;
 
     void Awake()
     {
@@ -39,8 +40,26 @@ public class DeliberativeLayer : MonoBehaviour
 
         crisis.Procesar();
 
-        // Solo inicia CNP si no tiene rol asignado y no hay ya uno en curso
-        if (controller.AcabaDeVerAlLadron && !social.IsCnpIniciado() && creencias.rolActual == BeliefBase.RolCNP.Ninguno)
+        // Solo liberar rol si fue asignado externamente (por otro agente vía CNP)
+        // Un perseguidor auto-asignado no cancela su rol al volver a ver al ladrón
+        if (controller.AcabaDeVerAlLadron && creencias.rolAsignadoExternamente)
+        {
+            creencias.CancelarPlan();
+            Debug.Log($"[DELIBERATIVA {communicator.nombreAgente}]: Rol liberado al ver al ladrón — relanzando CNP.");
+        }
+
+        // Al activarse la alarma de hoguera (transición), liberar roles para participar en el CNP de salida
+        bool alarmaActiva = controller.AlarmaHogueraActiva;
+        if (alarmaActiva && !alarmaAnterior && creencias.rolActual != BeliefBase.RolCNP.Ninguno)
+        {
+            creencias.CancelarPlan();
+            Debug.Log($"[DELIBERATIVA {communicator.nombreAgente}]: Rol liberado por alarma de hoguera — disponible para CNP salida.");
+        }
+        alarmaAnterior = alarmaActiva;
+
+        // Solo inicia CNP si no tiene rol asignado, no hay uno en curso y el cooldown expiró
+        if (controller.AcabaDeVerAlLadron && !social.IsCnpIniciado()
+            && creencias.rolActual == BeliefBase.RolCNP.Ninguno && social.CooldownExpirado())
         {
             social.IniciarCNP();
         }
@@ -77,6 +96,12 @@ public class DeliberativeLayer : MonoBehaviour
                 creencias.posicionLadron = null;
                 creencias.direccionLadron = Vector3.zero;
                 creencias.velocidadLadron = 0f;
+                if (creencias.rolActual == BeliefBase.RolCNP.BuscadorSectores ||
+                    (creencias.rolActual == BeliefBase.RolCNP.Perseguidor && !creencias.rolAsignadoExternamente))
+                {
+                    creencias.CancelarPlan();
+                    Debug.Log($"<color=gray>[DELIBERATIVA {communicator.nombreAgente}]: Plan cancelado por creencia caducada.</color>");
+                }
                 Debug.Log($"<color=gray>[DELIBERATIVA {communicator.nombreAgente}]: Creencia caducada. Objetivo perdido.</color>");
             }
         }

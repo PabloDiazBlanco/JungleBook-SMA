@@ -5,9 +5,11 @@ public class ModuleSocial : DeliberativeModule
 {
     // Configuración
     public float tiempoEsperaPropuestas = 0.5f;
+    public float cooldownCNPFallido = 3f;
 
     // Estado de la Negociación
     private bool cnpIniciado;
+    private float tiempoUltimoCNPFallido = -999f;
     private float cronometroCNP;
     private string convIdCNP = "";
     private string tipoCNP = "";
@@ -77,9 +79,6 @@ public class ModuleSocial : DeliberativeModule
         propuestasCNP.Clear();
         cronometroCNP = tiempoEsperaPropuestas;
 
-        // El iniciador se auto-asigna como perseguidor (cuenta como uno de los 3)
-        creencias.rolActual = BeliefBase.RolCNP.Perseguidor;
-
         string ladronStr = tactical.GetPosicionLadron();
 
         tipoCNP = controller.LadronTieneFuego ? "salida" : "hoguera";
@@ -106,9 +105,16 @@ public class ModuleSocial : DeliberativeModule
 
         if (propuestas.Count == 0)
         {
+            tiempoUltimoCNPFallido = Time.time;
+            creencias.rolActual = BeliefBase.RolCNP.Perseguidor;
+            creencias.rolAsignadoExternamente = false;
             Debug.Log($"[SOCIAL {communicator.nombreAgente}]: CNP sin candidatos — actúo solo.");
             return;
         }
+
+        // El iniciador se asigna como perseguidor al confirmar que hay colaboradores
+        creencias.rolActual = BeliefBase.RolCNP.Perseguidor;
+        creencias.rolAsignadoExternamente = false;
 
         // Parsear y ordenar por distancia al ladrón (dl) ascendente
         var candidatos = new List<(FIPAMessage msg, int dl, int dobj)>();
@@ -124,14 +130,31 @@ public class ModuleSocial : DeliberativeModule
 
         string contenidoPerseguir = tactical.GetComandoPersecucion();
 
+        int numPerseguidores = Mathf.Min(MAX_PERSEGUIDORES_PROPUESTAS, candidatos.Count);
+
+        // Si el CNP es de tipo hoguera, asignar el candidato más cercano a ella como Bloqueador
+        int idxBloqueador = -1;
+        if (tipoCNP == "hoguera" && candidatos.Count > numPerseguidores)
+        {
+            int minDobj = int.MaxValue;
+            for (int i = numPerseguidores; i < candidatos.Count; i++)
+            {
+                if (candidatos[i].dobj < minDobj)
+                {
+                    minDobj = candidatos[i].dobj;
+                    idxBloqueador = i;
+                }
+            }
+        }
+
         // Preparar lista de IDs de sector disponibles para los buscadores
         int totalSectores = SectorMap.Sectores.Count;
         var idsDisponibles = new List<int>();
         for (int i = 0; i < totalSectores; i++) idsDisponibles.Add(i);
 
-        int numPerseguidores = Mathf.Min(MAX_PERSEGUIDORES_PROPUESTAS, candidatos.Count);
-        int numBuscadores = candidatos.Count - numPerseguidores;
+        int numBuscadores = candidatos.Count - numPerseguidores - (idxBloqueador >= 0 ? 1 : 0);
 
+        int buscadorIdx = 0;
         for (int i = 0; i < candidatos.Count; i++)
         {
             if (i < numPerseguidores)
@@ -139,10 +162,14 @@ public class ModuleSocial : DeliberativeModule
                 EnviarAccept(candidatos[i].msg, contenidoPerseguir);
                 Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} PERSEGUIDOR (dl={candidatos[i].dl})");
             }
+            else if (i == idxBloqueador)
+            {
+                EnviarAccept(candidatos[i].msg, "cubrir_hoguera");
+                Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} BLOQUEADOR hoguera (dobj={candidatos[i].dobj})");
+            }
             else
             {
-                // Distribuir sectores en round-robin entre buscadores
-                int buscadorIdx = i - numPerseguidores;
+                if (numBuscadores <= 0) continue;
                 var sectoresAgente = new List<int>();
                 for (int s = buscadorIdx; s < idsDisponibles.Count; s += numBuscadores)
                     sectoresAgente.Add(idsDisponibles[s]);
@@ -150,6 +177,7 @@ public class ModuleSocial : DeliberativeModule
                 string contenidoSector = "explorar_sector:" + string.Join(",", sectoresAgente);
                 EnviarAccept(candidatos[i].msg, contenidoSector);
                 Debug.Log($"[SOCIAL {communicator.nombreAgente}]: → {candidatos[i].msg.emisor} BUSCADOR sectores [{string.Join(",", sectoresAgente)}]");
+                buscadorIdx++;
             }
         }
     }
@@ -168,8 +196,8 @@ public class ModuleSocial : DeliberativeModule
     {
         if (tactical == null) tactical = controller.GetComponent<ModuleTactical>();
 
-        // Solo rechaza si ya tiene un rol asignado por el grupo; estar en alerta no es excusa
-        if (creencias.rolActual != BeliefBase.RolCNP.Ninguno)
+        // Perseguidor y Bloqueador rechazan (misiones críticas); BuscadorSectores puede reasignarse
+        if (creencias.rolActual == BeliefBase.RolCNP.Perseguidor || creencias.rolActual == BeliefBase.RolCNP.Bloqueador)
         {
             FIPAMessage rechazo = new FIPAMessage(
                 FIPAPerformativa.REFUSE, communicator.nombreAgente, msg.emisor,
@@ -196,10 +224,13 @@ public class ModuleSocial : DeliberativeModule
 
     private void ProcesarAceptacion(FIPAMessage msg)
     {
+        if (creencias.alarmaHogueraActiva) return;
         if (tactical == null) tactical = controller.GetComponent<ModuleTactical>();
-        
+
+        creencias.rolAsignadoExternamente = true;
         tactical.EjecutarAccionConfirmada(msg.contenido);
     }
 
     public bool IsCnpIniciado() => cnpIniciado;
+    public bool CooldownExpirado() => Time.time - tiempoUltimoCNPFallido >= cooldownCNPFallido;
 }

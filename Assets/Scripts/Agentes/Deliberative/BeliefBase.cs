@@ -14,7 +14,8 @@ public class BeliefBase
     public float tiempoVidaCreenciaLadron = 30f;
 
     public enum RolCNP { Ninguno, Perseguidor, BuscadorSectores, Bloqueador }
-    public RolCNP rolActual = RolCNP.Ninguno; 
+    public RolCNP rolActual = RolCNP.Ninguno;
+    public bool rolAsignadoExternamente = false;
 
     public List<Vector3> sectoresAsignados = new List<Vector3>();
     public List<Vector3> planBusqueda = new List<Vector3>();
@@ -33,6 +34,7 @@ public class BeliefBase
         sectoresAsignados.Clear();
         indiceSectorActual = 0;
         rolActual = RolCNP.Ninguno;
+        rolAsignadoExternamente = false;
     }
 
     public string GetSectoresPendientesStr()

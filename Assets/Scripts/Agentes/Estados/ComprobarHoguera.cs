@@ -19,6 +19,7 @@ public class ComprobarHoguera : GuardBehavior
 
     public override bool CanActivate()
     {
+        if (controller?.deliberativa?.creencias.rolActual == BeliefBase.RolCNP.BuscadorSectores) return false;
         if (!enAlerta) return false;
         if (veAlLadron) return false;
         if (alarmaHogueraActiva) return false;

@@ -23,8 +23,16 @@ public class ModuleTactical : DeliberativeModule
 
             if (distanciaAlPunto < 2.0f)
             {
-                Debug.Log($"[TACTICAL {communicator.nombreAgente}]: Punto de sector registrado. Avanzando...");
-                creencias.AvanzarSector(); 
+                creencias.AvanzarSector();
+                if (!creencias.TienePlanActivo)
+                {
+                    creencias.rolActual = BeliefBase.RolCNP.Ninguno;
+                    Debug.Log($"[TACTICAL {communicator.nombreAgente}]: Plan de sectores completado. Rol liberado.");
+                }
+                else
+                {
+                    Debug.Log($"[TACTICAL {communicator.nombreAgente}]: Punto de sector registrado. Avanzando...");
+                }
             }
             else
             {
@@ -38,6 +46,7 @@ public class ModuleTactical : DeliberativeModule
         if (!creencias.posicionLadron.HasValue || creencias.velocidadLadron < 0.1f) return;
 
         Vector3 ultimaPos = creencias.posicionLadron.Value;
+        Debug.Log($"[TACTICAL {communicator.nombreAgente}]: Iniciando predicción — ladrón en {ultimaPos:F1}");
         Vector3 direccion = creencias.direccionLadron.HasValue ? creencias.direccionLadron.Value : Vector3.zero;
         
         Vector3 posicionFutura = ultimaPos + (direccion * creencias.velocidadLadron * tiempoProyeccionFutura);
@@ -205,6 +214,8 @@ public class ModuleTactical : DeliberativeModule
             Vector3? pos = ParsearPosicion(contenido.Substring("perseguir:".Length));
             if (pos.HasValue)
             {
+                creencias.planBusqueda.Clear();
+                creencias.indiceSectorActual = 0;
                 creencias.rolActual = BeliefBase.RolCNP.Perseguidor;
                 controller.InyectarPosicionLadron(pos.Value);
             }

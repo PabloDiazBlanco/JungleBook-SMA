@@ -332,6 +332,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 10459489}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10459490}
   m_SourcePrefab: {fileID: 100100000, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
 --- !u!4 &10459458 stripped
 Transform:
@@ -744,6 +747,22 @@ MonoBehaviour:
   direccionVigilancia: {fileID: 924417181}
   distanciaLlegada: 1.5
   velocidadGiro: 5
+--- !u!114 &10459490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10459459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
+  priority: 3
+  posicionHoguera: {fileID: 1533431827}
+  distanciaLlegada: 2
+  velocidad: 7
 --- !u!1001 &12447510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19466,6 +19485,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529498549}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 529498550}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529498515}
@@ -19888,6 +19910,22 @@ MonoBehaviour:
   direccionVigilancia: {fileID: 924417181}
   distanciaLlegada: 1.5
   velocidadGiro: 5
+--- !u!114 &529498550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529498513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
+  priority: 3
+  posicionHoguera: {fileID: 1533431827}
+  distanciaLlegada: 2
+  velocidad: 7
 --- !u!1001 &533515261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22869,6 +22907,22 @@ MonoBehaviour:
   direccionVigilancia: {fileID: 924417181}
   distanciaLlegada: 1.5
   velocidadGiro: 5
+--- !u!114 &586697715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586697685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
+  priority: 3
+  posicionHoguera: {fileID: 1533431827}
+  distanciaLlegada: 2
+  velocidad: 7
 --- !u!1001 &586706943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36337,6 +36391,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2143201482}
+    - targetCorrespondingSourceObject: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2143201483}
   m_SourcePrefab: {fileID: 100100000, guid: 7d67ac5cfda0b944580afbed7561ec82, type: 3}
 --- !u!1 &896257779
 GameObject:
@@ -41813,6 +41870,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043354}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1019043355}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1019043324}
@@ -42237,6 +42297,22 @@ MonoBehaviour:
   direccionVigilancia: {fileID: 924417181}
   distanciaLlegada: 1.5
   velocidadGiro: 5
+--- !u!114 &1019043355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019043322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
+  priority: 3
+  posicionHoguera: {fileID: 1533431827}
+  distanciaLlegada: 2
+  velocidad: 7
 --- !u!1 &1019762687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498041528017854, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
@@ -43753,6 +43829,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1063662446}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063662447}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 256116487}
@@ -44029,8 +44108,7 @@ MonoBehaviour:
   sensorOido: {fileID: 0}
   sensorHoguera: {fileID: 0}
   sensorObjetos: {fileID: 0}
-  behaviors:
-  - {fileID: 0}
+  behaviors: []
   deliberativa: {fileID: 1063662430}
 --- !u!114 &1063662435
 MonoBehaviour:
@@ -44121,6 +44199,22 @@ MonoBehaviour:
   direccionVigilancia: {fileID: 924417181}
   distanciaLlegada: 1.5
   velocidadGiro: 5
+--- !u!114 &1063662447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063662411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
+  priority: 3
+  posicionHoguera: {fileID: 1533431827}
+  distanciaLlegada: 2
+  velocidad: 7
 --- !u!1001 &1063838872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69563,6 +69657,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 586697714}
+    - targetCorrespondingSourceObject: {fileID: 3967108684766030035, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586697715}
     - targetCorrespondingSourceObject: {fileID: 8076258038442110218, guid: 1c8950e890f8de640b645d9ccc90ffa4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 202995253}
@@ -91739,6 +91836,22 @@ MonoBehaviour:
   direccionVigilancia: {fileID: 924417181}
   distanciaLlegada: 1.5
   velocidadGiro: 5
+--- !u!114 &2143201483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143201451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d3e261648ea3a4a98455437fa27527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComprobarHoguera
+  priority: 3
+  posicionHoguera: {fileID: 1533431827}
+  distanciaLlegada: 2
+  velocidad: 7
 --- !u!1 &2144177625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5511107240727842668, guid: e4a3c0459c0676f4a81d72f14ce79673, type: 3}
